@@ -1,0 +1,130 @@
+import { z } from "zod";
+
+/** Content directories and the category each one holds. */
+export const CATEGORY_DIRECTORIES = {
+  tools: "tool",
+  guides: "guide",
+  legal: "legal",
+  about: "about",
+} as const;
+
+export const CATEGORIES = ["tool", "guide", "legal", "about"] as const;
+export type Category = (typeof CATEGORIES)[number];
+
+/** URL prefix per category. Legal and about pages live at the site root. */
+export const CATEGORY_ROUTE_PREFIX: Record<Category, string> = {
+  tool: "/tool",
+  guide: "/guide",
+  legal: "",
+  about: "",
+};
+
+export const TEMPLATES = ["tool", "guide", "faq", "legal", "info", "hub"] as const;
+export type TemplateName = (typeof TEMPLATES)[number];
+
+/** Interactive client components a page can embed via `widget`. */
+export const WIDGETS = ["passport-photo-maker", "photo-compressor", "contact-form"] as const;
+export type WidgetName = (typeof WIDGETS)[number];
+
+export const SCHEMA_TYPES = [
+  "WebPage",
+  "Article",
+  "WebApplication",
+  "FAQPage",
+  "AboutPage",
+  "ContactPage",
+  "CollectionPage",
+] as const;
+export type SchemaType = (typeof SCHEMA_TYPES)[number];
+
+/** Minimum words of body content before an indexable page is considered thin. */
+export const MIN_WORDS: Record<TemplateName, number> = {
+  guide: 600,
+  tool: 300,
+  faq: 150,
+  legal: 250,
+  info: 200,
+  hub: 80,
+};
+
+const sitePath = z.string().regex(/^\/[a-z0-9\-/]*$/, "must be a site path like /guide/example");
+
+const isoDate = z
+  .union([z.date(), z.string()])
+  .transform((value) => new Date(value))
+  .refine((date) => !Number.isNaN(date.getTime()), "must be a valid date (YYYY-MM-DD)")
+  .transform((date) => date.toISOString());
+
+export const frontmatterSchema = z
+  .object({
+    /** Used for the <title> tag (the site name is appended automatically). */
+    title: z.string().trim().min(10).max(65),
+    /** Visible H1. Defaults to `title`. */
+    heading: z.string().trim().min(5).max(110).optional(),
+    /** Meta description and page intro. */
+    description: z.string().trim().min(70).max(165),
+    /** URL segment. Empty string makes the page its category's hub (e.g. /tool). */
+    slug: z.string().regex(/^([a-z0-9]+(-[a-z0-9]+)*)?$/, "must be lowercase kebab-case"),
+    category: z.enum(CATEGORIES),
+    template: z.enum(TEMPLATES),
+    published: z.boolean().default(true),
+    publishedAt: isoDate.optional(),
+    updatedAt: isoDate,
+
+    canonical: z.union([sitePath, z.url()]).optional(),
+    indexable: z.boolean().default(true),
+    robots: z
+      .object({
+        follow: z.boolean().default(true),
+        noarchive: z.boolean().default(false),
+        maxImagePreview: z.enum(["none", "standard", "large"]).default("large"),
+      })
+      .default({ follow: true, noarchive: false, maxImagePreview: "large" }),
+    keywords: z.array(z.string().trim().min(2)).max(12).default([]),
+    ogImage: z.string().regex(/^\/[\w\-/.]+\.(png|jpe?g|webp)$/, "must be a /public image path").optional(),
+    schemaType: z.enum(SCHEMA_TYPES).optional(),
+
+    breadcrumbLabel: z.string().trim().max(40).optional(),
+    showTableOfContents: z.boolean().default(false),
+    widget: z.enum(WIDGETS).optional(),
+    faq: z
+      .array(z.object({ question: z.string().trim().min(8), answer: z.string().trim().min(20) }))
+      .default([]),
+    relatedPages: z.array(sitePath).max(6).default([]),
+
+    author: z.string().default("editorial-team"),
+    /** Only set when a named, real person has actually reviewed the page. */
+    reviewedBy: z.string().optional(),
+    sources: z
+      .array(z.object({ title: z.string().trim().min(3), url: z.url(), publisher: z.string().trim().min(2) }))
+      .default([]),
+    /** Show the "not an official source" notice. */
+    showDisclaimer: z.boolean().default(false),
+  })
+  .strict()
+  .superRefine((data, ctx) => {
+    if (data.template === "tool" && !data.widget) {
+      ctx.addIssue({ code: "custom", path: ["widget"], message: "is required for the tool template" });
+    }
+    if (data.template === "faq" && data.faq.length < 3) {
+      ctx.addIssue({ code: "custom", path: ["faq"], message: "needs at least 3 entries for the faq template" });
+    }
+    if (data.template === "hub" && data.slug !== "") {
+      ctx.addIssue({ code: "custom", path: ["slug"], message: 'must be "" for the hub template' });
+    }
+    if (data.slug === "" && data.template !== "hub") {
+      ctx.addIssue({ code: "custom", path: ["slug"], message: "can only be empty for the hub template" });
+    }
+  });
+
+export type Frontmatter = z.output<typeof frontmatterSchema>;
+
+export const authorSchema = z.object({
+  name: z.string().min(2),
+  role: z.string().min(2),
+  bio: z.string().min(20),
+  url: sitePath.optional(),
+  type: z.enum(["Person", "Organization"]),
+});
+
+export type Author = z.infer<typeof authorSchema> & { id: string };

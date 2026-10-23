@@ -1,13 +1,16 @@
 #!/usr/bin/env node
 // Fails if a raw color value appears outside src/styles/tokens.css.
 // Colors must come from design tokens (e.g. `bg-primary`, `var(--color-border)`).
+// Escape hatches, for values that aren't UI styling (e.g. pixel data drawn to
+// a canvas): `og-theme.ts` (Satori can't read CSS variables), and any line
+// ending in a `design-tokens-ignore-line` comment.
 
 import { readdirSync, readFileSync } from "node:fs";
 import { join, relative } from "node:path";
 
 const root = join(import.meta.dirname, "..");
 const srcDir = join(root, "src");
-const allowed = new Set(["src/styles/tokens.css"]);
+const allowed = new Set(["src/styles/tokens.css", "src/styles/og-theme.ts"]);
 const extensions = /\.(css|ts|tsx|js|jsx|mdx)$/;
 
 const rules = [
@@ -30,6 +33,7 @@ for (const file of walk(srcDir)) {
   if (allowed.has(rel)) continue;
   const lines = readFileSync(file, "utf8").split("\n");
   lines.forEach((line, i) => {
+    if (line.includes("design-tokens-ignore-line")) return;
     for (const rule of rules) {
       if (rule.only && !rule.only.test(rel)) continue;
       for (const match of line.matchAll(rule.pattern)) {
