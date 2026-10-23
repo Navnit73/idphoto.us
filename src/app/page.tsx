@@ -283,13 +283,13 @@ export default async function Home() {
 
       {/* Hero */}
       <section className="border-b pt-page pb-12 sm:pb-16">
-        <Container className="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-12 lg:py-8">
+        <Container className="grid items-center gap-10 lg:grid-cols-[minmax(0,11fr)_minmax(0,9fr)] lg:gap-12 lg:py-8">
           <div className="flex flex-col items-start gap-6 text-left">
             <p className="inline-flex items-center gap-2 rounded-full border bg-surface-raised px-3 py-1 text-xs font-medium text-muted-foreground shadow-sm sm:text-sm">
               <span aria-hidden="true" className="size-2 rounded-full bg-success" />
               Free · No sign-up · U.S. and 60+ countries
             </p>
-            <h1 className="font-display text-3xl font-semibold tracking-tight text-balance sm:text-5xl">
+            <h1 className="font-display text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
               Passport Photo Online: <span className="text-primary">Free Passport Size Photo Maker</span>
             </h1>
             <p className="max-w-xl text-lg text-pretty text-muted-foreground">
@@ -316,13 +316,13 @@ export default async function Home() {
             </ul>
           </div>
 
-          <figure className="rounded-xl bg-photo-backdrop p-2 sm:p-4">
+          <figure className="mx-auto w-full max-w-[26.5rem] rounded-xl bg-photo-backdrop p-2 sm:max-w-[31rem] sm:p-4 lg:mx-0 lg:justify-self-end">
             <Image
               src={heroImage.src}
               width={heroImage.width}
               height={heroImage.height}
               alt={heroImage.alt}
-              sizes="(min-width: 80rem) 38rem, (min-width: 64rem) 48vw, 100vw"
+              sizes="(min-width: 80rem) 31rem, (min-width: 64rem) 40vw, (min-width: 40rem) 31rem, min(26.5rem, 100vw)"
               preload
               className="h-auto w-full"
             />
