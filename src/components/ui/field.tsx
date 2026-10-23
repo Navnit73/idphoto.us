@@ -1,7 +1,7 @@
 import { cn } from "@/lib/cn";
 
 const control =
-  "w-full rounded-md border border-input bg-background px-3 py-2 text-base text-foreground shadow-sm transition-colors placeholder:text-muted-foreground hover:border-muted-foreground focus-visible:border-ring aria-invalid:border-danger disabled:opacity-50";
+  "w-full rounded-md border border-input bg-background px-3 py-2 text-base text-foreground shadow-sm transition-colors placeholder:text-muted-foreground hover:border-muted-foreground focus-visible:border-ring focus-visible:outline-offset-0 aria-invalid:border-danger disabled:opacity-50";
 
 type FieldProps = {
   id: string;

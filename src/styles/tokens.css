@@ -103,6 +103,9 @@
      page in light mode and stays light in dark mode so the artwork is legible. */
   --photo-backdrop: light-dark(var(--neutral-0), var(--neutral-100));
 
+  /* Scrim behind modal dialogs. Dark in both themes, so the page recedes. */
+  --overlay: color-mix(in oklab, var(--neutral-950) 70%, transparent);
+
   --shadow-color: light-dark(
     color-mix(in oklab, var(--neutral-950) 10%, transparent),
     color-mix(in oklab, var(--neutral-950) 50%, transparent)

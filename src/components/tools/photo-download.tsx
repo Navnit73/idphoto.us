@@ -69,6 +69,12 @@ function rememberEmailed(resultId: string) {
 
 const noopSubscribe = () => () => {};
 
+// Discourage saving the photo outside the download flow. Only a deterrent (the
+// image URL is still reachable through dev tools), and scoped to the photo so
+// the rest of the page keeps its context menu (paste into the email field, open
+// links in a new tab).
+const blockContextMenu = (event: React.MouseEvent) => event.preventDefault();
+
 function startDownload(href: string) {
   const link = document.createElement("a");
   link.href = href;
@@ -104,6 +110,13 @@ export function PhotoDownload({
   const submitRef = useRef<HTMLButtonElement>(null);
   const [showGuides, setShowGuides] = useState(true);
   const [submitInView, setSubmitInView] = useState(false);
+  // While focus is in the panel, the bar would cover the field being typed in (WCAG 2.4.11).
+  const [panelFocused, setPanelFocused] = useState(false);
+  const hideBar = submitInView || panelFocused;
+  // The card and the full-size dialog show the same image, guides included.
+  const guidesShown = Boolean(guidesSrc) && showGuides;
+  const shownSrc = guidesShown ? guidesSrc! : imageSrc;
+  const shownAlt = guidesShown ? `${alt}, with measurement guides` : alt;
   const emailRef = useRef<HTMLInputElement>(null);
   const [status, setStatus] = useState<Status>({ kind: "idle" });
   const [errors, setErrors] = useState<Record<string, string[]>>({});
@@ -117,6 +130,7 @@ export function PhotoDownload({
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (status.kind === "sending") return;
     if (unlocked) {
       startDownload(downloadHref);
       return;
@@ -168,14 +182,6 @@ export function PhotoDownload({
     return () => observer.disconnect();
   }, []);
 
-  // Discourage saving the photo outside the download flow. Only a deterrent:
-  // the image URL is still reachable through dev tools.
-  useEffect(() => {
-    const block = (event: MouseEvent) => event.preventDefault();
-    document.addEventListener("contextmenu", block);
-    return () => document.removeEventListener("contextmenu", block);
-  }, []);
-
   function downloadFromBar() {
     if (unlocked) {
       startDownload(downloadHref);
@@ -219,17 +225,14 @@ export function PhotoDownload({
               aria-label="View photo full size"
               className="h-full max-w-full cursor-zoom-in rounded-sm"
             >
-              {/* eslint-disable-next-line @next/next/no-img-element -- private, short-lived image; next/image would copy it into our cache */}
+              {/* eslint-disable-next-line @next/next/no-img-element, jsx-a11y/no-noninteractive-element-interactions -- private, short-lived image; next/image would copy it into our cache. onContextMenu only suppresses the menu. */}
               <img
-                src={guidesSrc && showGuides ? guidesSrc : imageSrc}
-                alt={
-                  guidesSrc && showGuides
-                    ? `${alt}, with measurement guides`
-                    : alt
-                }
+                src={shownSrc}
+                alt={shownAlt}
                 width={width}
                 height={height}
                 draggable={false}
+                onContextMenu={blockContextMenu}
                 className="h-full w-auto max-w-full rounded-sm border border-border bg-photo-backdrop object-contain select-none"
               />
             </button>
@@ -243,7 +246,8 @@ export function PhotoDownload({
                   size="sm"
                   aria-pressed={showGuides}
                   onClick={() => setShowGuides((value) => !value)}
-                  className="aria-pressed:text-primary"
+                  // A fill as well as a color change, so "on" isn't signalled by color alone (WCAG 1.4.1).
+                  className="aria-pressed:bg-primary-subtle aria-pressed:text-primary-subtle-foreground"
                 >
                   <EyeIcon className="size-4" />
                   Guides
@@ -262,8 +266,16 @@ export function PhotoDownload({
         </figure>
       </section>
 
+      {/* Focus tracking only (to hide the mobile bar), not an interaction. */}
+      {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
       <aside
         aria-labelledby="download-heading"
+        onFocus={() => setPanelFocused(true)}
+        onBlur={(event) => {
+          if (!event.currentTarget.contains(event.relatedTarget)) {
+            setPanelFocused(false);
+          }
+        }}
         className="flex flex-col gap-4 rounded-xl border border-border bg-surface-raised p-4 sm:p-5 lg:sticky lg:top-20 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:self-start"
       >
         <h2
@@ -337,8 +349,9 @@ export function PhotoDownload({
             ref={submitRef}
             type="submit"
             size="lg"
-            className="h-11 w-full font-semibold shadow-none!"
-            disabled={status.kind === "sending"}
+            className="h-11 w-full font-semibold shadow-none! aria-disabled:opacity-50"
+            // Not `disabled`: that would drop keyboard focus to <body> mid-submit.
+            aria-disabled={status.kind === "sending" || undefined}
           >
             <DownloadIcon />
             {status.kind === "sending" ? "Sending…" : "Download photo"}
@@ -358,7 +371,8 @@ export function PhotoDownload({
           )}
         </form>
 
-        <ul className="flex flex-wrap justify-center gap-x-4 gap-y-1.5 border-t border-border pt-3 text-xs text-muted-foreground">
+        {/* order-last too, so it stays the panel's footer below the reordered summary. */}
+        <ul className="flex flex-wrap justify-center gap-x-4 gap-y-1.5 border-t border-border pt-3 text-xs text-muted-foreground max-lg:order-last">
           <li className="flex items-center gap-1.5">
             <DownloadIcon className="size-4 text-primary" />
             Instant download
@@ -383,10 +397,10 @@ export function PhotoDownload({
       {/* Small screens: keep the download one tap away until the form's own button is visible. */}
       <div
         className={cn(
-          "fixed inset-x-0 bottom-0 z-40 border-t border-border bg-surface-raised px-gutter pt-2.5 pb-[max(0.625rem,env(safe-area-inset-bottom))] transition-transform lg:hidden",
-          submitInView && "pointer-events-none translate-y-full",
+          "fixed inset-x-0 bottom-0 z-40 border-t border-border bg-surface-raised px-gutter pt-2.5 pb-[max(0.625rem,env(safe-area-inset-bottom))] transition-transform motion-reduce:transition-none lg:hidden",
+          hideBar && "pointer-events-none translate-y-full",
         )}
-        inert={submitInView}
+        inert={hideBar}
       >
         <Button
           size="lg"
@@ -407,17 +421,18 @@ export function PhotoDownload({
           // A click on the backdrop lands on the <dialog> itself.
           if (event.target === event.currentTarget) event.currentTarget.close();
         }}
-        className="m-auto max-h-[90vh] max-w-[min(90vw,40rem)] rounded-xl border border-border bg-surface-raised p-4 text-foreground backdrop:bg-foreground/60"
+        className="m-auto max-h-[90vh] max-w-[min(90vw,40rem)] rounded-xl border border-border bg-surface-raised p-4 text-foreground backdrop:bg-overlay"
       >
         <div className="flex flex-col items-center gap-4">
-          {/* eslint-disable-next-line @next/next/no-img-element -- see above */}
+          {/* eslint-disable-next-line @next/next/no-img-element, jsx-a11y/no-noninteractive-element-interactions -- see above */}
           <img
-            src={imageSrc}
-            alt={alt}
+            src={shownSrc}
+            alt={shownAlt}
             width={width}
             height={height}
             draggable={false}
-            className="h-auto max-h-[70vh] w-auto max-w-full rounded-md select-none"
+            onContextMenu={blockContextMenu}
+            className="h-auto max-h-[70vh] w-auto max-w-full rounded-md bg-photo-backdrop select-none"
           />
           <div className="flex gap-3">
             <Button onClick={downloadFromDialog} className="shadow-none!">

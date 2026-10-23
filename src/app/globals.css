@@ -48,6 +48,7 @@
   --color-danger: var(--danger);
   --color-danger-subtle: var(--danger-subtle);
   --color-photo-backdrop: var(--photo-backdrop);
+  --color-overlay: var(--overlay);
 
   --font-sans: var(--font-family-sans);
   --font-display: var(--font-family-display);

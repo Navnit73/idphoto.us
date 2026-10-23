@@ -171,13 +171,13 @@ async function PhotoPreview({
                   ? "Passed"
                   : "Needs attention"}
             </CheckRow>
-            <CheckRow ok label="Head height">
+            <CheckRow label="Head height">
               {formatPct(metrics.headHeightPct)} of photo
             </CheckRow>
-            <CheckRow ok label="Eye line">
+            <CheckRow label="Eye line">
               {formatPct(metrics.eyePositionPct)} from bottom
             </CheckRow>
-            <CheckRow ok label="Space above head">
+            <CheckRow label="Space above head">
               {formatPct(metrics.topMarginPct)} of photo
             </CheckRow>
           </dl>
@@ -233,7 +233,8 @@ function CheckRow({
   label,
   children,
 }: {
-  ok: boolean;
+  /** Omit for a plain measurement: the API reports the value, not a pass/fail. */
+  ok?: boolean;
   label: string;
   children: React.ReactNode;
 }) {
@@ -243,12 +244,16 @@ function CheckRow({
         <span
           className={cn(
             "flex size-6 shrink-0 items-center justify-center rounded-full",
-            ok
-              ? "bg-success-subtle text-success"
-              : "bg-warning-subtle text-warning",
+            ok === undefined
+              ? "bg-muted text-muted-foreground"
+              : ok
+                ? "bg-success-subtle text-success"
+                : "bg-warning-subtle text-warning",
           )}
         >
-          {ok ? (
+          {ok === undefined ? (
+            <span className="size-1.5 rounded-full bg-current" />
+          ) : ok ? (
             <CheckIcon className="size-4" />
           ) : (
             <AlertIcon className="size-4" />
