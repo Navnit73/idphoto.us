@@ -4,9 +4,13 @@ import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Alert, Textarea } from "@/components/ui/field";
-import { apiPost, ClientApiError } from "@/lib/http/client";
 
-type State = { step: "ask" } | { step: "comment"; helpful: boolean } | { step: "sending" } | { step: "done" } | { step: "error"; message: string };
+type State =
+  | { step: "ask" }
+  | { step: "comment"; helpful: boolean }
+  | { step: "sending" }
+  | { step: "done" }
+  | { step: "error"; message: string; helpful: boolean };
 
 /** "Was this page helpful?" — stores an anonymous vote (and optional comment) to improve content. */
 export function Feedback({ path }: { path: string }) {
@@ -16,10 +20,14 @@ export function Feedback({ path }: { path: string }) {
   async function submit(helpful: boolean) {
     setState({ step: "sending" });
     try {
+      // This widget sits on most content pages; load the HTTP client only when someone actually votes.
+      const { apiPost } = await import("@/lib/http/client");
       await apiPost("/feedback", { path, helpful, comment: comment.trim() || undefined });
       setState({ step: "done" });
     } catch (error) {
-      setState({ step: "error", message: error instanceof ClientApiError ? error.message : "Couldn't send feedback." });
+      // apiPost throws ClientApiError, whose messages are written for people; anything else (e.g. a failed chunk load) isn't.
+      const message = error instanceof Error && error.name === "ClientApiError" ? error.message : "Couldn't send feedback.";
+      setState({ step: "error", helpful, message });
     }
   }
 
@@ -68,9 +76,12 @@ export function Feedback({ path }: { path: string }) {
         </Alert>
       )}
       {state.step === "error" && (
-        <Alert tone="danger" className="mt-4">
-          {state.message}
-        </Alert>
+        <div className="mt-4 flex flex-col items-start gap-3">
+          <Alert tone="danger">{state.message}</Alert>
+          <Button variant="outline" size="sm" onClick={() => setState({ step: "comment", helpful: state.helpful })}>
+            Try again
+          </Button>
+        </div>
       )}
     </section>
   );

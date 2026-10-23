@@ -77,6 +77,7 @@
   --spacing: var(--space-unit);
   --spacing-gutter: var(--space-gutter);
   --spacing-section: var(--space-section);
+  --spacing-page: var(--space-page-top);
   --spacing-header: var(--layout-header-height);
 
   --container-content: var(--layout-content);

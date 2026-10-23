@@ -13,7 +13,7 @@ export function InfoTemplate({ page, crumbs }: TemplateProps) {
   const { frontmatter } = page;
 
   return (
-    <Container className="py-10 sm:py-14">
+    <Container className="pt-page pb-10 sm:pb-14">
       <article className="flex flex-col gap-12">
         <PageHeader page={page} crumbs={crumbs} />
         <div className="flex max-w-prose flex-col gap-12">

@@ -68,6 +68,8 @@ type PageInput = {
   description: string;
   updatedAt: string;
   publishedAt?: string;
+  /** Site path or URL of the page's representative image (its social card). */
+  image?: string;
   author: Author;
   reviewer?: Author | null;
   breadcrumbs: Crumb[];
@@ -85,6 +87,7 @@ export function pageJsonLd(input: PageInput): Thing[] {
     description: input.description,
     dateModified: input.updatedAt,
     ...(input.publishedAt && { datePublished: input.publishedAt }),
+    ...(input.image && { image: absoluteUrl(input.image) }),
     inLanguage: "en-US",
     isPartOf: { "@id": WEBSITE_ID },
   };

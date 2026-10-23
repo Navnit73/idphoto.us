@@ -15,7 +15,7 @@ export function GuideTemplate({ page, crumbs }: TemplateProps) {
   const toc = frontmatter.showTableOfContents;
 
   return (
-    <Container className="py-10 sm:py-14">
+    <Container className="pt-page pb-10 sm:pb-14">
       <article className="flex flex-col gap-10">
         <PageHeader page={page} crumbs={crumbs} byline />
 

@@ -14,9 +14,12 @@ const geistSans = Geist({
   subsets: ["latin"],
 });
 
+// Mono only appears in code snippets and error references, so it isn't
+// preloaded; the browser fetches it the first time a page actually uses it.
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  preload: false,
 });
 
 /** Site-wide defaults. Pages override these through `buildMetadata` (src/lib/seo/metadata.ts). */

@@ -4,13 +4,18 @@ import { notFound } from "next/navigation";
 
 import { JsonLd } from "@/components/seo/json-ld";
 import { templates } from "@/components/templates";
-import { getPage, getPageSummaries, pathFromSegments } from "@/lib/content/loader";
+import { getPage, getPageSummaries, pathFromSegments, type Page } from "@/lib/content/loader";
 import { buildBreadcrumbs, categoryListing, DEFAULT_SCHEMA_TYPE } from "@/lib/content/navigation";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { pageJsonLd } from "@/lib/seo/json-ld";
 
 /** Every content page is prerendered at build time; the build fails if one can't be. */
 export const ensureStatic = "navigation";
+
+/** A custom `ogImage`, or the generated card at /og/<path>. Shared by Open Graph tags and JSON-LD. */
+function socialImage(page: Page) {
+  return page.frontmatter.ogImage ?? `/og${page.path}`;
+}
 
 export async function generateStaticParams() {
   const pages = await getPageSummaries();
@@ -32,7 +37,7 @@ export async function generateMetadata({ params }: PageProps<"/[...path]">): Pro
     noarchive: frontmatter.robots.noarchive,
     maxImagePreview: frontmatter.robots.maxImagePreview,
     keywords: frontmatter.keywords,
-    ogImage: frontmatter.ogImage ?? `/og${page.path}`,
+    ogImage: socialImage(page),
     type: page.template === "guide" ? "article" : "website",
     publishedTime: frontmatter.publishedAt,
     modifiedTime: page.updatedAt,
@@ -57,6 +62,7 @@ export default async function ContentPage({ params }: PageProps<"/[...path]">) {
           description: page.description,
           updatedAt: page.updatedAt,
           publishedAt: page.frontmatter.publishedAt,
+          image: socialImage(page),
           author: page.author,
           reviewer: page.reviewer,
           breadcrumbs: crumbs,

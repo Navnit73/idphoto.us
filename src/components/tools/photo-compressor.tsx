@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Alert, Field, Input } from "@/components/ui/field";
@@ -25,45 +25,62 @@ const PRESETS = [
 ] as const;
 
 const MIN_SIDE = 600;
+const MIN_QUALITY = 0.4;
+const MAX_QUALITY = 0.95;
 
 type Result = { blob: Blob; url: string; width: number; height: number; quality: number };
 
 /**
- * Re-encodes a photo as JPEG under a target file size. Binary-searches JPEG
- * quality first; if even low quality is too large, scales the image down
- * (never below 600 px on the short side, the usual minimum for ID uploads).
+ * Re-encodes a photo as JPEG under a target file size, never going below
+ * 600 px on the short side (the usual minimum for ID uploads).
+ *
+ * Each size is first tried at the lowest acceptable quality. If that's still
+ * too large, no quality search can help, so we shrink straight to the size
+ * that should fit — JPEG size grows roughly with pixel count — instead of
+ * stepping down slowly. Once a size fits, quality is binary-searched upward.
+ * A 12 MP phone photo needs about 10 encodes rather than dozens.
  */
 async function compress(image: LoadedImage, targetBytes: number): Promise<Result> {
   const minScale = Math.min(1, MIN_SIDE / Math.min(image.width, image.height));
   let scale = 1;
-  let best: Omit<Result, "url"> | null = null;
 
-  for (let attempt = 0; attempt < 12 && !best; attempt++) {
+  for (let attempt = 0; attempt < 8; attempt++) {
     const width = Math.round(image.width * scale);
     const height = Math.round(image.height * scale);
     const { canvas, context } = createCanvas(width, height);
-    fillPhotoBackground(context);
-    context.drawImage(image.element, 0, 0, width, height);
+    try {
+      fillPhotoBackground(context);
+      context.drawImage(image.element, 0, 0, width, height);
 
-    let low = 0.4;
-    let high = 0.95;
-    for (let step = 0; step < 7; step++) {
-      const quality = (low + high) / 2;
-      const blob = await canvasToBlob(canvas, "image/jpeg", quality);
-      if (blob.size <= targetBytes) {
-        best = { blob, width, height, quality };
-        low = quality;
-      } else {
-        high = quality;
+      const floor = await canvasToBlob(canvas, "image/jpeg", MIN_QUALITY);
+      if (floor.size <= targetBytes) {
+        let best = { blob: floor, quality: MIN_QUALITY };
+        let low = MIN_QUALITY;
+        let high = MAX_QUALITY;
+        for (let step = 0; step < 6; step++) {
+          const quality = (low + high) / 2;
+          const blob = await canvasToBlob(canvas, "image/jpeg", quality);
+          if (blob.size <= targetBytes) {
+            best = { blob, quality };
+            low = quality;
+          } else {
+            high = quality;
+          }
+        }
+        return { ...best, width, height, url: URL.createObjectURL(best.blob) };
       }
-    }
 
-    if (scale <= minScale) break;
-    scale = Math.max(minScale, scale * 0.8);
+      if (scale <= minScale) break;
+      // Aim 5% under the estimate so the next size usually fits, and always shrink at least 10%.
+      scale = Math.max(minScale, Math.min(scale * 0.9, scale * Math.sqrt(targetBytes / floor.size) * 0.95));
+    } finally {
+      // Free the bitmap now; iOS Safari caps total canvas memory and large photos hit it quickly.
+      canvas.width = 0;
+      canvas.height = 0;
+    }
   }
 
-  if (!best) throw new Error("Couldn't get this photo under the target size without dropping below 600 px. Try a larger target.");
-  return { ...best, url: URL.createObjectURL(best.blob) };
+  throw new Error("Couldn't get this photo under the target size without dropping below 600 px. Try a larger target.");
 }
 
 function parseTarget(value: string) {
@@ -78,20 +95,16 @@ export function PhotoCompressor() {
   const [result, setResult] = useState<Result | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
-  const urls = useRef<string[]>([]);
 
-  useEffect(() => () => urls.current.forEach((url) => URL.revokeObjectURL(url)), []);
-
-  function track(url: string) {
-    urls.current.push(url);
-  }
+  // Release each object URL as soon as it's replaced, not only on unmount.
+  useEffect(() => (image ? () => URL.revokeObjectURL(image.url) : undefined), [image]);
+  useEffect(() => (result ? () => URL.revokeObjectURL(result.url) : undefined), [result]);
 
   async function onFile(file: File) {
     setError(null);
     setResult(null);
     try {
       const loaded = await loadImage(file);
-      track(loaded.url);
       setImage(loaded);
     } catch (cause) {
       setError(cause instanceof Error ? cause.message : "Couldn't open that image.");
@@ -103,9 +116,7 @@ export function PhotoCompressor() {
     setBusy(true);
     setError(null);
     try {
-      const output = await compress(image, targetKb * 1024);
-      track(output.url);
-      setResult(output);
+      setResult(await compress(image, targetKb * 1024));
     } catch (cause) {
       setError(cause instanceof Error ? cause.message : "Compression failed.");
     } finally {

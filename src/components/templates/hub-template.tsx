@@ -8,7 +8,7 @@ import type { TemplateProps } from "./types";
 /** Category landing page (e.g. /tool): intro copy plus every page in the category. */
 export function HubTemplate({ page, crumbs, categoryPages }: TemplateProps) {
   return (
-    <Container className="py-10 sm:py-14">
+    <Container className="pt-page pb-10 sm:pb-14">
       <div className="flex flex-col gap-12">
         <PageHeader page={page} crumbs={crumbs} />
         <section aria-labelledby="hub-list-heading" className="flex flex-col gap-6">

@@ -14,3 +14,11 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - Never hardcode colors (hex, `rgb()`, `oklch()`, Tailwind palette classes like `bg-blue-500`). Use semantic utilities (`bg-surface`, `text-muted-foreground`, `border-border`). New color roles go in `tokens.css` first, then get mapped in `globals.css`.
 - Prefer semantic tokens (which already adapt to light/dark) over `dark:` overrides.
 - `npm run lint` runs ESLint plus `scripts/check-design-tokens.mjs`.
+
+## Content and SEO rules
+
+- Pages live in `content/` as Markdown with Zod-validated frontmatter (`src/lib/content/schema.ts`). Read `docs/CONTENT.md` before adding or editing pages.
+- Templates render the only H1; Markdown bodies start at `##`. `npm run build` fails on content errors — fix the content, don't loosen the validator.
+- Never fabricate credentials, reviewers, official affiliations, statistics, or guarantees. Official requirements must cite primary sources in `sources`.
+- Metadata goes through `buildMetadata()` (`src/lib/seo/metadata.ts`); structured data through `src/lib/seo/json-ld.ts`.
+- Browser code calls our API with `apiPost` (`src/lib/http/client.ts`); server code calls third parties with `serverHttp` (`src/lib/http/server.ts`). Never import server modules (`env/server`, `db`, `logger`) into client components.

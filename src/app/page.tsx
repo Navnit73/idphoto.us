@@ -43,7 +43,7 @@ export default async function Home() {
     <>
       <JsonLd data={[organizationJsonLd(), websiteJsonLd()]} />
 
-      <section className="border-b py-section">
+      <section className="border-b pt-page pb-section">
         <Container className="flex flex-col items-start gap-6">
           <p className="rounded-full bg-primary-subtle px-3 py-1 text-xs font-medium tracking-wide text-primary-subtle-foreground uppercase">
             Free · No sign-up · Nothing uploaded

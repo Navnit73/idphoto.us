@@ -18,7 +18,10 @@ export function FileDrop({ onFile, label, className }: { onFile: (file: File) =>
         event.preventDefault();
         setDragging(true);
       }}
-      onDragLeave={() => setDragging(false)}
+      onDragLeave={(event) => {
+        // dragleave also fires when moving onto a child element; only reset when the pointer leaves the drop zone.
+        if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setDragging(false);
+      }}
       onDrop={(event) => {
         event.preventDefault();
         setDragging(false);

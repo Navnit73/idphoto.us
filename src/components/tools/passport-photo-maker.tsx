@@ -84,16 +84,17 @@ export function PassportPhotoMaker() {
   const [busy, setBusy] = useState(false);
   const frame = useRef<HTMLDivElement>(null);
   const drag = useRef<{ pointerId: number; startX: number; startY: number; view: View } | null>(null);
-  const urls = useRef<string[]>([]);
 
-  useEffect(() => () => urls.current.forEach((url) => URL.revokeObjectURL(url)), []);
+  // Release each object URL as soon as it's replaced, not only on unmount: a
+  // session of several photos would otherwise keep every one of them in memory.
+  useEffect(() => (image ? () => URL.revokeObjectURL(image.url) : undefined), [image]);
+  useEffect(() => (output ? () => URL.revokeObjectURL(output.previewUrl) : undefined), [output]);
 
   async function onFile(file: File) {
     setError(null);
     setOutput(null);
     try {
       const loaded = await loadImage(file);
-      urls.current.push(loaded.url);
       setImage(loaded);
       setView(centeredView(loaded));
     } catch (cause) {
@@ -101,6 +102,7 @@ export function PassportPhotoMaker() {
     }
   }
 
+  /** Every view change goes through here so a previously created photo never outlives the crop it was made from. */
   function update(next: View) {
     if (!image) return;
     setView(clampView(image, next));
@@ -108,6 +110,7 @@ export function PassportPhotoMaker() {
   }
 
   function onPointerDown(event: React.PointerEvent<HTMLDivElement>) {
+    if (event.button !== 0) return;
     event.currentTarget.setPointerCapture(event.pointerId);
     drag.current = { pointerId: event.pointerId, startX: event.clientX, startY: event.clientY, view };
   }
@@ -141,10 +144,10 @@ export function PassportPhotoMaker() {
       update({ ...view, x: view.x + dx, y: view.y + dy });
     } else if (event.key === "+" || event.key === "=") {
       event.preventDefault();
-      setView(zoomTo(image, view, view.zoom + 0.05));
+      update(zoomTo(image, view, view.zoom + 0.05));
     } else if (event.key === "-") {
       event.preventDefault();
-      setView(zoomTo(image, view, view.zoom - 0.05));
+      update(zoomTo(image, view, view.zoom - 0.05));
     }
   }
 
@@ -158,9 +161,7 @@ export function PassportPhotoMaker() {
         canvasToBlob(photoCanvas, "image/jpeg", 0.92),
         renderSheet(photoCanvas).then((canvas) => canvasToBlob(canvas, "image/jpeg", 0.92)),
       ]);
-      const previewUrl = URL.createObjectURL(photo);
-      urls.current.push(previewUrl);
-      setOutput({ photo, sheet, previewUrl });
+      setOutput({ photo, sheet, previewUrl: URL.createObjectURL(photo) });
     } catch (cause) {
       setError(cause instanceof Error ? cause.message : "Couldn't create the photo.");
     } finally {
@@ -232,10 +233,7 @@ export function PassportPhotoMaker() {
             max={MAX_ZOOM}
             step={0.01}
             value={view.zoom}
-            onChange={(event) => {
-              setView(zoomTo(image, view, Number(event.target.value)));
-              setOutput(null);
-            }}
+            onChange={(event) => update(zoomTo(image, view, Number(event.target.value)))}
             className="accent-primary"
           />
         </label>
@@ -259,7 +257,7 @@ export function PassportPhotoMaker() {
           <Button onClick={create} disabled={busy}>
             {busy ? "Creating…" : "Create passport photo"}
           </Button>
-          <Button variant="outline" onClick={() => setView(centeredView(image))}>
+          <Button variant="outline" onClick={() => update(centeredView(image))}>
             Reset
           </Button>
           <Button
