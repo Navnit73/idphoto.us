@@ -630,28 +630,7 @@ export default async function Home() {
       </section>
 
       {/* Final CTA */}
-      <section aria-labelledby="cta-heading" className="pb-section">
-        <Container>
-          <div className={cn(card, "flex flex-col items-start gap-6 p-8 sm:p-12 lg:flex-row lg:items-center lg:justify-between")}>
-            <div className="flex max-w-2xl flex-col gap-3">
-              <h2 id="cta-heading" className="font-display text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
-                Make your passport photo now. It&apos;s free.
-              </h2>
-              <p className="text-lg text-pretty text-muted-foreground">
-                Grab your phone, find a plain wall near a window, and get a print-ready 2 × 2 inch photo, or your
-                country&apos;s size, in a few minutes.
-              </p>
-            </div>
-            <a
-              href={links.tool}
-              className={buttonVariants({ size: "lg", className: "group w-full sm:w-auto" })}
-            >
-              Make my passport photo
-              <ArrowRightIcon className="size-4 transition-transform group-hover:translate-x-0.5" />
-            </a>
-          </div>
-        </Container>
-      </section>
+     
     </>
   );
 }
