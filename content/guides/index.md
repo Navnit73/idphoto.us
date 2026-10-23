@@ -19,6 +19,6 @@ Every guide is researched from official sources such as the U.S. Department of S
 
 ## Start here
 
-If you're making a U.S. passport photo, read the [requirements checklist](/guide/passport-photo-requirements) first: it covers background, glasses, expression, clothing, and printing in one place. Then check the exact measurements in the [passport photo size guide](/guide/us-passport-photo-size) before you crop.
+If you're making a U.S. passport photo, read the [requirements checklist](/guide/passport-photo-requirements) first: it covers background, glasses, expression, clothing, and printing in one place. Then use the [passport photo editor](/tool/passport-photo-editor) to crop your photo to the exact size.
 
 Found something out of date? [Tell us](/contact) and we'll check it.

@@ -62,7 +62,6 @@ const heroImage = {
 const links = {
   tool: "#photo-tool",
   requirements: "/guide/passport-photo-requirements",
-  size: "/guide/us-passport-photo-size",
   faq: "/faq",
 } as const;
 

@@ -26,7 +26,6 @@ export const siteConfig = {
       title: "Guides",
       links: [
         { label: "Passport photo requirements", href: "/guide/passport-photo-requirements" },
-        { label: "U.S. passport photo size", href: "/guide/us-passport-photo-size" },
         { label: "FAQ", href: "/faq" },
       ],
     },
@@ -45,6 +44,7 @@ export const siteConfig = {
         { label: "Privacy policy", href: "/privacy-policy" },
         { label: "Terms of service", href: "/terms" },
         { label: "Refund policy", href: "/refund-policy" },
+        { label: "Data security", href: "/data-security" },
       ],
     },
   ],

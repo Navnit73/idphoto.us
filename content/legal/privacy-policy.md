@@ -93,7 +93,7 @@ Our site is intended for a general audience and isn't directed at children under
 
 ## Security
 
-We use encrypted connections (HTTPS), restrict access to stored messages, use hard-to-guess links for photo results, validate everything sent to our servers, and store IP addresses only as hashes. No method of transmission or storage is perfectly secure, so please don't send sensitive information such as passport or Social Security numbers through our forms.
+We use encrypted connections (HTTPS), restrict access to stored messages, use hard-to-guess links for photo results, validate everything sent to our servers, and store IP addresses only as hashes. No method of transmission or storage is perfectly secure, so please don't send sensitive information such as passport or Social Security numbers through our forms. Read more about our safeguards on our [data security](/data-security) page.
 
 ## Changes to this policy
 

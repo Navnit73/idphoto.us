@@ -8,7 +8,7 @@ export async function generateStaticParams() {
   return pages.map((page) => ({ path: page.path.slice(1).split("/") }));
 }
 
-/** Social card for a content page, e.g. /og/guide/us-passport-photo-size. Prerendered at build time. */
+/** Social card for a content page, e.g. /og/guide/passport-photo-requirements. Prerendered at build time. */
 export async function GET(_request: Request, { params }: RouteContext<"/og/[...path]">) {
   const page = await getPage(pathFromSegments((await params).path));
   if (!page) return new Response("Not found", { status: 404 });

@@ -24,7 +24,6 @@ keywords:
 showDisclaimer: false
 relatedPages:
   - /guide/passport-photo-requirements
-  - /guide/us-passport-photo-size
 sources:
   - title: "U.S. Passport Photos"
     url: "https://travel.state.gov/content/travel/en/passports/how-apply/photos.html"
@@ -39,7 +38,7 @@ faq:
   - question: "How long can I download my photo?"
     answer: "Your result page and its download link work for 7 days. Download the photo, or use the \"Email me this photo\" option to send the links to yourself."
   - question: "What pixel size is the download?"
-    answer: "The download is a digital file at your country's pixel size. A U.S. photo is 600 × 600 pixels, which prints at exactly 2 × 2 inches at 300 DPI; choose actual size with no scaling. See the [U.S. passport photo size guide](/guide/us-passport-photo-size) for details."
+    answer: "The download is a digital file at your country's pixel size. A U.S. photo is 600 × 600 pixels, which prints at exactly 2 × 2 inches at 300 DPI; choose actual size with no scaling."
 ---
 
 ## How to use the passport photo editor

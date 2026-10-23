@@ -10,7 +10,6 @@ updatedAt: 2026-10-23
 showDisclaimer: true
 relatedPages:
   - /guide/passport-photo-requirements
-  - /guide/us-passport-photo-size
   - /tool/passport-photo-editor
 sources:
   - title: "U.S. Passport Photos"
@@ -18,7 +17,7 @@ sources:
     publisher: "U.S. Department of State"
 faq:
   - question: "What size is a U.S. passport photo?"
-    answer: "2 × 2 inches (51 × 51 mm), with the head measuring 1 to 1⅜ inches (25–35 mm) from the bottom of the chin to the top of the hair. See the [passport photo size guide](/guide/us-passport-photo-size) for pixel sizes."
+    answer: "2 × 2 inches (51 × 51 mm), with the head measuring 1 to 1⅜ inches (25–35 mm) from the bottom of the chin to the top of the hair. See the [passport photo requirements](/guide/passport-photo-requirements) for the full checklist."
   - question: "Can I wear glasses in my passport photo?"
     answer: "No, unless you can't remove them for medical reasons and include a signed doctor's statement with your application. The [passport photo requirements](/guide/passport-photo-requirements) guide covers glasses, hats, and clothing."
   - question: "Can I smile in my passport photo?"

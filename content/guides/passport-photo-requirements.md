@@ -19,7 +19,6 @@ keywords:
 showTableOfContents: true
 showDisclaimer: true
 relatedPages:
-  - /guide/us-passport-photo-size
   - /tool/passport-photo-editor
 sources:
   - title: "U.S. Passport Photos"
@@ -46,7 +45,7 @@ If you only remember three things: the photo must be **2 × 2 inches**, your hea
 
 The printed photo must be exactly **2 × 2 inches (51 × 51 mm)**. Within that square, your head — measured from the bottom of your chin to the top of your hair — must be between **1 inch and 1⅜ inches (25–35 mm)** tall. Your head should be centered, and the photo should show your full face from the front.
 
-Head size is where most home photos go wrong. A photo taken too close makes the head too large; one taken from too far away makes it too small. Our guide to the [U.S. passport photo size](/guide/us-passport-photo-size) explains the measurements in detail, including pixel sizes for digital photos.
+Head size is where most home photos go wrong. A photo taken too close makes the head too large; one taken from too far away makes it too small.
 
 ## Your appearance
 

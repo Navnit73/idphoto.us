@@ -1,8 +1,9 @@
 ---
-# OWNER REVIEW: rewrite this policy before introducing any paid product or service.
-title: "Refund Policy: Free Tools, No Charges"
+# OWNER REVIEW: this policy describes paid purchases and a money-back guarantee. Publish it
+# only once payments are live, and make sure the refund process below is actually staffed.
+title: "Refund Policy: 100% Money-Back Guarantee"
 heading: "Refund policy"
-description: "idphoto.us tools and guides are free, so there's nothing to refund. Learn what to do about government fees, third-party print charges, and unexpected charges."
+description: "If a photo you bought from idphoto.us is rejected by a government agency, we refund 100% of what you paid. Learn the requirements and how to request one."
 slug: refund-policy
 category: legal
 template: legal
@@ -10,26 +11,39 @@ breadcrumbLabel: "Refund policy"
 updatedAt: 2026-10-23
 ---
 
-## Our tools are free
+## Our 100% money-back guarantee
 
-Everything on idphoto.us — the passport photo editor and all guides — is free to use. We don't sell products, subscriptions, or services, and we don't ask for payment details. Because we never charge you, there are no payments for us to refund.
+We stand behind our photos. If a photo you bought from idphoto.us is rejected by a government agency for a passport, visa, or ID application, we'll refund 100% of your original purchase price. No partial credits and no deductions.
 
-If we introduce a paid product or service in the future, we'll publish a full refund policy on this page before we accept any payments, and the terms that apply at the time of purchase will be shown before you pay.
+## What we need from you
 
-## Government fees
+To keep things fair and fast, we ask for three things:
 
-Passport, visa, and other application fees are paid to the government agency handling your application, not to us. We never collect them. Those fees are generally non-refundable, even if an application is denied or a photo is rejected. For questions about government fees, contact the agency you paid. For U.S. passports, that's the U.S. Department of State.
+- **Timing:** request your refund within 30 days of your original purchase.
+- **Proof of rejection:** a screenshot or copy of the official notice showing the agency rejected the photo.
+- **Your purchase details:** the email address you used to buy, or your transaction ID.
 
-## Photo printing costs
+## No hidden deductions
 
-If you print photos from our tools at a pharmacy, photo lab, or online printing service, that transaction is between you and the printer. Contact them about any problems with your order. To avoid reprints, choose a 4 × 6 inch print at actual size with no borders or cropping.
+When your photo is rejected for official use, we refund the full amount you paid, every time. We don't subtract payment processing fees or service charges; we absorb those costs ourselves.
+
+## Processing time and method
+
+- Approved refunds are processed within 5 to 10 business days of approval. Your bank or card issuer may take a few more days to show the credit.
+- Refunds go back to the original payment method used for the purchase. We can't send refunds to a different card or account.
+
+## Other refund reasons
+
+Because our photos are delivered as immediate digital downloads, we review refund requests for other reasons — such as changing your mind, an accidental duplicate purchase, or choosing another service — case by case. We're happy to work with you, so reach out and explain what happened.
+
+## Government fees and printing costs
+
+Our refund covers only what you paid idphoto.us. Passport, visa, and other application fees are paid to the government agency handling your application, and they're generally non-refundable even if a photo is rejected. Contact that agency with questions about its fees. Likewise, if you print your photo at a pharmacy, photo lab, or online printer, contact them about any problems with that order.
 
 ## If you were charged by someone claiming to be us
 
-idphoto.us doesn't charge for anything. If you paid a website, app, or person who said they were idphoto.us, or who charged you to use our free tools, you were not dealing with us. Contact your bank or card issuer about the charge, and please [let us know](/contact) so we can warn others.
+If a website, app, or person who said they were idphoto.us charged you, and the charge doesn't match a purchase on idphoto.us, contact your bank or card issuer about it and please [let us know](/contact) so we can warn others.
 
-Be cautious of any website that charges extra "processing fees" to submit a government application on your behalf. Official U.S. passport and visa applications are made through the government's own forms and websites.
+## How to request a refund
 
-## Questions
-
-If you have a question about this policy, please reach us through the [contact page](/contact).
+Send us a refund request through our [contact page](/contact). Include your purchase email or transaction ID and, for a rejected photo, your proof of rejection. We aim to reply quickly and make the process as painless as possible.
