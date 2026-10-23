@@ -39,7 +39,7 @@ faq:
   - question: "How long can I download my photo?"
     answer: "Your result page and its download link work for 7 days. Download the photo, or use the \"Email me this photo\" option to send the links to yourself."
   - question: "What pixel size is the download?"
-    answer: "Yes. The download is a digital file at your country's pixel size. A U.S. photo is 600 × 600 pixels, which prints at exactly 2 × 2 inches at 300 DPI; choose actual size with no scaling. See the [U.S. passport photo size guide](/guide/us-passport-photo-size) for details."
+    answer: "The download is a digital file at your country's pixel size. A U.S. photo is 600 × 600 pixels, which prints at exactly 2 × 2 inches at 300 DPI; choose actual size with no scaling. See the [U.S. passport photo size guide](/guide/us-passport-photo-size) for details."
 ---
 
 ## How to use the passport photo editor
@@ -61,10 +61,6 @@ faq:
 The editor can't turn an unsuitable photo into an acceptable one. Retake the photo if it's blurry, your face is unevenly lit or shadowed, your head is tilted, or glasses, hair, or a hat cover part of your face.
 
 It also doesn't check every rule. Requirements such as how recent the photo must be, whether you may smile, and what you may wear vary by country, and they change. Before you apply, compare your photo with the official requirements for your document. For U.S. passports, start with our [passport photo requirements](/guide/passport-photo-requirements) guide.
-
-## Supported countries
-
-Passport photos for Algeria, Argentina, Australia, Austria, Bahrain, Belgium, Bhutan, Brazil (including the 3 × 4 foto), Bulgaria, Canada, China, Colombia, Croatia, Czechia, Denmark, Estonia, Finland, France, Germany, Greece, Hong Kong, Hungary, Iceland, India, Indonesia, Iran, Iraq, Ireland, Italy, Japan, Kazakhstan, Latvia, Lithuania, Luxembourg, Malawi, Malaysia, Malta, Mexico, Nepal, the Netherlands, New Zealand, Nigeria, Norway, Peru, the Philippines, Poland, Portugal, Romania, Singapore, Slovakia, Slovenia, South Africa, South Korea, Spain, Sri Lanka, Sweden, Switzerland, Tajikistan, Thailand, Turkey, the United Arab Emirates, the United Kingdom, and the United States, plus Schengen visa photos.
 
 ## Privacy
 

@@ -4,8 +4,8 @@ import { Markdown } from "@/components/content/markdown";
 import { RelatedPages } from "@/components/content/page-card-list";
 import { PageHeader } from "@/components/content/page-header";
 import { Sources } from "@/components/content/sources";
+import { SupportedCountries } from "@/components/content/supported-countries";
 import { Container } from "@/components/ui/container";
-import { Feedback } from "@/components/widgets/feedback";
 import { Widget } from "@/components/widgets/registry";
 
 import type { TemplateProps } from "./types";
@@ -26,7 +26,7 @@ export function ToolTemplate({ page, crumbs }: TemplateProps) {
           image={frontmatter.heroImage}
         />
         {frontmatter.widget && (
-          <section id={TOOL_ANCHOR} aria-labelledby="tool-heading" className="mx-auto w-full max-w-4xl scroll-mt-20">
+          <section id={TOOL_ANCHOR} aria-labelledby="tool-heading" className="mx-auto w-full max-w-6xl scroll-mt-20">
             {/* The widget's own headings are H3s, so this keeps the outline from skipping a level. */}
             <h2 id="tool-heading" className="sr-only">
               {page.breadcrumbLabel}
@@ -34,14 +34,14 @@ export function ToolTemplate({ page, crumbs }: TemplateProps) {
             <Widget name={frontmatter.widget} country={frontmatter.country} />
           </section>
         )}
-        <div className="mx-auto flex w-full max-w-prose flex-col gap-10 border-t pt-10 sm:gap-12 sm:pt-16">
+        <div className="mx-auto flex w-full max-w-4xl flex-col gap-10 border-t pt-10 sm:gap-12 sm:pt-16">
           {frontmatter.showDisclaimer && <Disclaimer />}
           <Markdown tree={page.tree} />
+          {frontmatter.widget === "photo-editor" && <SupportedCountries />}
           <FaqSection faq={page.faq} />
           <Sources sources={frontmatter.sources} />
-          <Feedback path={page.path} />
         </div>
-        <div className="mx-auto w-full max-w-4xl">
+        <div className="mx-auto w-full max-w-6xl">
           <RelatedPages pages={page.related} />
         </div>
       </article>
