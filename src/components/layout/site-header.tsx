@@ -5,6 +5,7 @@ import { Container } from "@/components/ui/container";
 import { siteConfig } from "@/config/site";
 
 import { MobileNav } from "./mobile-nav";
+import { NavLink } from "./nav-link";
 
 export function SiteHeader() {
   return (
@@ -25,9 +26,9 @@ export function SiteHeader() {
             <ul className="flex items-center gap-6 text-sm text-muted-foreground">
               {siteConfig.nav.map((item) => (
                 <li key={item.href}>
-                  <Link href={item.href} className="transition-colors hover:text-foreground">
+                  <NavLink href={item.href} className="transition-colors hover:text-foreground">
                     {item.label}
-                  </Link>
+                  </NavLink>
                 </li>
               ))}
             </ul>

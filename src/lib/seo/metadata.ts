@@ -12,7 +12,8 @@ export function absoluteUrl(pathOrUrl: string) {
 type PageMetadataInput = {
   title: string;
   description: string;
-  path: string;
+  /** `null` for pages with no stable public URL (private result links): no canonical or og:url is emitted. */
+  path: string | null;
   canonical?: string;
   indexable?: boolean;
   follow?: boolean;
@@ -33,7 +34,8 @@ type PageMetadataInput = {
  * deployments are always noindex, whatever the page says.
  */
 export function buildMetadata(input: PageMetadataInput): Metadata {
-  const canonical = absoluteUrl(input.canonical ?? input.path);
+  const target = input.canonical ?? input.path;
+  const canonical = target === null ? undefined : absoluteUrl(target);
   const index = isIndexingAllowed && (input.indexable ?? true);
   const follow = isIndexingAllowed && (input.follow ?? true);
   const images = input.ogImage ? [{ url: input.ogImage, width: 1200, height: 630, alt: input.title }] : undefined;
@@ -42,7 +44,7 @@ export function buildMetadata(input: PageMetadataInput): Metadata {
     title: input.absoluteTitle ? { absolute: input.title } : input.title,
     description: input.description,
     keywords: input.keywords?.length ? input.keywords : undefined,
-    alternates: { canonical },
+    ...(canonical && { alternates: { canonical } }),
     robots: {
       index,
       follow,
@@ -51,7 +53,7 @@ export function buildMetadata(input: PageMetadataInput): Metadata {
     },
     openGraph: {
       type: input.type ?? "website",
-      url: canonical,
+      ...(canonical && { url: canonical }),
       siteName: siteConfig.name,
       locale: "en_US",
       title: input.title,

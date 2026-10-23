@@ -19,7 +19,7 @@ const EDITOR_PATH = "/#photo-tool";
 export const metadata = buildMetadata({
   title: "Your passport photo",
   description: "Preview, download, or email the passport photo you just made with idphoto.us. This link expires automatically.",
-  path: "/preview",
+  path: null,
   indexable: false,
   follow: false,
   noarchive: true,
