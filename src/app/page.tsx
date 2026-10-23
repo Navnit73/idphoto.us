@@ -70,12 +70,7 @@ const links = {
   faq: "/faq",
 } as const;
 
-const highlights = [
-  { icon: ShieldIcon, title: "100% free", body: "Make and download your photo. No account or payment details." },
-  { icon: GlobeIcon, title: "U.S. + 60 countries", body: "2 × 2 inch, 35 × 45 mm, 50 × 70 mm, and more." },
-  { icon: ClockIcon, title: "Ready in minutes", body: "Processing takes up to a minute after you upload." },
-  { icon: DeviceIcon, title: "Any device", body: "Works on iPhone, Android, tablets, and computers." },
-];
+
 
 const tips = [
   "Stand in front of a plain white or off-white wall.",
@@ -283,19 +278,14 @@ export default async function Home() {
 
       {/* Hero */}
       <section className="border-b pt-page pb-12 sm:pb-16">
-        <Container className="grid items-center gap-10 lg:grid-cols-[minmax(0,11fr)_minmax(0,9fr)] lg:gap-12 lg:py-8">
+        <Container className="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-12 lg:py-8">
           <div className="flex flex-col items-start gap-6 text-left">
-            <p className="inline-flex items-center gap-2 rounded-full border bg-surface-raised px-3 py-1 text-xs font-medium text-muted-foreground shadow-sm sm:text-sm">
-              <span aria-hidden="true" className="size-2 rounded-full bg-success" />
-              Free · No sign-up · U.S. and 60+ countries
-            </p>
+           
             <h1 className="font-display text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
               Passport Photo Online: <span className="text-primary">Free Passport Size Photo Maker</span>
             </h1>
             <p className="max-w-xl text-lg text-pretty text-muted-foreground">
-              Convert any photo to passport size in minutes. Make a 2 × 2 inch photo for a U.S. passport, visa, or green
-              card, or the right size for 60+ other countries, including the U.K., Canada, India, and the Schengen area.
-              Then download it to print at home or upload online.
+              Convert any photo to passport size photo in minutes. Make a 2 × 2 inch photo 
             </p>
             <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
               <a href={links.tool} className={buttonVariants({ size: "lg", className: "group" })}>
@@ -316,34 +306,20 @@ export default async function Home() {
             </ul>
           </div>
 
-          <figure className="mx-auto w-full max-w-[26.5rem] rounded-xl bg-photo-backdrop p-2 sm:max-w-[31rem] sm:p-4 lg:mx-0 lg:justify-self-end">
+          <figure className="rounded-xl bg-photo-backdrop p-2 sm:p-4">
             <Image
               src={heroImage.src}
               width={heroImage.width}
               height={heroImage.height}
               alt={heroImage.alt}
-              sizes="(min-width: 80rem) 31rem, (min-width: 64rem) 40vw, (min-width: 40rem) 31rem, min(26.5rem, 100vw)"
+              sizes="(min-width: 70rem) 38rem, (min-width: 64rem) 48vw, 100vw"
               preload
               className="h-auto w-full"
             />
           </figure>
         </Container>
 
-        <Container className="mt-12 sm:mt-16">
-          <ul className="grid gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4">
-            {highlights.map(({ icon: Icon, title, body }) => (
-              <li key={title} className={cn(card, "flex gap-3 p-4 sm:p-5")}>
-                <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-primary-subtle text-primary-subtle-foreground">
-                  <Icon />
-                </span>
-                <span className="flex flex-col gap-0.5">
-                  <span className="font-semibold">{title}</span>
-                  <span className="text-sm text-muted-foreground">{body}</span>
-                </span>
-              </li>
-            ))}
-          </ul>
-        </Container>
+
       </section>
 
       {/* Photo tool: the hero's main button scrolls here. */}
