@@ -101,3 +101,30 @@ export const PlusIcon = (props: IconProps) => (
     <path d="M12 5v14M5 12h14" />
   </Icon>
 );
+
+export const MailIcon = (props: IconProps) => (
+  <Icon {...props}>
+    <rect x="3" y="5" width="18" height="14" rx="2" />
+    <path d="m4 7 8 6 8-6" />
+  </Icon>
+);
+
+export const EyeIcon = (props: IconProps) => (
+  <Icon {...props}>
+    <path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z" />
+    <circle cx="12" cy="12" r="3" />
+  </Icon>
+);
+
+export const ExpandIcon = (props: IconProps) => (
+  <Icon {...props}>
+    <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+  </Icon>
+);
+
+export const AlertIcon = (props: IconProps) => (
+  <Icon {...props}>
+    <path d="M12 3.5 2.5 20h19z" />
+    <path d="M12 10v4m0 3h.01" />
+  </Icon>
+);
