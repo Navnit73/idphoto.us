@@ -32,7 +32,7 @@ export const ensureStatic = "navigation";
  * It does not target requirements, size, 2x2, crop/converter, checker, visa or
  * near-me terms. Each of those gets one sentence and a link to its own page.
  */
-const title = `Passport Photo Online: Free Passport Photo Maker `;
+const title = "Passport Photo Online: Free Passport Photo Maker";
 const description =
   "Make a passport photo online for free. Our passport photo maker creates a U.S. passport picture or a photo for 60+ countries. Download, print, or upload.";
 

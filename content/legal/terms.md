@@ -2,7 +2,7 @@
 # OWNER REVIEW: have these terms reviewed by a qualified lawyer before launch, and add the
 # operator's legal name. Confirm before payments go live: the $7.99 price, what a purchase
 # includes (digital photo + A4 print sheet), and which features stay free.
-title: "Terms of Service for idphoto.us Photo Tools"
+title: "Terms of Service: Rules for Using Our Tools"
 heading: "Terms of service"
 description: "The terms for using idphoto.us: free and paid features, payments and refunds, photo acceptance, your responsibilities, and the limits of our liability."
 slug: terms
@@ -19,14 +19,15 @@ These terms govern your use of idphoto.us (the "site"), including its guides, ph
 
 idphoto.us helps you make passport, visa, and ID photos. Our tools check and crop your photo to the official size for the U.S. and 60+ other countries, and our guides explain the requirements.
 
-- **Free:** our guides, and uploading a photo to see a processed preview with its measurements.
-- **Paid:** downloading the finished, compliant photo, for a one-time fee per purchase.
+Everything on the site is currently free, including downloading your finished photo. We plan to charge a one-time fee per photo for downloads in the future. Our guides, and uploading a photo to see a processed preview with its measurements, will stay free.
 
 We may add, change, or remove features at any time.
 
 ## Payments
 
-- The fee to download a processed photo is **$7.99 (USD) per photo**. The price is always shown before you pay.
+We don't take payments yet. When paid downloads launch, we'll announce it on the site and update these terms first, and these rules will apply:
+
+- The fee to download a processed photo will be **$7.99 (USD) per photo**. The price is always shown before you pay.
 - Each purchase includes one processed digital photo and an A4 print sheet of 20 photos, cropped and ready for submission.
 - Payment is a one-time charge. There are no subscriptions or recurring fees.
 - Payments are processed by our third-party payment provider. We never see or store your full card number.
@@ -34,7 +35,7 @@ We may add, change, or remove features at any time.
 
 ## Refunds
 
-If a government agency rejects a photo you bought from us, you can get a full refund of your purchase price. Request it within 30 days of purchase through our [contact page](/contact), with your transaction ID or purchase email and proof of the rejection. Approved refunds go back to your original payment method within 5 to 10 business days. See our [refund policy](/refund-policy) for the full details, including requests for other reasons.
+Once paid downloads launch, if a government agency rejects a photo you bought from us, you can get a full refund of your purchase price. Request it within 30 days of purchase through our [contact page](/contact), with your transaction ID or purchase email and proof of the rejection. Approved refunds go back to your original payment method within 5 to 10 business days. See our [refund policy](/refund-policy) for the full details, including requests for other reasons.
 
 ## Your responsibilities
 

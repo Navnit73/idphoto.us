@@ -74,7 +74,7 @@ Each page owns one primary keyword. No other page may target it. Crop, checker, 
 ## Checked and already correct
 - Every page goes through `buildMetadata()` and gets a self-referencing absolute canonical, Open Graph, Twitter, and robots tags. `metadataBase` comes from `NEXT_PUBLIC_SITE_URL`, which defaults to `https://idphoto.us`.
 - Mixed-case URLs and trailing slashes return a 308 to one lowercase URL. Unknown paths return a real 404 with `noindex`.
-- The sitemap lists exactly the 14 indexable pages. Result pages under `/preview/` are `noindex, nofollow, noarchive` and left out of the sitemap.
+- The sitemap lists exactly the 14 indexable pages, as URLs only (no `<lastmod>`). Result pages under `/preview/` are `noindex, nofollow, noarchive` and left out of the sitemap.
 - Non-production builds output `noindex` and a disallow-all `robots.txt`.
 - Titles, meta tags, JSON-LD, and the H1 all appear in server HTML. The photo widget is the only client-rendered content.
 - Breadcrumbs appear on the page and in BreadcrumbList JSON-LD on every content page.

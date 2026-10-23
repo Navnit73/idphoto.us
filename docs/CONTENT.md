@@ -25,7 +25,7 @@ description: "A U.S. passport photo is 2 × 2 inches…"        # Meta descripti
 slug: us-passport-photo-size                             # kebab-case; "" only for hubs
 category: guide                                          # tool | guide | about | legal
 template: guide                                          # tool | guide | faq | legal | info | hub
-updatedAt: 2026-10-23                                    # shown on the page and in the sitemap
+updatedAt: 2026-10-23                                    # shown on the page and in structured data
 
 # Optional
 heading: "U.S. passport photo size in inches…"   # visible H1 (defaults to title)

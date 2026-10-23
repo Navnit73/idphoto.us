@@ -108,7 +108,8 @@ type PageInput = {
 /** Builds the structured-data graph for a content page. */
 export function pageJsonLd(input: PageInput): Thing[] {
   const url = absoluteUrl(input.url);
-  const graph: Thing[] = [breadcrumbJsonLd(input.breadcrumbs)];
+  // The page nodes reference the organization and website by @id, so both are included to keep each page's graph self-contained.
+  const graph: Thing[] = [organizationJsonLd(), websiteJsonLd(), breadcrumbJsonLd(input.breadcrumbs)];
   const common = {
     "@id": `${url}#page`,
     url,

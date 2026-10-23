@@ -7,14 +7,11 @@ import { absoluteUrl } from "@/lib/seo/metadata";
 /**
  * Lists only pages that should rank: published, indexable, and canonical to
  * themselves. Pages canonicalized elsewhere or marked noindex are left out.
+ * URLs only, no <lastmod>: every page shares one date, which tells crawlers nothing.
  */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   if (!isIndexingAllowed) return [];
   const pages = await getPageSummaries();
-  const newest = pages.reduce((latest, page) => (page.updatedAt > latest ? page.updatedAt : latest), "");
 
-  return [
-    { url: absoluteUrl("/"), lastModified: newest || undefined },
-    ...pages.filter((page) => page.inSitemap).map((page) => ({ url: absoluteUrl(page.path), lastModified: page.updatedAt })),
-  ];
+  return [{ url: absoluteUrl("/") }, ...pages.filter((page) => page.inSitemap).map((page) => ({ url: absoluteUrl(page.path) }))];
 }

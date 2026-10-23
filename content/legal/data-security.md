@@ -6,7 +6,7 @@
 # rest, and compliance claims (GDPR, CCPA). Leave out marketing stats and competitor tables.
 title: "Data Security: How We Protect Your Photos"
 heading: "Data security"
-description: "How idphoto.us protects your passport and ID photos: encrypted connections, metadata removal, automatic deletion, no data selling, and no AI training on your photos."
+description: "How idphoto.us protects your passport and ID photos: encrypted connections, metadata removal, automatic deletion, no data sales, and no AI training."
 slug: data-security
 category: legal
 template: info
@@ -22,7 +22,7 @@ faq:
   - question: "How long do you keep my photo?"
     answer: "Your result page, and our record of it, is deleted automatically 7 days after you make your photo. After that, the result page stops working and we can't recover it, so download your photo promptly."
   - question: "Do you store my card details?"
-    answer: "No. You enter your card details with our payment provider, not on our servers. We receive only a confirmation that the payment succeeded."
+    answer: "No. Our tools are currently free, so we don't collect card details at all. When paid downloads launch, you'll enter card details with our payment provider, not on our servers, and we'll receive only a confirmation that the payment succeeded."
   - question: "Can your staff see my photo?"
     answer: "Processing is automated. We don't look at your photo unless you ask us to in a support request, for example to check why a photo didn't process correctly."
   - question: "Will my photo be used to train AI or facial recognition?"
@@ -49,7 +49,7 @@ We keep your photo only as long as you need it to view and download the result.
 
 ## Payment security
 
-You enter card details with our payment provider, not on idphoto.us. Your card number, security code, and bank details never reach our servers, and we don't store them. We receive only what we need to confirm and record your purchase.
+Our tools are currently free, so we don't take payments or collect card details. When paid downloads launch, you'll enter card details with our payment provider, not on idphoto.us. Your card number, security code, and bank details never reach our servers, and we don't store them. We receive only what we need to confirm and record your purchase.
 
 ## Your data is not for sale
 

@@ -1,6 +1,7 @@
 ---
-# OWNER REVIEW: this policy describes paid purchases and a money-back guarantee. Publish it
-# only once payments are live, and make sure the refund process below is actually staffed.
+# OWNER REVIEW: this policy describes paid purchases and a money-back guarantee. When payments
+# go live, remove the "Paid downloads aren't live yet" section and make sure the refund
+# process below is actually staffed.
 title: "Refund Policy: 100% Money-Back Guarantee"
 heading: "Refund policy"
 description: "If a photo you bought from idphoto.us is rejected by a government agency, we refund 100% of what you paid. Learn the requirements and how to request one."
@@ -10,6 +11,10 @@ template: legal
 breadcrumbLabel: "Refund policy"
 updatedAt: 2026-10-23
 ---
+
+## Paid downloads aren't live yet
+
+All of our tools and downloads are currently free, so there is nothing to refund today. We plan to start charging for downloads, and this policy is how refunds will work once we do. We'll say so clearly on the site before anyone is charged.
 
 ## Our 100% money-back guarantee
 

@@ -9,12 +9,14 @@ const isDev = process.env.NODE_ENV !== "production";
  */
 const contentSecurityPolicy = [
   "default-src 'self'",
-  `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""}`,
+  // Microsoft Clarity loads its tag from www.clarity.ms and scripts.clarity.ms,
+  // then beacons to *.clarity.ms and c.bing.com.
+  `script-src 'self' 'unsafe-inline' https://*.clarity.ms${isDev ? " 'unsafe-eval'" : ""}`,
   "style-src 'self' 'unsafe-inline'",
   // Cloudinary serves photo-editor results (shown on /preview/<id>).
-  "img-src 'self' data: blob: https://res.cloudinary.com",
+  "img-src 'self' data: blob: https://res.cloudinary.com https://*.clarity.ms https://c.bing.com",
   "font-src 'self'",
-  "connect-src 'self'",
+  "connect-src 'self' https://*.clarity.ms https://c.bing.com",
   "worker-src 'self' blob:",
   "object-src 'none'",
   "base-uri 'self'",
@@ -65,6 +67,11 @@ const nextConfig: NextConfig = {
         statusCode: 301,
       },
     ];
+  },
+
+  // Browsers and some crawlers request /favicon.ico directly, ignoring <link rel="icon">; serve the PNG logo there.
+  async rewrites() {
+    return [{ source: "/favicon.ico", destination: "/logo.png" }];
   },
 
   async headers() {
