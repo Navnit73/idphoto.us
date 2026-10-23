@@ -9,6 +9,7 @@ import { collections } from "@/lib/db/collections";
 import { DatabaseNotConfiguredError, getDb } from "@/lib/db/mongodb";
 import { serverEnv } from "@/lib/env/server";
 import { logger as rootLogger } from "@/lib/logger";
+import { MailDeliveryError, MailNotConfiguredError } from "@/lib/mail";
 import { fieldErrors } from "@/lib/validation/forms";
 
 import type { ApiErrorCode, ApiFailure, ApiSuccess } from "./types";
@@ -60,22 +61,56 @@ export function jsonHandler<S extends z.ZodType>(
   options: { name: string; schema: S; maxBytes?: number },
   handler: (input: z.infer<S>, context: HandlerContext) => Promise<Response>,
 ) {
+  return withApiErrors(options.name, async (request, context) => {
+    if (!request.headers.get("content-type")?.includes("application/json")) {
+      throw new ApiError("unsupported_media_type", "Send the request body as JSON.");
+    }
+    const body = await readJson(request, options.maxBytes ?? 16_384);
+    return handler(parse(options.schema, body), context);
+  });
+}
+
+/**
+ * Like `jsonHandler`, for `multipart/form-data` uploads. The body is read with
+ * a hard size cap before parsing; text fields are validated with `schema` and
+ * the parsed FormData is passed along so the handler can check its files.
+ */
+export function formHandler<S extends z.ZodType>(
+  options: { name: string; schema: S; maxBytes: number },
+  handler: (input: z.infer<S>, form: FormData, context: HandlerContext) => Promise<Response>,
+) {
+  return withApiErrors(options.name, async (request, context) => {
+    const contentType = request.headers.get("content-type") ?? "";
+    if (!contentType.includes("multipart/form-data")) {
+      throw new ApiError("unsupported_media_type", "Send the request body as multipart/form-data.");
+    }
+    const bytes = await readLimited(request, options.maxBytes);
+    let form: FormData;
+    try {
+      form = await new Response(bytes, { headers: { "content-type": contentType } }).formData();
+    } catch {
+      throw new ApiError("bad_request", "The upload couldn't be read. Please try again.");
+    }
+    const fields = Object.fromEntries([...form.entries()].filter(([, value]) => typeof value === "string"));
+    return handler(parse(options.schema, fields), form, context);
+  });
+}
+
+function parse<S extends z.ZodType>(schema: S, value: unknown): z.infer<S> {
+  const parsed = schema.safeParse(value);
+  if (!parsed.success) throw new ApiError("validation_failed", "Some fields need attention.", fieldErrors(parsed.error));
+  return parsed.data;
+}
+
+function withApiErrors(name: string, run: (request: Request, context: HandlerContext) => Promise<Response>) {
   return async (request: Request) => {
     const requestId = crypto.randomUUID();
-    const log = rootLogger.child({ route: options.name, requestId });
+    const log = rootLogger.child({ route: name, requestId });
     const started = performance.now();
 
     try {
       assertSameOrigin(request);
-      if (!request.headers.get("content-type")?.includes("application/json")) {
-        throw new ApiError("unsupported_media_type", "Send the request body as JSON.");
-      }
-      const body = await readJson(request, options.maxBytes ?? 16_384);
-      const parsed = options.schema.safeParse(body);
-      if (!parsed.success) {
-        throw new ApiError("validation_failed", "Some fields need attention.", fieldErrors(parsed.error));
-      }
-      const response = await handler(parsed.data, { request, log, ipHash: hashIp(clientIp(request)) });
+      const response = await run(request, { request, log, ipHash: hashIp(clientIp(request)) });
       log.info("request handled", { status: response.status, ms: Math.round(performance.now() - started) });
       return response;
     } catch (error) {
@@ -83,9 +118,13 @@ export function jsonHandler<S extends z.ZodType>(
         log.warn("request rejected", { code: error.code });
         return fail(error);
       }
-      if (error instanceof DatabaseNotConfiguredError) {
-        log.warn("database not configured");
+      if (error instanceof DatabaseNotConfiguredError || error instanceof MailNotConfiguredError) {
+        log.warn("service not configured", { service: error.name });
         return fail(new ApiError("service_unavailable", "This feature is temporarily unavailable. Please try again later."));
+      }
+      if (error instanceof MailDeliveryError) {
+        // Already logged by sendMail.
+        return fail(new ApiError("network_error", "We couldn't send the email right now. Please try again later."));
       }
       log.error("request failed", { error });
       return fail(new ApiError("internal_error", "Something went wrong on our side. Please try again."));
@@ -97,6 +136,35 @@ function assertSameOrigin(request: Request) {
   const origin = request.headers.get("origin");
   const allowed = new Set([new URL(request.url).origin, siteConfig.url]);
   if (!origin || !allowed.has(origin)) throw new ApiError("forbidden", "Cross-origin requests are not allowed.");
+}
+
+/** Reads the body as bytes, aborting as soon as it exceeds `maxBytes` (Content-Length can be absent or wrong). */
+async function readLimited(request: Request, maxBytes: number): Promise<Uint8Array<ArrayBuffer>> {
+  const declared = Number(request.headers.get("content-length") ?? 0);
+  if (declared > maxBytes) throw new ApiError("payload_too_large", "The upload is too large.");
+  if (!request.body) return new Uint8Array();
+
+  const chunks: Uint8Array[] = [];
+  let total = 0;
+  const reader = request.body.getReader();
+  for (;;) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    total += value.byteLength;
+    if (total > maxBytes) {
+      await reader.cancel();
+      throw new ApiError("payload_too_large", "The upload is too large.");
+    }
+    chunks.push(value);
+  }
+
+  const bytes = new Uint8Array(total);
+  let offset = 0;
+  for (const chunk of chunks) {
+    bytes.set(chunk, offset);
+    offset += chunk.byteLength;
+  }
+  return bytes;
 }
 
 async function readJson(request: Request, maxBytes: number): Promise<unknown> {

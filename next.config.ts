@@ -11,7 +11,8 @@ const contentSecurityPolicy = [
   "default-src 'self'",
   `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""}`,
   "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' data: blob:",
+  // Cloudinary serves photo-editor results (shown on /preview/<id>).
+  "img-src 'self' data: blob: https://res.cloudinary.com",
   "font-src 'self'",
   "connect-src 'self'",
   "worker-src 'self' blob:",

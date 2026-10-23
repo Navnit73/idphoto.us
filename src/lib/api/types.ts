@@ -19,3 +19,6 @@ export type ApiFailure = {
 };
 
 export type ApiResponse<T> = ApiSuccess<T> | ApiFailure;
+
+/** POST /api/photo/process */
+export type PhotoProcessResult = { resultId: string };

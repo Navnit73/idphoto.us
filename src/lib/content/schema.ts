@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+import { COUNTRY_CODES } from "@/lib/photo/countries";
+
 /** Content directories and the category each one holds. */
 export const CATEGORY_DIRECTORIES = {
   tools: "tool",
@@ -23,7 +25,7 @@ export const TEMPLATES = ["tool", "guide", "faq", "legal", "info", "hub"] as con
 export type TemplateName = (typeof TEMPLATES)[number];
 
 /** Interactive client components a page can embed via `widget`. */
-export const WIDGETS = ["passport-photo-maker", "photo-compressor", "contact-form"] as const;
+export const WIDGETS = ["passport-photo-maker", "photo-compressor", "photo-editor", "contact-form"] as const;
 export type WidgetName = (typeof WIDGETS)[number];
 
 export const SCHEMA_TYPES = [
@@ -87,6 +89,8 @@ export const frontmatterSchema = z
     breadcrumbLabel: z.string().trim().max(40).optional(),
     showTableOfContents: z.boolean().default(false),
     widget: z.enum(WIDGETS).optional(),
+    /** Country preselected in the `photo-editor` widget (its API code, e.g. IN, GB, EU). */
+    country: z.enum(COUNTRY_CODES).optional(),
     faq: z
       .array(z.object({ question: z.string().trim().min(8), answer: z.string().trim().min(20) }))
       .default([]),
@@ -105,6 +109,9 @@ export const frontmatterSchema = z
   .superRefine((data, ctx) => {
     if (data.template === "tool" && !data.widget) {
       ctx.addIssue({ code: "custom", path: ["widget"], message: "is required for the tool template" });
+    }
+    if (data.country && data.widget !== "photo-editor") {
+      ctx.addIssue({ code: "custom", path: ["country"], message: "only applies to the photo-editor widget" });
     }
     if (data.template === "faq" && data.faq.length < 3) {
       ctx.addIssue({ code: "custom", path: ["faq"], message: "needs at least 3 entries for the faq template" });

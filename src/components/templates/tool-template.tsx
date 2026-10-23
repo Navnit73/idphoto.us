@@ -20,7 +20,7 @@ export function ToolTemplate({ page, crumbs }: TemplateProps) {
         <PageHeader page={page} crumbs={crumbs} />
         {frontmatter.widget && (
           <section aria-label="Tool">
-            <Widget name={frontmatter.widget} />
+            <Widget name={frontmatter.widget} country={frontmatter.country} />
           </section>
         )}
         <div className="flex max-w-prose flex-col gap-12">

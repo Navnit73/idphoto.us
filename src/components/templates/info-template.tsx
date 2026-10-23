@@ -19,7 +19,7 @@ export function InfoTemplate({ page, crumbs }: TemplateProps) {
         <div className="flex max-w-prose flex-col gap-12">
           {frontmatter.showTableOfContents && <TableOfContents headings={page.headings} />}
           <Markdown tree={page.tree} />
-          {frontmatter.widget && <Widget name={frontmatter.widget} />}
+          {frontmatter.widget && <Widget name={frontmatter.widget} country={frontmatter.country} />}
           <FaqSection faq={page.faq} />
         </div>
         <RelatedPages pages={page.related} />

@@ -7,7 +7,18 @@ import { cn } from "@/lib/cn";
 import { ACCEPTED_TYPES } from "./image-utils";
 
 /** Accessible file picker that also accepts drag-and-drop. */
-export function FileDrop({ onFile, label, className }: { onFile: (file: File) => void; label: string; className?: string }) {
+export function FileDrop({
+  onFile,
+  label,
+  className,
+  privacyNote = "Processed on your device. Nothing is uploaded.",
+}: {
+  onFile: (file: File) => void;
+  label: string;
+  className?: string;
+  /** Must say truthfully where the photo goes. */
+  privacyNote?: string;
+}) {
   const id = useId();
   const [dragging, setDragging] = useState(false);
 
@@ -39,7 +50,7 @@ export function FileDrop({ onFile, label, className }: { onFile: (file: File) =>
       </svg>
       <span className="text-base font-semibold">{label}</span>
       <span className="text-sm text-muted-foreground">JPEG, PNG, or WebP up to 25 MB · drag and drop or tap to choose</span>
-      <span className="text-xs text-muted-foreground">Processed on your device. Nothing is uploaded.</span>
+      <span className="text-xs text-muted-foreground">{privacyNote}</span>
       <input
         id={id}
         type="file"

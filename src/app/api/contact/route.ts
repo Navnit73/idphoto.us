@@ -6,6 +6,8 @@ import { collections } from "@/lib/db/collections";
 import { getDb } from "@/lib/db/mongodb";
 import { serverEnv } from "@/lib/env/server";
 import { serverHttp } from "@/lib/http/server";
+import { isMailConfigured, sendMail } from "@/lib/mail";
+import { contactNotificationEmail } from "@/lib/mail/templates";
 import { contactSchema } from "@/lib/validation/forms";
 
 export const POST = jsonHandler({ name: "contact", schema: contactSchema }, async (input, { log, ipHash }) => {
@@ -37,6 +39,20 @@ export const POST = jsonHandler({ name: "contact", schema: contactSchema }, asyn
         .catch(() => {
           // Logged by the serverHttp interceptor; the message itself is already stored.
         });
+    });
+  }
+
+  const inbox = serverEnv.MAIL_TO;
+  if (inbox && isMailConfigured()) {
+    // Also after the response. Reply-To is the sender, so the owner can answer straight from their inbox.
+    after(async () => {
+      await sendMail(
+        "contact-notification",
+        { to: inbox, replyTo: input.email },
+        contactNotificationEmail({ ...input, id: insertedId.toHexString(), pagePath: input.pagePath ?? null }),
+      ).catch(() => {
+        // Logged by sendMail; the message itself is already stored.
+      });
     });
   }
 

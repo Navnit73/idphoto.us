@@ -16,8 +16,27 @@ const schema = z
     IP_HASH_SALT: z.string().min(16).optional(),
     /** Optional Slack-compatible webhook notified on new contact messages. */
     CONTACT_WEBHOOK_URL: z.url().optional(),
+
+    /** PixPassport photo processing. Without the key, the photo editor endpoint responds 503. */
+    PASSPORT_API_URL: z.url().default("https://api.pixpassport.com"),
+    PASSPORT_API_KEY: z.string().min(8).optional(),
+
+    /** SMTP for all outgoing email (src/lib/mail). Without SMTP_HOST, email features respond 503. */
+    SMTP_HOST: z.string().min(1).optional(),
+    SMTP_PORT: z.coerce.number().int().min(1).max(65535).default(587),
+    /** true = implicit TLS (port 465); false = STARTTLS (port 587). */
+    SMTP_SECURE: z.stringbool().default(false),
+    SMTP_USER: z.string().min(1).optional(),
+    SMTP_PASS: z.string().min(1).optional(),
+    /** Sender address, e.g. `idphoto.us <hello@idphoto.us>`. Defaults to SMTP_USER. */
+    MAIL_FROM: z.string().min(3).optional(),
+    /** Inbox for site notifications (new contact messages). */
+    MAIL_TO: z.email().optional(),
   })
   .superRefine((env, ctx) => {
+    if (env.SMTP_HOST && !env.MAIL_FROM && !env.SMTP_USER) {
+      ctx.addIssue({ code: "custom", path: ["MAIL_FROM"], message: "is required when SMTP_HOST is set without SMTP_USER" });
+    }
     if (env.NODE_ENV === "production" && env.MONGODB_URI && !env.IP_HASH_SALT) {
       ctx.addIssue({
         code: "custom",

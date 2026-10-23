@@ -32,12 +32,24 @@ function toClientError(error: unknown): ClientApiError {
   return new ClientApiError("internal_error", "Something went wrong. Please try again.");
 }
 
-export async function apiPost<T>(path: string, body: unknown): Promise<T> {
+async function unwrap<T>(request: Promise<{ data: ApiResponse<T> }>): Promise<T> {
   try {
-    const { data } = await apiClient.post<ApiResponse<T>>(path, body);
+    const { data } = await request;
     if (!data.ok) throw new ClientApiError(data.error.code, data.error.message, data.error.fields);
     return data.data;
   } catch (error) {
     throw error instanceof ClientApiError ? error : toClientError(error);
   }
+}
+
+export function apiPost<T>(path: string, body: unknown): Promise<T> {
+  return unwrap(apiClient.post<ApiResponse<T>>(path, body));
+}
+
+/**
+ * Posts a FormData upload. The multipart Content-Type stops axios from
+ * serializing the form as JSON; the browser then sets it with the boundary.
+ */
+export function apiUpload<T>(path: string, form: FormData, { timeout = 90_000 }: { timeout?: number } = {}): Promise<T> {
+  return unwrap(apiClient.post<ApiResponse<T>>(path, form, { timeout, headers: { "Content-Type": "multipart/form-data" } }));
 }

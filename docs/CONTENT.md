@@ -40,7 +40,8 @@ ogImage: /images/og/custom.png                   # default: generated card at /o
 schemaType: Article                              # override the template default (see below)
 showTableOfContents: true
 showDisclaimer: true                             # "not an official source" notice
-widget: passport-photo-maker                     # passport-photo-maker | photo-compressor | contact-form
+widget: passport-photo-maker                     # passport-photo-maker | photo-compressor | photo-editor | contact-form
+country: IN                                      # photo-editor only: preselected country (code from src/lib/photo/countries.ts)
 relatedPages: [/guide/passport-photo-requirements, /tool/passport-photo-maker]
 author: editorial-team                           # id from content/authors.json
 reviewedBy: some-author-id                       # ONLY if that person really reviewed the page
@@ -59,7 +60,7 @@ faq:
 | Template | Use for                         | Renders                                                                                   | Default schema   |
 | -------- | ------------------------------- | ----------------------------------------------------------------------------------------- | ---------------- |
 | `tool`   | Interactive tools               | H1, then the widget, then the explanation, FAQ, sources, feedback, and related pages      | `WebApplication` |
-| `guide`  | Long-form articles              | Byline, reading time, sticky table of contents, body, FAQ, sources, feedback, related     | `Article`        |
+| `guide`  | Long-form articles              | Byline, reading time, sticky table of contents, optional widget, body, FAQ, sources, feedback, related | `Article`        |
 | `faq`    | Q&A pages                       | FAQ entries first, then the body                                                          | `FAQPage`        |
 | `legal`  | Policies                        | A narrow reading column with the last-updated date                                        | `WebPage`        |
 | `info`   | About, contact, policies        | Body, then an optional widget (for example, the contact form), FAQ, and related pages     | `WebPage`        |
@@ -68,6 +69,17 @@ faq:
 To add a template, create a component in `src/components/templates/`, register it in `src/components/templates/index.tsx`, and add its name to `TEMPLATES` in `src/lib/content/schema.ts`.
 
 To add a widget, create a client component, register it in `src/components/widgets/registry.tsx`, and add it to `WIDGETS`. Widgets are loaded on demand, so a page only downloads the widgets it uses.
+
+### Embedding the photo editor
+
+`photo-editor` uploads the photo to the PixPassport API and opens the result at `/preview/<id>`. It works on `tool`, `guide`, and `info` pages. Set `country` to preselect a country, for example on a country guide:
+
+```yaml
+widget: photo-editor
+country: IN        # India; use the API code, e.g. GB, CA, EU (Schengen), CHE (Switzerland)
+```
+
+Because this widget uploads photos, any page that embeds it must not claim that photos stay on the device.
 
 ## Writing rules (enforced at build time)
 

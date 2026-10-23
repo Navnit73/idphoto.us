@@ -10,10 +10,18 @@ Copy `.env.example` and set these values in your host's settings. Never commit r
 | ---------------------- | ---------------------------- | ----------------------------------------------------------------------------------------- |
 | `NEXT_PUBLIC_SITE_URL` | Yes                          | Canonical origin, e.g. `https://idphoto.us`. Used for canonicals, sitemap, OG, and JSON-LD. |
 | `NEXT_PUBLIC_SITE_ENV` | Yes, `production` on live    | **Anything other than `production` makes the whole site noindex** and robots.txt disallows everything. Use `preview` for staging. |
-| `MONGODB_URI`          | For contact and feedback     | `mongodb+srv://…`. Without it the site works, and the form endpoints return 503.          |
+| `MONGODB_URI`          | For forms and photo editor   | `mongodb+srv://…`. Without it the site works, and the form and photo endpoints return 503. |
 | `MONGODB_DB`           | No (default `idphoto`)       |                                                                                           |
 | `IP_HASH_SALT`         | Yes, if `MONGODB_URI` is set | 16+ random characters (`openssl rand -hex 32`). Changing it resets rate limits.           |
 | `CONTACT_WEBHOOK_URL`  | No                           | Slack-compatible webhook, pinged on new messages (no message body or email is sent).      |
+| `PASSPORT_API_URL`     | No (default `https://api.pixpassport.com`) | PixPassport base URL for the photo editor.                                 |
+| `PASSPORT_API_KEY`     | For the photo editor         | Sent as `X-API-Key`. Without it, `/api/photo/process` returns 503.                        |
+| `SMTP_HOST`            | For email                    | e.g. `smtp.gmail.com`. Without it, "Email me this photo" returns 503 and contact emails are skipped. |
+| `SMTP_PORT`            | No (default `587`)           |                                                                                           |
+| `SMTP_SECURE`          | No (default `false`)         | `true` for port 465 (implicit TLS), `false` for 587 (STARTTLS, required).                 |
+| `SMTP_USER` / `SMTP_PASS` | Usually                   | For Gmail, use an [app password](https://support.google.com/accounts/answer/185833), not the account password. |
+| `MAIL_FROM`            | No (default `SMTP_USER`)     | Sender, e.g. `idphoto.us <hello@idphoto.us>`. Gmail only sends as the account or its aliases. |
+| `MAIL_TO`              | No                           | Inbox that receives a copy of each contact message (Reply-To is the sender).              |
 | `LOG_LEVEL`            | No (default `info`)          | `debug`, `info`, `warn`, or `error`.                                                      |
 
 `NEXT_PUBLIC_*` values are baked in at build time, so rebuild after changing them. Server variables are validated when the app starts; invalid values fail fast with a clear message.
@@ -25,7 +33,7 @@ Copy `.env.example` and set these values in your host's settings. Never commit r
 3. Restrict network access to your host's egress IPs where possible.
 4. Set `MONGODB_URI`. Indexes, including the TTL index that expires rate-limit records, are created automatically on first connection.
 
-Collections: `contact_messages`, `feedback`, `rate_limits`. Read messages with Atlas or `mongosh`; there's no admin UI.
+Collections: `contact_messages`, `feedback`, `photo_results` (expire after 7 days via a TTL index), `rate_limits`. Read messages with Atlas or `mongosh`; there's no admin UI.
 
 ## 3. Build and run
 
@@ -59,10 +67,11 @@ On **Docker or a VM**, run `npm ci && npm run build && npm run start` behind a T
 
 - **Headers:** `next.config.ts` sends CSP, HSTS (with preload), `X-Content-Type-Options`, `X-Frame-Options: DENY`, `Referrer-Policy`, `Permissions-Policy`, and COOP on every response.
 - **CSP tradeoff:** pages are statically prerendered, and a nonce-based CSP would force every page to render per request. The policy therefore allows `'unsafe-inline'` scripts (needed for Next's inline bootstrap) and locks everything else to `'self'`. Markdown can't inject scripts, because raw HTML is stripped. If you add third-party scripts (analytics, ads), add their origins to the CSP.
-- **API endpoints:** same-origin `Origin` check, JSON-only bodies with size caps, Zod validation, MongoDB-backed rate limits keyed by salted IP hashes, a honeypot field, and generic error messages. Stack traces are never returned.
+- **API endpoints:** same-origin `Origin` check, JSON bodies (or multipart uploads via `formHandler`) with size caps, Zod validation, MongoDB-backed rate limits keyed by salted IP hashes, a honeypot field, and generic error messages. Stack traces are never returned.
 - **Client IP:** rate limiting reads the first `X-Forwarded-For` entry. Make sure your proxy or CDN overwrites that header rather than appending to client-supplied values (Vercel does this).
 - **Secrets:** only `NEXT_PUBLIC_*` values reach the browser. Server modules import `server-only`, so importing them into client code fails the build.
-- **Photos:** tools process images in the browser, and no image data is ever sent to the server.
+- **Photos:** the passport photo maker and compressor process images in the browser and never upload them. The photo editor is the exception: `/api/photo/process` accepts a JPEG/PNG/WebP up to 8 MB (the browser re-encodes and downsizes first), forwards it to PixPassport, and stores only the result links and metrics. Result pages (`/preview/<id>`) are `noindex`, keyed by an unguessable UUID, and expire after 7 days; the images themselves stay in PixPassport's Cloudinary storage. Cloudinary (`res.cloudinary.com`) is allowed in the CSP `img-src`.
+- **Email:** all mail goes through `src/lib/mail` (`sendMail` + templates in `templates.ts`). Templates escape user input and include a plain-text part. Addresses and message content are never logged.
 
 ## 6. Logging and monitoring
 

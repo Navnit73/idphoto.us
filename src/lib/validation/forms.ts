@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+import { COUNTRY_CODES, DOCUMENT_TYPES } from "@/lib/photo/countries";
+
 /** Shared between the browser forms (instant feedback) and API routes (authoritative). */
 
 export const CONTACT_TOPICS = ["general", "correction", "tool-problem", "privacy", "other"] as const;
@@ -23,6 +25,30 @@ export const feedbackSchema = z.object({
 });
 
 export type FeedbackInput = z.infer<typeof feedbackSchema>;
+
+/** Text fields sent with the photo upload; the image itself is checked separately. */
+export const photoProcessSchema = z.object({
+  country_code: z.enum(COUNTRY_CODES, "Choose a country from the list"),
+  document_type: z.enum(DOCUMENT_TYPES).default("passport"),
+});
+
+/** Upload cap. The browser downsizes photos well below this before sending them. */
+export const MAX_PHOTO_UPLOAD_BYTES = 8 * 1024 * 1024;
+export const PHOTO_UPLOAD_TYPES = ["image/jpeg", "image/png", "image/webp"] as const;
+
+/** How long a processed photo stays available at /preview/<id>. */
+export const PHOTO_RESULT_TTL_DAYS = 7;
+
+export const photoResultIdSchema = z.uuid();
+
+export const photoEmailSchema = z.object({
+  resultId: photoResultIdSchema,
+  email: z.email("Please enter a valid email address").max(200),
+  /** Honeypot, as in the contact form. */
+  website: z.string().max(200).optional(),
+});
+
+export type PhotoEmailInput = z.infer<typeof photoEmailSchema>;
 
 /** Flattens Zod issues to `{ field: [messages] }` for form display. */
 export function fieldErrors(error: z.ZodError): Record<string, string[]> {
