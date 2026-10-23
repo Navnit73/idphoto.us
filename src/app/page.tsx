@@ -28,22 +28,26 @@ import { buildMetadata } from "@/lib/seo/metadata";
 
 export const ensureStatic = "navigation";
 
+/**
+ * This page owns "passport photo online" and the broad maker terms.
+ * It does not target requirements, size, 2x2, crop/converter, checker, visa or
+ * near-me terms. Each of those gets one sentence and a link to its own page.
+ */
 export const metadata = buildMetadata({
-  title: `Passport Photo Online Free: Passport Size Photo Maker | ${siteConfig.name}`,
+  title: `Passport Photo Online: Free Passport Photo Maker | ${siteConfig.name}`,
   absoluteTitle: true,
   description:
-    "Free passport photo maker online. Convert any photo to passport size: 2x2 inch for U.S. passports and visas, or 35 × 45 mm and more for 60+ countries.",
+    "Make a passport photo online for free. Our passport photo maker creates a U.S. passport picture or a photo for 60+ countries. Download, print, or upload.",
   path: "/",
   ogImage: "/og",
   keywords: [
     "passport photo online",
-    "passport size photo maker",
-    "free passport photo maker",
-    "convert photo to passport size",
-    "2x2 passport photo online free",
-    "online passport photo editor",
-    "print passport photo at home",
-    "id photo maker",
+    "passport photo maker",
+    "passport size photo",
+    "passport size pic",
+    "passport size photo for passport",
+    "us passport photo",
+    "us passport picture",
   ],
 });
 
@@ -51,108 +55,101 @@ const heroImage = {
   src: "https://res.cloudinary.com/dipzpwbbk/image/upload/v1791864231/Upload_Edit_Print__Passport_Photos_uqasb5.webp",
   width: 1774,
   height: 887,
-  alt: "Two example U.S. passport photos, a man and a woman, each measured at 2 × 2 inches (600 × 600 pixels) with the head centered.",
+  alt: "Two example U.S. passport photos, a man and a woman, each with the head centered against a plain background.",
 };
 
 /**
- * Internal link targets. Only pages that exist today are linked, so the home
- * page never sends visitors or crawlers to a 404. Add a link here when its
- * guide or tool is published.
+ * Internal link targets.
+ * TODO: confirm each path below exists before you deploy. Only the first four
+ * are known to exist today; swap the rest for your real URLs, or delete the
+ * matching row in `relatedTopics`, so the page never links to a 404.
  */
 const links = {
-  /** The photo tool section on this page. */
   tool: "#photo-tool",
   requirements: "/guide/passport-photo-requirements",
   size: "/guide/us-passport-photo-size",
   faq: "/faq",
+ 
+  crop: "/tool/passport-photo-cropper",
+  checker: "/tool/passport-photo-checker",
+  visa: "/guide/visa-photo-requirements",
+  nearMe: "/guide/passport-photo-near-me",
 } as const;
 
 const steps = [
   {
     icon: CameraIcon,
     title: "Take or upload a photo",
-    body: "Take a passport photo at home with your phone, or use a recent photo you already have. Any JPEG, PNG, or WebP works, as long as your face is clear and front-facing.",
+    body: "Snap a photo with your phone, or pick a recent one. JPEG, PNG, and WebP files all work.",
   },
   {
     icon: CropIcon,
-    title: "We crop it to passport size",
-    body: "Choose your country. The tool finds your face, checks the background, and converts the photo to the right size: 2 × 2 inches for the U.S., or your country's format.",
+    title: "Pick your country",
+    body: "Choose the U.S. or any of 60+ countries. The maker finds your face and builds your passport picture.",
   },
   {
     icon: DownloadIcon,
-    title: "Download, print, or upload",
-    body: "Save a high-resolution file to print at home or at a photo lab, or upload it with an online application such as a passport renewal or the DS-160.",
+    title: "Download your photo",
+    body: "Save a high-resolution file. Print it at home, send it to a photo lab, or upload it online.",
   },
 ];
 
-const usDocuments = [
-  { title: "U.S. passport book and card", detail: "2 × 2 in (51 × 51 mm), first-time or renewal" },
-  { title: "U.S. visa (DS-160)", detail: "Square digital file, 600 × 600 px or larger" },
-  { title: "Green card and USCIS forms", detail: "2 × 2 in prints for forms like the I-485 and N-400" },
-  { title: "Baby and child passports", detail: "2 × 2 in, with the same rules as adults" },
-  { title: "Any 2 × 2 photo", detail: "Badges, IDs, and other square-format forms" },
+const usPeople = [
+  {
+    title: "First-time applicants",
+    body: "Apply for your first U.S. passport with a photo you made at home.",
+  },
+  {
+    title: "Renewals",
+    body: "Renew with a fresh passport photo made from a recent selfie.",
+  },
+  {
+    title: "Parents and families",
+    body: "Make a passport picture for your child, baby, or the whole family.",
+  },
+  {
+    title: "Americans abroad",
+    body: "Get a U.S. passport photo online, wherever you live.",
+  },
 ];
 
-/** Print sizes are listed only where they're well established; otherwise the tool's digital output is shown. */
-const internationalCountries: { code: CountryCode; label?: string; size?: string }[] = [
-  { code: "GB", label: "United Kingdom", size: "35 × 45 mm" },
-  { code: "CA", size: "50 × 70 mm" },
+/** Country tiles show names only; sizes live on the owning size page. */
+const internationalCountries: { code: CountryCode; label?: string }[] = [
+  { code: "GB", label: "United Kingdom" },
+  { code: "CA" },
   { code: "IN" },
-  { code: "EU", size: "35 × 45 mm" },
-  { code: "AU", size: "35 × 45 mm" },
-  { code: "DE", size: "35 × 45 mm" },
-  { code: "FR", size: "35 × 45 mm" },
+  { code: "AU" },
+  { code: "DE" },
+  { code: "FR" },
   { code: "MX" },
   { code: "PH" },
   { code: "CN" },
+  { code: "EU" },
 ];
 
-const countryTiles = internationalCountries.flatMap(({ code, label, size }) => {
+const countryTiles = internationalCountries.flatMap(({ code, label }) => {
   const spec = PHOTO_COUNTRIES.find((country) => country.code === code);
-  return spec ? [{ code, name: label ?? spec.name, size: size ?? `${spec.width} × ${spec.height} px` }] : [];
+  return spec ? [{ code, name: label ?? spec.name }] : [];
 });
-const moreSizes = PHOTO_COUNTRIES.length - 1 - countryTiles.length;
+const moreCountries = PHOTO_COUNTRIES.length - 1 - countryTiles.length;
 
-const comparison = [
-  { label: "Cost to make the photo", online: "Free", store: "Set by each store" },
-  { label: "Where you take it", online: "Anywhere, on your own schedule", store: "During store or office hours" },
-  { label: "Retakes", online: "As many as you like", store: "Depends on the location" },
-  { label: "Digital file for online renewal", online: "Included in every download", store: "Not always available" },
-  { label: "Sizes for other countries", online: "60+ countries", store: "Often only 2 × 2 inch" },
-];
 
-const usRules = [
-  "Measures exactly 2 × 2 inches (51 × 51 mm).",
-  "Head is 1 to 1 3/8 inches from chin to top of head.",
-  "Plain white or off-white background with no shadows.",
-  "Taken in color within the last six months.",
-  "Glasses off, unless you have a signed medical statement.",
-  "No filters, retouching, or edits that change how you look.",
-];
-
-const internationalRules = [
-  "The U.K., Australia, and most of Europe use 35 × 45 mm. Canada uses 50 × 70 mm.",
-  "Head-size limits are set in millimeters and differ by country.",
-  "Some countries accept light gray or cream backgrounds instead of white.",
-  "Many require a neutral expression with your mouth closed, even where the U.S. allows a natural smile.",
-  "Visa photos can follow different rules than the same country's passport photos.",
-];
 
 const principles = [
   {
     icon: ShieldIcon,
     title: "Clear about your data",
-    body: "We tell you before a photo is uploaded, expire your result page after 7 days, and never sell your information.",
+    body: "We tell you before a photo uploads, expire your result page after 7 days, and never sell your information.",
   },
   {
     icon: CheckIcon,
     title: "Checked against official sources",
-    body: "Guides cite the Department of State and other agencies directly, and show when they were last reviewed.",
+    body: "Our guides cite the Department of State and other agencies, and show when we last reviewed them.",
   },
   {
     icon: GlobeIcon,
     title: "Honest about limits",
-    body: "We explain what a tool can and can't do. The agency reviewing your application always has the final say.",
+    body: "We explain what our tools can and can't do. The agency reviewing your application has the final say.",
   },
 ];
 
@@ -160,42 +157,37 @@ const faqs = [
   {
     question: "Is this passport photo maker free?",
     answer:
-      "Yes. Making, editing, and downloading your passport photo is free, with no account needed. If you choose to print at a store or photo lab, that business sets its own price.",
-  },
-  {
-    question: "How do I convert a photo to passport size?",
-    answer:
-      "Choose your country, then upload the photo. The tool finds your face and crops and resizes the photo to that country's passport size. For the U.S., that's 2 × 2 inches, or 600 × 600 pixels. Start with a recent, front-facing photo taken against a plain, light background.",
-  },
-  {
-    question: "What size is a passport photo in other countries?",
-    answer:
-      "It depends on the country. The U.S. uses 2 × 2 inches (51 × 51 mm). The U.K., Australia, and most of Europe use 35 × 45 mm, and Canada uses 50 × 70 mm. Choose your country in the tool, and it crops to that size.",
+      "Yes. You can make, edit, and download your passport photo for free, with no account. If you print at a store or lab, that business sets its own price.",
   },
   {
     question: "Can I make my own U.S. passport photo online?",
     answer:
-      "Yes. The State Department accepts photos you take yourself, as long as they meet every requirement. Take a clear photo against a plain white or off-white background, crop it to 2 × 2 inches with the tool, and print it or upload it.",
+      "Yes. The State Department accepts photos you take yourself, as long as they meet its rules. Take a clear, front-facing photo, upload it, and let the maker build your U.S. passport picture.",
   },
   {
     question: "Will the State Department accept a photo I made online?",
     answer:
-      "It will if the final photo meets the official rules for size, head position, background, lighting, and expression. How you made the photo doesn't matter. Our tool handles the size and crop, but the agency reviewing your application makes the final decision.",
+      "It will if the final photo meets the official rules. How you made the photo doesn't matter. Our tool prepares the file, but the agency reviewing your application makes the final decision.",
+  },
+  {
+    question: "Can I make a passport photo for another country?",
+    answer:
+      "Yes. Choose your country in the tool, and it formats the photo for that country. Over 60 countries are available.",
   },
   {
     question: "Can I print my passport photo at home?",
     answer:
-      "Yes. Print it on matte or glossy photo-quality paper at 100% scale so it measures exactly 2 × 2 inches, or your country's size. You can also send the file to a photo lab and pick up prints the same day.",
+      "Yes. Print it on photo-quality paper at 100% scale, or send the file to a photo lab. Check the printed result with a ruler before you mail it.",
   },
   {
     question: "How long does it take to make a passport photo online?",
     answer:
-      "Most people finish in a few minutes. Taking a good photo usually takes the longest. Processing takes up to a minute, and then your photo is ready to download.",
+      "Most people finish in a few minutes. Taking a good photo takes the longest. Processing takes up to a minute, and then you can download your file.",
   },
   {
     question: "Do you store my photos?",
     answer:
-      "Your photo is uploaded to our processing service so it can be cropped and checked. Your result page and its download link expire after 7 days, so save the file before then. Our privacy policy explains exactly what is kept.",
+      "We upload your photo to our processing service so we can prepare it. Your result page and download link expire after 7 days, so save your file before then. Our privacy policy explains what we keep.",
   },
 ];
 
@@ -214,20 +206,17 @@ const card = "rounded-xl border bg-surface-raised shadow-sm";
 
 function SectionHeader({
   id,
-  eyebrow,
   title,
   children,
   className,
 }: {
   id: string;
-  eyebrow: string;
   title: string;
   children?: React.ReactNode;
   className?: string;
 }) {
   return (
     <div className={cn("flex max-w-2xl flex-col gap-3", className)}>
-      <p className="text-sm font-semibold tracking-wide text-primary uppercase">{eyebrow}</p>
       <h2 id={id} className="font-display text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
         {title}
       </h2>
@@ -265,13 +254,14 @@ export default async function Home() {
 
       {/* Hero */}
       <section className="border-b pt-page pb-12 sm:pb-16">
-        <Container className="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-12 lg:py-8">
+        <Container className="grid items-center gap-10 lg:grid-cols-2 lg:gap-12 lg:py-8">
           <div className="flex flex-col items-start gap-6 text-left">
             <h1 className="font-display text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
-              Passport Photo Online: <span className="text-primary">Free Passport Size Photo Maker</span>
+              Passport Photo Online: Free Passport Photo Maker
             </h1>
             <p className="max-w-xl text-lg text-pretty text-muted-foreground">
-              Convert any photo to passport size in minutes .
+              Make a U.S. passport photo online in minutes, or choose from 60+ other countries. Upload a photo,
+              download your file, and print it or submit it online.
             </p>
             <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
               <a href={links.tool} className={buttonVariants({ size: "lg", className: "group" })}>
@@ -307,11 +297,11 @@ export default async function Home() {
       </section>
 
       {/* Photo tool: the hero's main button scrolls here. */}
-      <section id="photo-tool" aria-labelledby="photo-tool-heading" className="py-section">
+      <section id="photo-tool" aria-labelledby="photo-tool-heading" className="scroll-mt-header py-section">
         <Container className="flex flex-col gap-10">
-          <SectionHeader id="photo-tool-heading" eyebrow="Online passport photo editor" title="Upload a photo and convert it to passport size">
-            Choose your country and upload a photo. We find your face, check the background, and crop it to the right size.
-            Your result opens on its own page, ready to download.
+          <SectionHeader id="photo-tool-heading" title="Make your passport photo online">
+            Choose your country and upload a photo. Your finished passport picture opens on its own page, ready to
+            download.
           </SectionHeader>
 
           <Widget name="photo-editor" />
@@ -321,8 +311,8 @@ export default async function Home() {
       {/* How it works */}
       <section aria-labelledby="how-heading" className="border-y py-section">
         <Container className="flex flex-col gap-10">
-          <SectionHeader id="how-heading" eyebrow="How it works" title="How to make a passport photo online in 3 steps">
-            You need a camera, a plain wall, and good light. Our passport photo maker handles the measurements.
+          <SectionHeader id="how-heading" title="How to make a passport photo online in 3 steps">
+            You need a phone, a plain wall, and good light. Our passport photo maker handles the rest.
           </SectionHeader>
 
           <ol className="grid gap-4 md:grid-cols-3 md:gap-6">
@@ -333,7 +323,7 @@ export default async function Home() {
                     <Icon className="size-5" />
                   </span>
                   <span aria-hidden="true" className="font-display text-4xl font-semibold text-border-strong">
-                    {String(index + 1).padStart(2, "0")}
+                    {index + 1}
                   </span>
                 </div>
                 <h3 className="text-xl font-semibold">
@@ -344,23 +334,15 @@ export default async function Home() {
               </li>
             ))}
           </ol>
-
-          <p className="text-sm text-muted-foreground">
-            Want the exact measurements? Read our guide to the{" "}
-            <Link href={links.size} className={textLink}>
-              U.S. passport photo size
-            </Link>{" "}
-            in inches, millimeters, and pixels.
-          </p>
         </Container>
       </section>
 
-      {/* Sizes: U.S. documents and international formats */}
-      <section aria-labelledby="sizes-heading" className="py-section">
+      {/* People in the U.S. and other countries */}
+      <section aria-labelledby="people-heading" className="py-section">
         <Container className="flex flex-col gap-10">
-          <SectionHeader id="sizes-heading" eyebrow="Photo sizes" title="Passport photo sizes for the U.S. and 60+ countries">
-            One tool for every format. Make a 2 × 2 photo for U.S. documents, or a passport size photo for your home country
-            or your next visa.
+          <SectionHeader id="people-heading" title="Who makes a passport photo online with us">
+            People across the U.S. use our passport photo maker for every kind of application. People in 60+ countries
+            use it too.
           </SectionHeader>
 
           <div className="grid gap-6 lg:grid-cols-2">
@@ -369,19 +351,18 @@ export default async function Home() {
                 <span className="flex h-7 items-center rounded-md bg-primary-subtle px-2 text-xs font-bold text-primary-subtle-foreground">
                   US
                 </span>
-                <h3 className="text-xl font-semibold">United States: 2 × 2 inch photos</h3>
+                <h3 className="text-xl font-semibold">U.S. passport photo</h3>
               </div>
               <ul className="flex flex-col divide-y">
-                {usDocuments.map((doc) => (
-                  <li key={doc.title} className="flex flex-col gap-0.5 py-3 first:pt-0 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
-                    <span className="font-medium">{doc.title}</span>
-                    <span className="text-sm text-muted-foreground sm:text-right">{doc.detail}</span>
+                {usPeople.map((person) => (
+                  <li key={person.title} className="flex flex-col gap-0.5 py-3 first:pt-0">
+                    <span className="font-medium">{person.title}</span>
+                    <span className="text-sm text-muted-foreground">{person.body}</span>
                   </li>
                 ))}
               </ul>
-              <div className="mt-auto flex flex-wrap gap-x-6 gap-y-2">
-                <ArrowLink href={links.tool}>Make a 2 × 2 photo</ArrowLink>
-                <ArrowLink href={links.size}>U.S. size guide</ArrowLink>
+              <div className="mt-auto">
+                <ArrowLink href={links.tool}>Make a U.S. passport picture</ArrowLink>
               </div>
             </div>
 
@@ -390,19 +371,17 @@ export default async function Home() {
                 <span className="flex size-7 items-center justify-center rounded-md bg-primary-subtle text-primary-subtle-foreground">
                   <GlobeIcon className="size-4" />
                 </span>
-                <h3 className="text-xl font-semibold">Around the world</h3>
+                <h3 className="text-xl font-semibold">Passport photos for other countries</h3>
               </div>
-              <ul className="grid grid-cols-2 gap-2 sm:gap-3">
+              <ul className="grid grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-3">
                 {countryTiles.map((country) => (
-                  <li key={country.code} className="flex flex-col rounded-lg border px-3 py-2.5">
-                    <span className="truncate text-sm font-medium">{country.name}</span>
-                    <span className="text-xs text-muted-foreground">{country.size}</span>
+                  <li key={country.code} className="rounded-lg border px-3 py-2.5">
+                    <span className="block truncate text-sm font-medium">{country.name}</span>
                   </li>
                 ))}
               </ul>
-              <div className="mt-auto flex flex-col gap-2">
-                <p className="text-xs text-muted-foreground">Print size, or the digital size the tool creates, in pixels.</p>
-                <ArrowLink href={links.tool}>Choose from {moreSizes} more sizes in the tool</ArrowLink>
+              <div className="mt-auto">
+                <ArrowLink href={links.tool}>Choose from {moreCountries} more countries</ArrowLink>
               </div>
             </div>
           </div>
@@ -412,8 +391,8 @@ export default async function Home() {
       {/* Print or digital */}
       <section aria-labelledby="output-heading" className="border-y py-section">
         <Container className="flex flex-col gap-10">
-          <SectionHeader id="output-heading" eyebrow="Print or digital" title="Print your passport photo at home, or upload it online">
-            Every download is a high-resolution file, so you can use the same photo on paper and in online applications.
+          <SectionHeader id="output-heading" title="Print your passport photo or upload it online">
+            Every download is a high-resolution file, so you can use one photo on paper and on screen.
           </SectionHeader>
 
           <div className="grid gap-6 md:grid-cols-2">
@@ -421,136 +400,31 @@ export default async function Home() {
               <span className="flex size-11 items-center justify-center rounded-lg bg-primary-subtle text-primary-subtle-foreground">
                 <PrinterIcon />
               </span>
-              <h3 className="text-xl font-semibold">Print a 2 × 2 photo at home or at a lab</h3>
+              <h3 className="text-xl font-semibold">Print at home or at a lab</h3>
               <p className="text-muted-foreground">
-                Print on matte or glossy photo paper at 100% scale, so a U.S. photo measures exactly 2 × 2 inches. Or send
-                the file to a photo lab or pharmacy photo counter and pick up prints the same day. Check the size with a
-                ruler before you mail your application.
+                Print on photo paper at 100% scale, or send the file to a photo lab or pharmacy counter. Check the
+                printed photo with a ruler before you mail your application.
               </p>
             </div>
             <div className={cn(card, "flex flex-col gap-4 p-6 sm:p-8")}>
               <span className="flex size-11 items-center justify-center rounded-lg bg-primary-subtle text-primary-subtle-foreground">
                 <UploadCloudIcon />
               </span>
-              <h3 className="text-xl font-semibold">Get a digital passport photo for online forms</h3>
+              <h3 className="text-xl font-semibold">Upload a digital passport photo</h3>
               <p className="text-muted-foreground">
-                Online passport renewals, the DS-160 visa form, and many foreign e-visa portals ask for a digital photo
-                with pixel and file-size limits. Our editor saves a JPEG at your country&apos;s pixel size, ready to upload.
+                Online renewals and e-forms ask for a digital photo. Our editor saves a JPEG you can upload right away.
               </p>
             </div>
           </div>
         </Container>
       </section>
 
-      {/* Why online */}
-      <section aria-labelledby="why-heading" className="py-section">
-        <Container className="flex flex-col gap-10">
-          <SectionHeader id="why-heading" eyebrow="Online vs. in store" title="Why use an online passport photo maker instead of a store">
-            Pharmacies such as Walgreens and CVS, post offices, and photo studios take passport photos, and they&apos;re a
-            good choice if you&apos;d rather hand the job to someone else. Making your photo online gives you more control
-            and a digital file for online applications.
-          </SectionHeader>
-
-          {/* Phones get stacked cards; a three-column table is too cramped there. */}
-          <ul className="flex flex-col gap-3 sm:hidden">
-            {comparison.map((row) => (
-              <li key={row.label} className={cn(card, "flex flex-col gap-3 p-4")}>
-                <span className="font-semibold">{row.label}</span>
-                <dl className="grid grid-cols-2 gap-3 text-sm">
-                  <div className="flex flex-col gap-0.5 rounded-lg bg-primary-subtle p-3">
-                    <dt className="text-xs font-medium text-primary-subtle-foreground">{siteConfig.name}</dt>
-                    <dd className="font-medium">{row.online}</dd>
-                  </div>
-                  <div className="flex flex-col gap-0.5 rounded-lg border p-3">
-                    <dt className="text-xs font-medium text-muted-foreground">Pharmacy or post office</dt>
-                    <dd className="text-muted-foreground">{row.store}</dd>
-                  </div>
-                </dl>
-              </li>
-            ))}
-          </ul>
-
-          <div className={cn(card, "hidden overflow-hidden sm:block")}>
-            <table className="w-full text-left">
-              <caption className="sr-only">Online passport photo maker compared with an in-store passport photo</caption>
-              <thead>
-                <tr className="border-b">
-                  <th scope="col" className="p-4 font-semibold sm:p-5">
-                    <span className="sr-only">Compare</span>
-                  </th>
-                  <th scope="col" className="bg-primary-subtle p-4 font-semibold text-primary-subtle-foreground sm:p-5">
-                    {siteConfig.name}
-                  </th>
-                  <th scope="col" className="p-4 font-semibold sm:p-5">
-                    Pharmacy or post office
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y">
-                {comparison.map((row) => (
-                  <tr key={row.label}>
-                    <th scope="row" className="p-4 font-medium sm:p-5">
-                      {row.label}
-                    </th>
-                    <td className="bg-primary-subtle/40 p-4 sm:p-5">
-                      <span className="flex items-center gap-2">
-                        <CheckIcon className="size-4 text-success" />
-                        {row.online}
-                      </span>
-                    </td>
-                    <td className="p-4 text-muted-foreground sm:p-5">{row.store}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </Container>
-      </section>
-
-      {/* Compliance checklist */}
-      <section aria-labelledby="accepted-heading" className="border-y py-section">
-        <Container className="flex flex-col gap-10">
-          <SectionHeader id="accepted-heading" eyebrow="Requirements" title="What makes a passport photo get accepted">
-            Most rejected photos fail for a handful of avoidable reasons, such as shadows, the wrong head size, or glasses.
-            Run through the checklist for your country before you print.
-          </SectionHeader>
-
-          <div className="grid gap-6 md:grid-cols-2">
-            {[
-              { title: "U.S. passport and visa photos", rules: usRules },
-              { title: "Passport photos for other countries", rules: internationalRules },
-            ].map((group) => (
-              <div key={group.title} className={cn(card, "flex flex-col gap-4 p-6 sm:p-8")}>
-                <h3 className="text-xl font-semibold">{group.title}</h3>
-                <ul className="flex flex-col gap-3">
-                  {group.rules.map((rule) => (
-                    <li key={rule} className="flex gap-3">
-                      <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-success-subtle text-success">
-                        <CheckIcon className="size-3.5" />
-                      </span>
-                      <span className="text-muted-foreground">{rule}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-
-          <p className="max-w-prose text-pretty text-muted-foreground">
-            Your clothes matter, too. A white shirt can blend into a white background, so choose a darker or colored top.
-            Skip uniforms, camouflage, and headphones, and keep your hair away from your eyes. Read the full{" "}
-            <Link href={links.requirements} className={textLink}>
-              passport photo requirements
-            </Link>
-            .
-          </p>
-        </Container>
-      </section>
+     
 
       {/* Tools and guides */}
-      <section aria-labelledby="resources-heading" className="py-section">
+      <section aria-labelledby="resources-heading" className="border-y py-section">
         <Container className="flex flex-col gap-10">
-          <SectionHeader id="resources-heading" eyebrow="Tools and guides" title="Free passport photo tools and guides">
+          <SectionHeader id="resources-heading" title="Free passport photo tools and guides">
             Plain-English explanations of official rules, with links to the agency sources we used.
           </SectionHeader>
 
@@ -573,10 +447,10 @@ export default async function Home() {
       </section>
 
       {/* How we work */}
-      <section aria-labelledby="principles-heading" className="border-y py-section">
+      <section aria-labelledby="principles-heading" className="py-section">
         <Container className="flex flex-col gap-10">
-          <SectionHeader id="principles-heading" eyebrow="Our approach" title="How we work" />
-          <ul className="grid gap-4 md:grid-cols-3 md:gap-6">
+          <SectionHeader id="principles-heading" title="How we work" />
+          <ul className="grid gap-6 md:grid-cols-3">
             {principles.map(({ icon: Icon, title, body }) => (
               <li key={title} className="flex gap-4">
                 <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary-subtle text-primary-subtle-foreground">
@@ -604,9 +478,13 @@ export default async function Home() {
       </section>
 
       {/* FAQ */}
-      <section aria-labelledby="faq-heading" className="py-section">
+      <section aria-labelledby="faq-heading" className="border-t py-section">
         <Container className="grid gap-10 lg:grid-cols-[minmax(0,20rem)_minmax(0,1fr)] lg:gap-16">
-          <SectionHeader id="faq-heading" eyebrow="FAQ" title="Passport photo online: frequently asked questions" className="lg:sticky lg:top-[calc(var(--spacing-header)+2rem)] lg:self-start">
+          <SectionHeader
+            id="faq-heading"
+            title="Passport photo online: frequently asked questions"
+            className="lg:sticky lg:top-[calc(var(--spacing-header)+2rem)] lg:self-start"
+          >
             Can&apos;t find your answer? See the{" "}
             <Link href={links.faq} className={textLink}>
               full FAQ
@@ -629,8 +507,7 @@ export default async function Home() {
         </Container>
       </section>
 
-      {/* Final CTA */}
-     
+      
     </>
   );
 }
