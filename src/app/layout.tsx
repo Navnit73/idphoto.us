@@ -5,7 +5,6 @@ import Script from "next/script";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { siteConfig } from "@/config/site";
-import { isIndexingAllowed } from "@/lib/env/public";
 import { themeInitScript } from "@/lib/theme";
 
 import "./globals.css";
@@ -32,7 +31,7 @@ export const metadata: Metadata = {
   },
   description: siteConfig.description,
   applicationName: siteConfig.name,
-  robots: { index: isIndexingAllowed, follow: isIndexingAllowed },
+  robots: { index: true, follow: true },
   openGraph: {
     type: "website",
     siteName: siteConfig.name,
@@ -61,8 +60,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           {children}
         </main>
         <SiteFooter />
-        {/* Microsoft Clarity analytics — production only, so previews don't pollute the data. */}
-        {isIndexingAllowed && (
+        {/* Microsoft Clarity analytics — production builds only, so local dev doesn't pollute the data. */}
+        {process.env.NODE_ENV === "production" && (
           <Script id="microsoft-clarity" strategy="afterInteractive">
             {`(function(c,l,a,r,i,t,y){
               c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};

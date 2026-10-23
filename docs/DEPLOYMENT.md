@@ -9,7 +9,6 @@ Copy `.env.example` and set these values in your host's settings. Never commit r
 | Variable               | Required                     | Notes                                                                                     |
 | ---------------------- | ---------------------------- | ----------------------------------------------------------------------------------------- |
 | `NEXT_PUBLIC_SITE_URL` | Yes                          | Canonical origin, e.g. `https://idphoto.us`. Used for canonicals, sitemap, OG, and JSON-LD. |
-| `NEXT_PUBLIC_SITE_ENV` | Yes, `production` on live    | **Anything other than `production` makes the whole site noindex** and robots.txt disallows everything. Use `preview` for staging. |
 | `MONGODB_URI`          | For forms and photo editor   | `mongodb+srv://…`. Without it the site works, and the form and photo endpoints return 503. |
 | `MONGODB_DB`           | No (default `idphoto`)       |                                                                                           |
 | `IP_HASH_SALT`         | Yes, if `MONGODB_URI` is set | 16+ random characters (`openssl rand -hex 32`). Changing it resets rate limits.           |
@@ -45,7 +44,7 @@ npm run build       # also validates all Markdown content; fails on any content 
 npm run start       # serves on PORT (default 3000)
 ```
 
-On **Vercel**, import the repo, set the environment variables (use `NEXT_PUBLIC_SITE_ENV=preview` for the Preview environment and `production` for Production), and deploy. No other configuration is needed.
+On **Vercel**, import the repo, set the environment variables, and deploy. No other configuration is needed.
 
 On **Docker or a VM**, run `npm ci && npm run build && npm run start` behind a TLS-terminating reverse proxy. Markdown in `content/` is included in traced output (`outputFileTracingIncludes` in `next.config.ts`).
 
@@ -56,7 +55,7 @@ On **Docker or a VM**, run `npm ci && npm run build && npm run start` behind a T
 ## 4. Domain and SEO launch checklist
 
 - [ ] Serve only `https://idphoto.us`. Redirect `www.` and `http://` to it with a 301/308 at the host or DNS level.
-- [ ] `NEXT_PUBLIC_SITE_URL=https://idphoto.us` and `NEXT_PUBLIC_SITE_ENV=production` are set on production only.
+- [ ] `NEXT_PUBLIC_SITE_URL=https://idphoto.us` is set on production.
 - [ ] Visit `/robots.txt` and `/sitemap.xml` on production and confirm they list the right URLs.
 - [ ] Verify the domain in Google Search Console and Bing Webmaster Tools, and submit `https://idphoto.us/sitemap.xml`.
 - [ ] Spot-check pages in Google's Rich Results Test (`Article`, `FAQPage`, `BreadcrumbList`).

@@ -1,7 +1,6 @@
 import type { MetadataRoute } from "next";
 
 import { getPageSummaries } from "@/lib/content/loader";
-import { isIndexingAllowed } from "@/lib/env/public";
 import { absoluteUrl } from "@/lib/seo/metadata";
 
 /**
@@ -10,7 +9,6 @@ import { absoluteUrl } from "@/lib/seo/metadata";
  * URLs only, no <lastmod>: every page shares one date, which tells crawlers nothing.
  */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  if (!isIndexingAllowed) return [];
   const pages = await getPageSummaries();
 
   return [{ url: absoluteUrl("/") }, ...pages.filter((page) => page.inSitemap).map((page) => ({ url: absoluteUrl(page.path) }))];

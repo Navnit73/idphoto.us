@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 
 import { siteConfig } from "@/config/site";
-import { isIndexingAllowed } from "@/lib/env/public";
 
 /** Resolves a site path (or passes through an absolute URL) against the canonical origin. */
 export function absoluteUrl(pathOrUrl: string) {
@@ -30,14 +29,13 @@ type PageMetadataInput = {
 
 /**
  * Single place that turns page data into Next.js metadata, so every route gets
- * the same canonical, robots, Open Graph, and Twitter treatment. Non-production
- * deployments are always noindex, whatever the page says.
+ * the same canonical, robots, Open Graph, and Twitter treatment.
  */
 export function buildMetadata(input: PageMetadataInput): Metadata {
   const target = input.canonical ?? input.path;
   const canonical = target === null ? undefined : absoluteUrl(target);
-  const index = isIndexingAllowed && (input.indexable ?? true);
-  const follow = isIndexingAllowed && (input.follow ?? true);
+  const index = input.indexable ?? true;
+  const follow = input.follow ?? true;
   const images = input.ogImage ? [{ url: input.ogImage, width: 1200, height: 630, alt: input.title }] : undefined;
 
   return {
