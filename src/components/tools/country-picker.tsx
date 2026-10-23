@@ -119,13 +119,17 @@ export function CountryPicker({
             openList();
           }
         }}
-        className="flex h-12 w-full items-center gap-3 rounded-lg border border-border-strong bg-background px-4 text-left text-base font-medium text-foreground shadow-sm transition-colors hover:border-muted-foreground focus-visible:border-ring disabled:opacity-50 sm:h-14 sm:text-lg"
+        className="flex h-12 w-full items-center gap-3 rounded-lg border border-border-strong bg-background px-4 text-left text-base font-medium text-foreground shadow-sm transition-colors hover:border-muted-foreground focus-visible:border-ring focus-visible:outline-1 focus-visible:outline-offset-0 disabled:opacity-50 sm:h-14 sm:text-lg"
       >
         {selected && (
           <>
             <span aria-hidden="true">{flagEmoji(selected.code)}</span>
             <span className="min-w-0 flex-1 truncate">
-              {selected.name} ({displayCode(selected.code)}) — {selected.width} × {selected.height} px
+              {selected.name} ({displayCode(selected.code)})
+              <span className="hidden sm:inline">
+                {" "}
+                — {selected.width} × {selected.height} px
+              </span>
             </span>
           </>
         )}
@@ -174,12 +178,12 @@ export function CountryPicker({
                   setActive(0);
                 }}
                 onKeyDown={onSearchKeyDown}
-                className="h-11 w-full rounded-md border border-border-strong bg-background pr-3 pl-10 text-base text-foreground placeholder:text-muted-foreground focus-visible:border-ring"
+                className="h-11 w-full rounded-md border border-border-strong bg-background pr-3 pl-10 text-base text-foreground placeholder:text-muted-foreground focus-visible:border-ring focus-visible:outline-1 focus-visible:outline-offset-0"
               />
             </div>
           </div>
 
-          <ul ref={listRef} id={listId} role="listbox" aria-label="Countries" className="max-h-80 overflow-y-auto py-1">
+          <ul ref={listRef} id={listId} role="listbox" aria-label="Countries" className="max-h-[min(20rem,50dvh)] overflow-y-auto overscroll-contain py-1">
             {matches.map((country, index) => (
               <li
                 key={country.code}
@@ -192,14 +196,14 @@ export function CountryPicker({
                 onMouseMove={() => setActive(index)}
                 onClick={() => choose(country.code)}
                 className={cn(
-                  "flex cursor-pointer items-center gap-3 px-4 py-2.5 text-base",
+                  "flex cursor-pointer items-center gap-3 px-3 py-2.5 text-base sm:px-4",
                   index === active && "bg-primary-subtle text-primary-subtle-foreground",
                   country.code === value && "font-semibold",
                 )}
               >
                 <span aria-hidden="true">{flagEmoji(country.code)}</span>
-                <span className="flex-1">{country.name}</span>
-                <span className="text-sm text-muted-foreground tabular-nums">
+                <span className="min-w-0 flex-1">{country.name}</span>
+                <span className="shrink-0 text-sm text-muted-foreground tabular-nums">
                   {country.width}×{country.height}px
                 </span>
               </li>

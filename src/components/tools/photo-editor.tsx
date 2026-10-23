@@ -96,7 +96,7 @@ export function PhotoEditor({ country: initialCountry = DEFAULT_COUNTRY }: { cou
 
   return (
     <div className="flex flex-col gap-5">
-      <div className="flex flex-col gap-2 rounded-xl border bg-surface-raised p-5 shadow-sm sm:p-6">
+      <div className="flex flex-col gap-2 rounded-xl border bg-surface-raised p-4 shadow-sm sm:p-6">
         <label htmlFor="photo-editor-country" className="text-base font-semibold">
           Select country / destination
         </label>
@@ -108,11 +108,11 @@ export function PhotoEditor({ country: initialCountry = DEFAULT_COUNTRY }: { cou
           describedBy={spec ? "photo-editor-country-hint" : undefined}
         />
         {spec && (
-          <p id="photo-editor-country-hint" className="flex items-center gap-2 text-sm text-muted-foreground">
+          <p id="photo-editor-country-hint" className="flex items-start gap-2 text-sm text-muted-foreground">
             <svg
               viewBox="0 0 24 24"
               aria-hidden="true"
-              className="size-4 shrink-0"
+              className="mt-0.5 size-4 shrink-0"
               fill="none"
               stroke="currentColor"
               strokeWidth={1.75}
@@ -127,7 +127,7 @@ export function PhotoEditor({ country: initialCountry = DEFAULT_COUNTRY }: { cou
 
       <section
         aria-labelledby="photo-editor-upload-heading"
-        className="flex flex-col gap-5 rounded-xl border bg-surface-raised p-5 shadow-sm sm:p-8"
+        className="flex flex-col gap-5 rounded-xl border bg-surface-raised p-4 shadow-sm sm:p-8"
       >
         <h3 id="photo-editor-upload-heading" className="text-base font-semibold">
           Upload or take your photo
@@ -137,9 +137,9 @@ export function PhotoEditor({ country: initialCountry = DEFAULT_COUNTRY }: { cou
           <div
             role="status"
             aria-live="polite"
-            className="flex min-h-56 flex-col items-center gap-6 rounded-xl border bg-surface p-6 sm:flex-row sm:items-center sm:p-8"
+            className="flex min-h-48 flex-col items-center gap-6 rounded-xl border bg-surface p-5 sm:min-h-56 sm:flex-row sm:items-center sm:p-8"
           >
-            <div className="flex size-40 shrink-0 items-center justify-center overflow-hidden rounded-lg border bg-photo-backdrop">
+            <div className="flex size-32 shrink-0 items-center justify-center overflow-hidden rounded-lg border bg-photo-backdrop sm:size-40">
               {status.thumbUrl ? (
                 // eslint-disable-next-line @next/next/no-img-element -- local blob preview, nothing to optimize
                 <img src={status.thumbUrl} alt="Your uploaded photo" className="size-full object-contain" />
@@ -214,8 +214,8 @@ export function PhotoEditor({ country: initialCountry = DEFAULT_COUNTRY }: { cou
           <h4 className="text-sm font-semibold">Quick acceptance tips</h4>
           <ul className="grid gap-x-8 gap-y-2.5 text-sm text-muted-foreground sm:grid-cols-2">
             {TIPS.map((tip) => (
-              <li key={tip} className="flex items-center gap-2">
-                <CheckIcon className="size-4 text-success" />
+              <li key={tip} className="flex items-start gap-2">
+                <CheckIcon className="mt-0.5 size-4 shrink-0 text-success" />
                 {tip}
               </li>
             ))}

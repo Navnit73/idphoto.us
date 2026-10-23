@@ -20,7 +20,7 @@ keywords:
   - passport photo online
   - passport photo size by country
   - passport photo background
-showDisclaimer: true
+showDisclaimer: false
 relatedPages:
   - /guide/passport-photo-requirements
   - /guide/us-passport-photo-size

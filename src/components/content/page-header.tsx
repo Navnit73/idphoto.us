@@ -24,8 +24,8 @@ type PageHeaderProps = {
 export function PageHeader({ page, crumbs, byline = false, cta, image }: PageHeaderProps) {
   const intro = (
     <div className="flex flex-col gap-4">
-      <h1 className="font-display text-4xl font-semibold tracking-tight text-balance">{page.heading}</h1>
-      <p className="max-w-prose text-lg text-pretty text-muted-foreground">{page.description}</p>
+      <h1 className="font-display text-3xl font-semibold sm:text-4xl tracking-tight text-balance">{page.heading}</h1>
+      <p className="max-w-prose text-base text-pretty sm:text-lg text-muted-foreground">{page.description}</p>
       <dl className="flex flex-wrap gap-x-6 gap-y-1 text-sm text-muted-foreground">
         {byline && (
           <div className="flex gap-1.5">
@@ -61,7 +61,7 @@ export function PageHeader({ page, crumbs, byline = false, cta, image }: PageHea
         )}
       </dl>
       {cta && (
-        <a href={cta.href} className={buttonVariants({ size: "lg", className: "group mt-2 self-start" })}>
+        <a href={cta.href} className={buttonVariants({ size: "lg", className: "group mt-2 w-full sm:w-auto sm:self-start" })}>
           {cta.label}
           <ArrowRightIcon className="size-4 transition-transform group-hover:translate-x-0.5" />
         </a>
@@ -70,7 +70,7 @@ export function PageHeader({ page, crumbs, byline = false, cta, image }: PageHea
   );
 
   return (
-    <header className="flex flex-col gap-4 border-b pb-8">
+    <header className="flex flex-col gap-4 border-b pb-6 sm:pb-8">
       <Breadcrumbs crumbs={crumbs} />
       {image ? (
         <div className="grid items-center gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-12">

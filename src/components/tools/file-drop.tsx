@@ -42,7 +42,7 @@ export function FileDrop({
         if (file) onFile(file);
       }}
       className={cn(
-        "flex min-h-56 cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-border-strong bg-surface p-8 text-center transition-colors hover:border-primary focus-within:border-primary",
+        "flex min-h-48 cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-border-strong bg-surface p-5 text-center sm:min-h-56 sm:p-8 transition-colors hover:border-primary focus-within:border-primary",
         dragging && "border-primary bg-primary-subtle",
         className,
       )}
@@ -57,9 +57,9 @@ export function FileDrop({
           <circle cx="8.5" cy="8.5" r="1.5" />
         </svg>
       </span>
-      <span className="text-lg font-semibold sm:text-xl">{label}</span>
-      <span className="text-sm text-muted-foreground sm:text-base">{hint}</span>
-      <span className="mt-1 text-xs text-muted-foreground">{privacyNote}</span>
+      <span className="text-lg font-semibold text-balance sm:text-xl">{label}</span>
+      <span className="text-sm text-pretty text-muted-foreground sm:text-base">{hint}</span>
+      <span className="mt-1 max-w-md text-xs text-pretty text-muted-foreground">{privacyNote}</span>
       <input
         id={id}
         type="file"

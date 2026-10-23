@@ -18,7 +18,7 @@ export function ToolTemplate({ page, crumbs }: TemplateProps) {
 
   return (
     <Container className="pt-page pb-10 sm:pb-14">
-      <article className="flex flex-col gap-12">
+      <article className="flex flex-col gap-8 sm:gap-12">
         <PageHeader
           page={page}
           crumbs={crumbs}
@@ -26,11 +26,11 @@ export function ToolTemplate({ page, crumbs }: TemplateProps) {
           image={frontmatter.heroImage}
         />
         {frontmatter.widget && (
-          <section id={TOOL_ANCHOR} aria-label="Tool">
+          <section id={TOOL_ANCHOR} aria-label="Tool" className="mx-auto w-full max-w-4xl scroll-mt-20">
             <Widget name={frontmatter.widget} country={frontmatter.country} />
           </section>
         )}
-        <div className="mx-auto flex w-full max-w-prose flex-col gap-12 border-t pt-12 sm:pt-16">
+        <div className="mx-auto flex w-full max-w-prose flex-col gap-10 border-t pt-10 sm:gap-12 sm:pt-16">
           {frontmatter.showDisclaimer && <Disclaimer />}
           <Markdown tree={page.tree} />
           <FaqSection faq={page.faq} />
