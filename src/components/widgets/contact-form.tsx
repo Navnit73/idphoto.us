@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -102,9 +103,9 @@ export function ContactForm() {
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-sm text-muted-foreground">
             We use your details only to reply. See the{" "}
-            <a href="/privacy-policy" className="text-primary underline underline-offset-4">
+            <Link href="/privacy-policy" className="text-primary underline underline-offset-4">
               privacy policy
-            </a>
+            </Link>
             .
           </p>
           <Button type="submit" disabled={status.kind === "sending"}>

@@ -122,12 +122,14 @@ async function loadAllPages(version: string): Promise<Page[]> {
         if (reviewer === undefined) throw new Error(`unknown reviewer "${frontmatter.reviewedBy}"`);
 
         const body = await parseMarkdown(content);
-        const faq = await Promise.all(
-          frontmatter.faq.map(async (item) => ({
-            question: item.question,
-            answer: (await parseMarkdown(item.answer, { allowHeadings: false })).tree,
-          })),
+        const parsedFaq = await Promise.all(
+          frontmatter.faq.map(async (item) => ({ item, answer: await parseMarkdown(item.answer, { allowHeadings: false }) })),
         );
+        const faq = parsedFaq.map(({ item, answer }) => ({ question: item.question, answer: answer.tree }));
+        // Visible FAQ answers are real page content, so they count toward the thin-content check.
+        const wordCount =
+          body.wordCount + parsedFaq.reduce((sum, { item, answer }) => sum + answer.wordCount + item.question.split(/\s+/).length, 0);
+        const faqLinks = parsedFaq.flatMap(({ answer }) => answer.internalLinks);
 
         const pagePath = routePath(frontmatter);
         const canonical = frontmatter.canonical ?? pagePath;
@@ -149,14 +151,14 @@ async function loadAllPages(version: string): Promise<Page[]> {
           sourceFile,
           tree: body.tree,
           headings: body.headings,
-          wordCount: body.wordCount,
-          readingMinutes: Math.max(1, Math.round(body.wordCount / 225)),
+          wordCount,
+          readingMinutes: Math.max(1, Math.round(wordCount / 225)),
           faq,
           author,
           reviewer,
         });
 
-        internalLinks.set(sourceFile, body.internalLinks);
+        internalLinks.set(sourceFile, [...body.internalLinks, ...faqLinks]);
       } catch (error) {
         errors.push(`${sourceFile}:\n  ${String(error instanceof Error ? error.message : error).replaceAll("\n", "\n  ")}`);
       }

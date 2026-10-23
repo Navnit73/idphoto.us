@@ -32,14 +32,10 @@ function serializeError(error: Error): Fields {
 
 function write(level: Level, bindings: Fields, msg: string, fields?: Fields) {
   if (levels[level] < threshold) return;
-  const entry = { level, time: new Date().toISOString(), msg, ...bindings, ...(redact(fields) as Fields) };
+  const context = { ...bindings, ...(redact(fields) as Fields) };
   const out = level === "error" || level === "warn" ? console.error : console.log;
-  if (pretty) {
-    const { level: _l, time: _t, msg: _m, ...rest } = entry;
-    out(`[${level}] ${msg}`, Object.keys(rest).length ? rest : "");
-  } else {
-    out(JSON.stringify(entry));
-  }
+  if (pretty) out(`[${level}] ${msg}`, context);
+  else out(JSON.stringify({ level, time: new Date().toISOString(), msg, ...context }));
 }
 
 export type Logger = {

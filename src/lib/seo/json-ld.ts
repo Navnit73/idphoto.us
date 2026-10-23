@@ -2,6 +2,7 @@ import type {
   Article,
   BreadcrumbList,
   FAQPage,
+  IdReference,
   Organization,
   Person,
   Thing,
@@ -55,7 +56,7 @@ export function breadcrumbJsonLd(crumbs: Crumb[]): BreadcrumbList {
   };
 }
 
-function authorJsonLd(author: Author): Person | Organization {
+function authorJsonLd(author: Author): Person | IdReference {
   if (author.type === "Organization") return { "@id": ORGANIZATION_ID };
   return { "@type": "Person", name: author.name, ...(author.url && { url: absoluteUrl(author.url) }) };
 }

@@ -57,8 +57,8 @@ const isoDate = z
 
 export const frontmatterSchema = z
   .object({
-    /** Used for the <title> tag (the site name is appended automatically). */
-    title: z.string().trim().min(10).max(65),
+    /** Used for the <title> tag; " | idphoto.us" is appended, so keep it under ~60 characters. */
+    title: z.string().trim().min(10).max(60),
     /** Visible H1. Defaults to `title`. */
     heading: z.string().trim().min(5).max(110).optional(),
     /** Meta description and page intro. */

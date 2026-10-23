@@ -12,7 +12,7 @@ export function SiteHeader() {
       <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:rounded-md focus:bg-background focus:px-3 focus:py-2">
         Skip to content
       </a>
-      <Container className="relative flex h-header items-center justify-between gap-6">
+      <Container className="flex h-header items-center justify-between gap-6">
         <Link href="/" className="flex items-center gap-2 font-display text-lg font-semibold tracking-tight">
           <span aria-hidden="true" className="inline-flex size-7 items-center justify-center rounded-md bg-primary text-xs text-primary-foreground">
             ID
