@@ -7,9 +7,7 @@ import {
   ArrowRightIcon,
   CameraIcon,
   CheckIcon,
-  ClockIcon,
   CropIcon,
-  DeviceIcon,
   DownloadIcon,
   GlobeIcon,
   PlusIcon,
@@ -69,16 +67,6 @@ const links = {
   compressor: "/tool/photo-compressor",
   faq: "/faq",
 } as const;
-
-
-
-const tips = [
-  "Stand in front of a plain white or off-white wall.",
-  "Face a window for soft, even light with no shadows.",
-  "Hold the camera at eye level, about 4 feet away.",
-  "Take off glasses and skip filters or beauty modes.",
-  "Use the rear camera and turn off portrait mode.",
-];
 
 const steps = [
   {
@@ -330,24 +318,7 @@ export default async function Home() {
             Your result opens on its own page, ready to download.
           </SectionHeader>
 
-          <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_20rem] lg:gap-8">
-            <Widget name="photo-editor" />
-
-            <aside aria-labelledby="tips-heading" className={cn(card, "flex flex-col gap-4 p-5 sm:p-6")}>
-              <h3 id="tips-heading" className="text-lg font-semibold">
-                Tips for a photo that passes
-              </h3>
-              <ul className="flex flex-col gap-3 text-sm">
-                {tips.map((tip) => (
-                  <li key={tip} className="flex gap-2.5">
-                    <CheckIcon className="mt-0.5 size-4 text-success" />
-                    <span className="text-muted-foreground">{tip}</span>
-                  </li>
-                ))}
-              </ul>
-              <ArrowLink href={links.requirements}>Full photo requirements</ArrowLink>
-            </aside>
-          </div>
+          <Widget name="photo-editor" />
         </Container>
       </section>
 

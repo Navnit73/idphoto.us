@@ -86,3 +86,16 @@ export const DEFAULT_COUNTRY: CountryCode = "US";
 export function getCountry(code: string): PhotoCountry | undefined {
   return PHOTO_COUNTRIES.find((country) => country.code === code);
 }
+
+/** The API codes that aren't ISO 3166 alpha-2, mapped to the region they mean. */
+const ISO_OVERRIDES: Partial<Record<CountryCode, string>> = { PER: "PE", CHE: "CH", NI: "NG", "BR-3*4": "BR" };
+
+/** Two-letter region code for display (`EU` stays `EU`). */
+export function displayCode(code: CountryCode): string {
+  return ISO_OVERRIDES[code] ?? code;
+}
+
+/** Flag emoji built from regional indicator symbols. Windows shows the letters instead of a flag. */
+export function flagEmoji(code: CountryCode): string {
+  return String.fromCodePoint(...[...displayCode(code)].map((letter) => 0x1f1e6 + letter.charCodeAt(0) - 65));
+}

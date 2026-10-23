@@ -4,13 +4,16 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
+import { CheckIcon } from "@/components/home/icons";
 import { Button } from "@/components/ui/button";
-import { Alert, Field, Select } from "@/components/ui/field";
+import { Alert } from "@/components/ui/field";
 import type { PhotoProcessResult } from "@/lib/api/types";
+import { cn } from "@/lib/cn";
 import { apiUpload, ClientApiError } from "@/lib/http/client";
-import { DEFAULT_COUNTRY, getCountry, PHOTO_COUNTRIES, type CountryCode } from "@/lib/photo/countries";
+import { DEFAULT_COUNTRY, getCountry, type CountryCode } from "@/lib/photo/countries";
 import { PHOTO_RESULT_TTL_DAYS } from "@/lib/validation/forms";
 
+import { CountryPicker } from "./country-picker";
 import { FileDrop } from "./file-drop";
 import { canvasToBlob, createCanvas, fillPhotoBackground, loadImage } from "./image-utils";
 
@@ -40,11 +43,18 @@ type Status =
   | { kind: "working"; step: "preparing" | "processing" | "opening"; thumbUrl?: string }
   | { kind: "error"; message: string };
 
-const STEP_LABELS = {
-  preparing: "Preparing your photo…",
-  processing: "Checking your face and background, then cropping to size…",
-  opening: "Done! Opening your photo…",
-};
+const TIPS = [
+  "Look straight at the camera with a neutral face",
+  "Eyes open, mouth closed",
+  "Even light on your face and shoulders",
+  "Plain, light-colored background",
+];
+
+const STEPS = [
+  { key: "preparing", label: "Preparing your photo" },
+  { key: "processing", label: "Checking your face and background, then cropping to size" },
+  { key: "opening", label: "Opening your result" },
+] as const;
 
 /**
  * Upload-and-process passport photo tool: pick a country, drop a photo, and
@@ -85,70 +95,140 @@ export function PhotoEditor({ country: initialCountry = DEFAULT_COUNTRY }: { cou
   const working = status.kind === "working";
 
   return (
-    <div className="flex flex-col gap-5 rounded-xl border bg-surface-raised p-5 shadow-sm sm:p-8">
-      <div className="max-w-sm">
-        <Field
+    <div className="flex flex-col gap-5">
+      <div className="flex flex-col gap-2 rounded-xl border bg-surface-raised p-5 shadow-sm sm:p-6">
+        <label htmlFor="photo-editor-country" className="text-base font-semibold">
+          Select country / destination
+        </label>
+        <CountryPicker
           id="photo-editor-country"
-          label="Country"
-          hint={spec ? `Passport photo · ${spec.width} × ${spec.height} px` : undefined}
-        >
-          {(props) => (
-            <Select
-              {...props}
-              value={country}
-              disabled={working}
-              onChange={(event) => setCountry(event.target.value as CountryCode)}
+          value={country}
+          onChange={setCountry}
+          disabled={working}
+          describedBy={spec ? "photo-editor-country-hint" : undefined}
+        />
+        {spec && (
+          <p id="photo-editor-country-hint" className="flex items-center gap-2 text-sm text-muted-foreground">
+            <svg
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+              className="size-4 shrink-0"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={1.75}
             >
-              {PHOTO_COUNTRIES.map((option) => (
-                <option key={option.code} value={option.code}>
-                  {option.name}
-                </option>
-              ))}
-            </Select>
-          )}
-        </Field>
+              <circle cx="12" cy="12" r="9" />
+              <path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3Z" />
+            </svg>
+            Passport photo sized to {spec.width} × {spec.height} px for {spec.name}
+          </p>
+        )}
       </div>
 
-      {working ? (
-        <div
-          role="status"
-          aria-live="polite"
-          className="flex min-h-56 flex-col items-center justify-center gap-4 rounded-xl border-2 border-dashed border-border-strong bg-surface p-8 text-center"
-        >
-          {status.thumbUrl ? (
-            // eslint-disable-next-line @next/next/no-img-element -- local blob preview, nothing to optimize
-            <img src={status.thumbUrl} alt="" className="max-h-40 w-auto animate-pulse rounded-md border" />
-          ) : (
-            <span aria-hidden="true" className="size-10 animate-spin rounded-full border-4 border-border-strong border-t-primary" />
-          )}
-          <p className="text-base font-semibold">{STEP_LABELS[status.step]}</p>
-          {status.step === "processing" && <p className="text-sm text-muted-foreground">This can take up to a minute. Please keep this page open.</p>}
+      <section
+        aria-labelledby="photo-editor-upload-heading"
+        className="flex flex-col gap-5 rounded-xl border bg-surface-raised p-5 shadow-sm sm:p-8"
+      >
+        <h3 id="photo-editor-upload-heading" className="text-base font-semibold">
+          Upload or take your photo
+        </h3>
+
+        {working ? (
+          <div
+            role="status"
+            aria-live="polite"
+            className="flex min-h-56 flex-col items-center gap-6 rounded-xl border bg-surface p-6 sm:flex-row sm:items-center sm:p-8"
+          >
+            <div className="flex size-40 shrink-0 items-center justify-center overflow-hidden rounded-lg border bg-photo-backdrop">
+              {status.thumbUrl ? (
+                // eslint-disable-next-line @next/next/no-img-element -- local blob preview, nothing to optimize
+                <img src={status.thumbUrl} alt="Your uploaded photo" className="size-full object-contain" />
+              ) : (
+                <span
+                  aria-hidden="true"
+                  className="size-10 animate-spin rounded-full border-4 border-border-strong border-t-primary"
+                />
+              )}
+            </div>
+
+            <div className="flex flex-col gap-4">
+              <ol className="flex flex-col gap-3">
+                {STEPS.map(({ key, label }, index) => {
+                  const current = STEPS.findIndex((step) => step.key === status.step);
+                  const state = index < current ? "done" : index === current ? "active" : "pending";
+                  return (
+                    <li
+                      key={key}
+                      aria-current={state === "active" ? "step" : undefined}
+                      className="flex items-center gap-3 text-sm"
+                    >
+                      {state === "done" ? (
+                        <span
+                          aria-hidden="true"
+                          className="flex size-5 items-center justify-center rounded-full bg-success text-primary-foreground"
+                        >
+                          <svg viewBox="0 0 16 16" className="size-3" fill="none" stroke="currentColor" strokeWidth={2.5}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="m3.5 8.5 3 3 6-7" />
+                          </svg>
+                        </span>
+                      ) : state === "active" ? (
+                        <span
+                          aria-hidden="true"
+                          className="size-5 animate-spin rounded-full border-2 border-border-strong border-t-primary"
+                        />
+                      ) : (
+                        <span aria-hidden="true" className="size-5 rounded-full border-2 border-border-strong" />
+                      )}
+                      <span className={cn(state === "active" ? "font-semibold text-foreground" : "text-muted-foreground")}>
+                        {label}
+                        {state === "done" && <span className="sr-only"> (done)</span>}
+                      </span>
+                    </li>
+                  );
+                })}
+              </ol>
+              {status.step === "processing" && (
+                <p className="text-sm text-muted-foreground">This can take up to a minute. Please keep this page open.</p>
+              )}
+            </div>
+          </div>
+        ) : (
+          <FileDrop
+            onFile={onFile}
+            label="Tap to upload a photo or take a picture"
+            hint="Drag and drop from your device · JPEG, PNG, or WebP (up to 25 MB)"
+            privacyNote={`Your photo is uploaded over an encrypted connection for processing. Your result page expires after ${PHOTO_RESULT_TTL_DAYS} days.`}
+          />
+        )}
+
+        {status.kind === "error" && (
+          <Alert tone="danger">
+            <p>{status.message}</p>
+            <Button variant="outline" size="sm" className="mt-3" onClick={() => setStatus({ kind: "idle" })}>
+              Try another photo
+            </Button>
+          </Alert>
+        )}
+
+        <div className="flex flex-col gap-3 border-t pt-5">
+          <h4 className="text-sm font-semibold">Quick acceptance tips</h4>
+          <ul className="grid gap-x-8 gap-y-2.5 text-sm text-muted-foreground sm:grid-cols-2">
+            {TIPS.map((tip) => (
+              <li key={tip} className="flex items-center gap-2">
+                <CheckIcon className="size-4 text-success" />
+                {tip}
+              </li>
+            ))}
+          </ul>
+          <p className="text-xs text-muted-foreground">
+            Read how we handle uploads in our{" "}
+            <Link href="/privacy-policy" className="text-primary underline underline-offset-4">
+              privacy policy
+            </Link>
+            .
+          </p>
         </div>
-      ) : (
-        <FileDrop
-          onFile={onFile}
-          label="Upload your photo"
-          privacyNote={`Your photo is uploaded over an encrypted connection for processing. Your result page expires after ${PHOTO_RESULT_TTL_DAYS} days.`}
-        />
-      )}
-
-      {status.kind === "error" && (
-        <Alert tone="danger">
-          <p>{status.message}</p>
-          <Button variant="outline" size="sm" className="mt-3" onClick={() => setStatus({ kind: "idle" })}>
-            Try another photo
-          </Button>
-        </Alert>
-      )}
-
-      <p className="text-sm text-muted-foreground">
-        For best results, use a recent, front-facing photo in even light with nothing covering your face. Read how we handle
-        uploads in our{" "}
-        <Link href="/privacy-policy" className="text-primary underline underline-offset-4">
-          privacy policy
-        </Link>
-        .
-      </p>
+      </section>
     </div>
   );
 }
