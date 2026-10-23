@@ -268,12 +268,11 @@ export default async function Home() {
       <section className="border-b pt-page pb-12 sm:pb-16">
         <Container className="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-12 lg:py-8">
           <div className="flex flex-col items-start gap-6 text-left">
-           
             <h1 className="font-display text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
               Passport Photo Online: <span className="text-primary">Free Passport Size Photo Maker</span>
             </h1>
             <p className="max-w-xl text-lg text-pretty text-muted-foreground">
-              Convert any photo to passport size photo in minutes. Make a 2 × 2 inch photo 
+              Convert any photo to passport size in minutes .
             </p>
             <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
               <a href={links.tool} className={buttonVariants({ size: "lg", className: "group" })}>
@@ -300,14 +299,12 @@ export default async function Home() {
               width={heroImage.width}
               height={heroImage.height}
               alt={heroImage.alt}
-              sizes="(min-width: 70rem) 38rem, (min-width: 64rem) 48vw, 100vw"
+              sizes="(min-width: 80rem) 35rem, (min-width: 64rem) 45vw, 100vw"
               preload
               className="h-auto w-full"
             />
           </figure>
         </Container>
-
-
       </section>
 
       {/* Photo tool: the hero's main button scrolls here. */}

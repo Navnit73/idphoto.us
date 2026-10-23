@@ -199,7 +199,7 @@ export function CountryPicker({
               >
                 <span aria-hidden="true">{flagEmoji(country.code)}</span>
                 <span className="flex-1">{country.name}</span>
-                <span className="font-mono text-sm text-muted-foreground">
+                <span className="text-sm text-muted-foreground tabular-nums">
                   {country.width}×{country.height}px
                 </span>
               </li>

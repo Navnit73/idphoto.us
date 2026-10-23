@@ -36,9 +36,6 @@ export const photoProcessSchema = z.object({
 export const MAX_PHOTO_UPLOAD_BYTES = 8 * 1024 * 1024;
 export const PHOTO_UPLOAD_TYPES = ["image/jpeg", "image/png", "image/webp"] as const;
 
-/** How long a processed photo stays available at /preview/<id>. */
-export const PHOTO_RESULT_TTL_DAYS = 7;
-
 export const photoResultIdSchema = z.uuid();
 
 export const photoEmailSchema = z.object({

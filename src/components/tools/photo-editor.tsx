@@ -11,7 +11,7 @@ import type { PhotoProcessResult } from "@/lib/api/types";
 import { cn } from "@/lib/cn";
 import { apiUpload, ClientApiError } from "@/lib/http/client";
 import { DEFAULT_COUNTRY, getCountry, type CountryCode } from "@/lib/photo/countries";
-import { PHOTO_RESULT_TTL_DAYS } from "@/lib/validation/forms";
+import { PHOTO_RESULT_TTL_DAYS } from "@/lib/photo/limits";
 
 import { CountryPicker } from "./country-picker";
 import { FileDrop } from "./file-drop";

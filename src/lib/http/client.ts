@@ -1,14 +1,11 @@
-import axios, { AxiosError } from "axios";
+import type { ApiErrorCode, ApiResponse } from "@/lib/api/types";
 
-import type { ApiErrorCode, ApiFailure, ApiResponse } from "@/lib/api/types";
-
-/** Axios instance for browser → our own /api routes. Same-origin, JSON only. */
-export const apiClient = axios.create({
-  baseURL: "/api",
-  timeout: 15_000,
-  headers: { "Content-Type": "application/json", Accept: "application/json" },
-  withCredentials: false,
-});
+/**
+ * Browser → our own /api routes. Same-origin, JSON responses only. Built on
+ * `fetch` rather than axios so the photo tools don't ship an HTTP library.
+ */
+const API_BASE = "/api";
+const DEFAULT_TIMEOUT_MS = 15_000;
 
 /** Error thrown by `apiPost`, carrying the API's error code and per-field messages. */
 export class ClientApiError extends Error {
@@ -22,34 +19,35 @@ export class ClientApiError extends Error {
   }
 }
 
-function toClientError(error: unknown): ClientApiError {
-  if (error instanceof AxiosError) {
-    const body = error.response?.data as ApiFailure | undefined;
-    if (body && body.ok === false) return new ClientApiError(body.error.code, body.error.message, body.error.fields);
-    if (error.code === AxiosError.ECONNABORTED) return new ClientApiError("network_error", "The request timed out. Please try again.");
-    if (!error.response) return new ClientApiError("network_error", "Couldn't reach the server. Check your connection and try again.");
-  }
-  return new ClientApiError("internal_error", "Something went wrong. Please try again.");
-}
-
-async function unwrap<T>(request: Promise<{ data: ApiResponse<T> }>): Promise<T> {
+async function request<T>(path: string, body: BodyInit, { timeout, headers }: { timeout: number; headers?: HeadersInit }): Promise<T> {
+  let response: Response;
   try {
-    const { data } = await request;
-    if (!data.ok) throw new ClientApiError(data.error.code, data.error.message, data.error.fields);
-    return data.data;
+    response = await fetch(`${API_BASE}${path}`, {
+      method: "POST",
+      body,
+      headers: { Accept: "application/json", ...headers },
+      credentials: "same-origin",
+      signal: AbortSignal.timeout(timeout),
+    });
   } catch (error) {
-    throw error instanceof ClientApiError ? error : toClientError(error);
+    if (error instanceof DOMException && error.name === "TimeoutError") {
+      throw new ClientApiError("network_error", "The request timed out. Please try again.");
+    }
+    throw new ClientApiError("network_error", "Couldn't reach the server. Check your connection and try again.");
   }
+
+  // Our routes always answer with an ApiResponse; anything else (a proxy error page, say) is unexpected.
+  const data = (await response.json().catch(() => null)) as ApiResponse<T> | null;
+  if (data?.ok === true) return data.data;
+  if (data?.ok === false) throw new ClientApiError(data.error.code, data.error.message, data.error.fields);
+  throw new ClientApiError("internal_error", "Something went wrong. Please try again.");
 }
 
 export function apiPost<T>(path: string, body: unknown): Promise<T> {
-  return unwrap(apiClient.post<ApiResponse<T>>(path, body));
+  return request<T>(path, JSON.stringify(body), { timeout: DEFAULT_TIMEOUT_MS, headers: { "Content-Type": "application/json" } });
 }
 
-/**
- * Posts a FormData upload. The multipart Content-Type stops axios from
- * serializing the form as JSON; the browser then sets it with the boundary.
- */
+/** Posts a FormData upload. No Content-Type header, so the browser sets multipart with its boundary. */
 export function apiUpload<T>(path: string, form: FormData, { timeout = 90_000 }: { timeout?: number } = {}): Promise<T> {
-  return unwrap(apiClient.post<ApiResponse<T>>(path, form, { timeout, headers: { "Content-Type": "multipart/form-data" } }));
+  return request<T>(path, form, { timeout });
 }

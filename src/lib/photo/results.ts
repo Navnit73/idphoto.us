@@ -2,7 +2,8 @@ import "server-only";
 
 import { collections, type PhotoResultDoc } from "@/lib/db/collections";
 import { getDb } from "@/lib/db/mongodb";
-import { PHOTO_RESULT_TTL_DAYS, photoResultIdSchema } from "@/lib/validation/forms";
+import { PHOTO_RESULT_TTL_DAYS } from "@/lib/photo/limits";
+import { photoResultIdSchema } from "@/lib/validation/forms";
 
 import type { ProcessedPhoto } from "./pixpassport";
 
