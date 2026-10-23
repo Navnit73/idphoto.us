@@ -15,7 +15,7 @@ keywords:
   - reduce photo file size
   - photo compressor
 relatedPages:
-  - /tool/passport-photo-maker
+  - /tool/passport-photo-editor
   - /guide/us-passport-photo-size
   - /guide/passport-photo-requirements
 sources:
@@ -24,7 +24,7 @@ sources:
     publisher: "U.S. Department of State"
 faq:
   - question: "How do I get my photo under 240 KB for the DS-160?"
-    answer: "Choose the 240 KB preset and select Compress photo. The tool lowers JPEG quality step by step and, only if needed, reduces the dimensions — but never below 600 pixels on the shorter side, the minimum for visa photos. Crop to a square first with the [passport photo maker](/tool/passport-photo-maker)."
+    answer: "Choose the 240 KB preset and select Compress photo. The tool lowers JPEG quality step by step and, only if needed, reduces the dimensions — but never below 600 pixels on the shorter side, the minimum for visa photos. Make the square photo first with the [passport photo editor](/tool/passport-photo-editor)."
   - question: "Will compression make my photo blurry?"
     answer: "Some detail is lost with any JPEG compression, but at 240 KB a 600 × 600 photo keeps plenty of quality. The tool always picks the highest quality that fits your target."
   - question: "Are my photos uploaded?"
@@ -55,7 +55,7 @@ Requirements vary by form and can change, so check the instructions on the form 
 
 ## Tips for the best result
 
-- **Crop first, then compress.** A square passport-style crop has fewer pixels than a full phone photo, so it compresses with less quality loss. Use the [passport photo maker](/tool/passport-photo-maker), then compress its 600 × 600 output.
+- **Crop first, then compress.** A square passport-style crop has fewer pixels than a full phone photo, so it compresses with less quality loss. Use the [passport photo editor](/tool/passport-photo-editor), then compress its 600 × 600 output.
 - **Start from the original.** Each round of JPEG compression loses detail. Compress the original file once rather than compressing a copy that's already been compressed.
 - **Check the result.** Look at the preview at full size. If faces look blocky, choose a larger target if the form allows it.
 

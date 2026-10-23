@@ -17,7 +17,7 @@ showTableOfContents: true
 showDisclaimer: true
 relatedPages:
   - /guide/passport-photo-requirements
-  - /tool/passport-photo-maker
+  - /tool/passport-photo-editor
   - /tool/photo-compressor
 sources:
   - title: "U.S. Passport Photos"
@@ -35,7 +35,7 @@ faq:
   - question: "How many pixels is a 2 × 2 inch photo?"
     answer: "At 300 DPI, the standard for photo printing, a 2 × 2 inch photo is 600 × 600 pixels. U.S. visa applications accept square digital photos from 600 × 600 up to 1200 × 1200 pixels."
   - question: "Can I print a passport photo on a 4 × 6 print?"
-    answer: "Yes. A 4 × 6 inch print holds six 2 × 2 inch photos with no wasted space. Print at actual size with no scaling or borders, then cut along the edges. Our passport photo maker creates this sheet for you."
+    answer: "Yes. A 4 × 6 inch print holds six 2 × 2 inch photos with no wasted space. Print at actual size with no scaling or borders, then cut along the edges."
 ---
 
 The official size of a U.S. passport photo is **2 × 2 inches (51 × 51 mm)**. That part is easy. What trips people up is the second measurement: the size of your head inside the photo, which must be **between 1 inch and 1⅜ inches (25–35 mm)** from the bottom of your chin to the top of your hair.
@@ -104,4 +104,4 @@ Many U.S. applications ask for passport-style photos, including U.S. visa applic
 
 ## The fast way to get the size right
 
-Our [passport photo maker](/tool/passport-photo-maker) shows the chin line and the top-of-head zone directly on your photo, so you can line it up by eye. It exports a 600 × 600 pixel file for online forms and a 4 × 6 inch print sheet with six copies. It doesn't change the background or your appearance, so you still need a compliant original photo — see the full [passport photo requirements](/guide/passport-photo-requirements).
+Our [passport photo editor](/tool/passport-photo-editor) finds your face and the top of your head, crops the photo to 600 × 600 pixels, and reports the head height so you can check it against the official range. If your background doesn't pass its check, the editor may replace it and tells you when it has. The Department of State doesn't accept photos changed by software, so in that case retake the photo against a plain white or off-white wall. Either way, you need a compliant original photo — see the full [passport photo requirements](/guide/passport-photo-requirements).

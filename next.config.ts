@@ -52,6 +52,7 @@ const nextConfig: NextConfig = {
   outputFileTracingIncludes: {
     "/**": ["./content/**/*"],
   },
+ 
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
   },

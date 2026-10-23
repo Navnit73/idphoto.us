@@ -14,8 +14,8 @@ export default function NotFound() {
         The link may be out of date, or the page may have moved. These are the most popular places to start:
       </p>
       <div className="flex flex-wrap gap-3">
-        <Link href="/tool/passport-photo-maker" className={buttonVariants()}>
-          Passport photo maker
+        <Link href="/#photo-tool" className={buttonVariants()}>
+          Make a passport photo
         </Link>
         <Link href="/guide" className={buttonVariants({ variant: "outline" })}>
           Browse guides

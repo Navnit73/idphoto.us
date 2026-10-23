@@ -17,7 +17,7 @@ showTableOfContents: true
 showDisclaimer: true
 relatedPages:
   - /guide/us-passport-photo-size
-  - /tool/passport-photo-maker
+  - /tool/passport-photo-editor
   - /tool/photo-compressor
 sources:
   - title: "U.S. Passport Photos"
@@ -37,7 +37,7 @@ faq:
   - question: "How recent does my passport photo need to be?"
     answer: "It must have been taken within the last six months and show how you look now. If your appearance has changed noticeably, take a new photo."
   - question: "Can I take my passport photo at home?"
-    answer: "Yes. Many people take their own passport photo at home. Ask someone to take it from a few feet away against a plain white or off-white wall in even light, then crop it to 2 × 2 inches with the correct head size using our [passport photo maker](/tool/passport-photo-maker)."
+    answer: "Yes. Many people take their own passport photo at home. Ask someone to take it from a few feet away against a plain white or off-white wall in even light, then crop it to 2 × 2 inches with the correct head size using our [passport photo editor](/tool/passport-photo-editor)."
 ---
 
 A passport photo is one of the most common reasons an application gets delayed. The rules are specific, but none of them are complicated once you see them together. This checklist covers every requirement the U.S. Department of State publishes for passport photos, grouped by what you need to get right: size, appearance, background and lighting, and printing.
@@ -109,4 +109,4 @@ Children need their own photo, and the same rules apply. For babies, no other pe
 | Editing | No filters, retouching, or AI changes |
 | Print | Photo-quality paper, undamaged |
 
-When everything checks out, use our [passport photo maker](/tool/passport-photo-maker) to crop your photo to the correct size, or the [photo compressor](/tool/photo-compressor) if an online form needs a smaller file.
+When everything checks out, use our [passport photo editor](/tool/passport-photo-editor) to crop your photo to the correct size, or the [photo compressor](/tool/photo-compressor) if an online form needs a smaller file.

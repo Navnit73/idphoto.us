@@ -4,7 +4,7 @@ SEO-focused passport and ID photo tools and guides. Built with Next.js 16 (App R
 
 - **Markdown-driven pages.** Every page except the home page is a Markdown file in `content/`. Frontmatter controls the route, template, metadata, structured data, and SEO settings. See [docs/CONTENT.md](docs/CONTENT.md).
 - **Static by default.** Content pages are prerendered at build time (`ensureStatic = "navigation"`). Only `/api/*` runs per request.
-- **Private tools.** The passport photo maker and photo compressor run entirely in the browser. Photos are never uploaded.
+- **Photo tools.** The passport photo editor (on the home page and `/tool/passport-photo-editor`) uploads photos to the PixPassport API for cropping and background checks. The photo compressor runs entirely in the browser.
 - **Validated content.** The build fails on duplicate titles, thin pages, broken internal links, bad canonicals, or a wrong heading structure.
 
 ## Getting started
@@ -43,7 +43,7 @@ src/
   components/
     content/                Markdown renderer, page header, TOC, FAQ, sources, breadcrumbs
     templates/              tool, guide, faq, legal, info, hub (+ registry)
-    tools/                  Passport photo maker, photo compressor (client-side)
+    tools/                  Photo editor (PixPassport upload), photo compressor (client-side)
     widgets/                Lazy widget registry, contact form, feedback
     ui/, layout/, theme/    Primitives, header/footer, theme toggle
   config/site.ts            Site name, nav, footer links

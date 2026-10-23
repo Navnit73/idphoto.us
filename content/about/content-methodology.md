@@ -27,7 +27,7 @@ Official requirements change occasionally — for example, the U.S. stopped acce
 
 ## How we build and test tools
 
-Our tools use the same measurements as our guides. The passport photo maker, for example, sets the head height between 50% and 69% of a 2 × 2 inch photo, matching the official 1 to 1⅜ inch range. We test tools in current versions of major browsers on desktop and mobile. All processing happens on your device; we don't collect photos to test or train anything.
+Our tools use the same measurements as our guides. For a U.S. photo, for example, the passport photo editor reports the head height as a share of the 2 × 2 inch photo, so you can compare it with the official 1 to 1⅜ inch range (50% to 69%). We test tools in current versions of major browsers on desktop and mobile. The photo compressor runs entirely on your device; the passport photo editor uploads your photo for processing, as described in our [privacy policy](/privacy-policy).
 
 ## Limits you should know about
 

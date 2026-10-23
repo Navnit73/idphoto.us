@@ -16,8 +16,8 @@ keywords:
   - passport photo background
 showDisclaimer: true
 relatedPages:
-  - /tool/passport-photo-maker
   - /guide/passport-photo-requirements
+  - /guide/us-passport-photo-size
   - /tool/photo-compressor
 sources:
   - title: "U.S. Passport Photos"
@@ -25,7 +25,7 @@ sources:
     publisher: "U.S. Department of State"
 faq:
   - question: "Is my photo uploaded?"
-    answer: "Yes. Unlike our [passport photo maker](/tool/passport-photo-maker), which works entirely in your browser, this editor sends your photo over an encrypted connection to a processing server. Your result page expires after 7 days. The [privacy policy](/privacy-policy) explains exactly what is stored."
+    answer: "Yes. The editor sends your photo over an encrypted connection to a processing server. Your result page expires after 7 days. The [privacy policy](/privacy-policy) explains exactly what is stored."
   - question: "Will my photo be accepted?"
     answer: "No tool can promise that. The editor crops and sizes the photo and checks the background, but acceptance also depends on lighting, expression, focus, and the other [requirements](/guide/passport-photo-requirements), and the agency that receives your application makes the final decision."
   - question: "What happens if my background doesn't pass?"
@@ -33,7 +33,7 @@ faq:
   - question: "How long can I get my photo?"
     answer: "Your result page and its download link work for 7 days. Download the photo, or use the \"Email me this photo\" option to send the links to yourself."
   - question: "Can I print the photo?"
-    answer: "The download is a digital file at your country's pixel size, ready for online applications. For a U.S. 2 × 2 inch photo on a 4 × 6 print sheet, use the [passport photo maker](/tool/passport-photo-maker)."
+    answer: "Yes. The download is a digital file at your country's pixel size. A U.S. photo is 600 × 600 pixels, which prints at exactly 2 × 2 inches at 300 DPI; choose actual size with no scaling. See the [U.S. passport photo size guide](/guide/us-passport-photo-size) for details."
 ---
 
 ## How to use the passport photo editor
@@ -62,4 +62,4 @@ Passport photos for Algeria, Argentina, Australia, Austria, Bahrain, Belgium, Bh
 
 ## Privacy
 
-This tool uploads your photo, because face detection and background checks run on a server. The photo travels over an encrypted connection and is handled by our photo processing provider. We keep a record of your result so its page works, and that record is deleted automatically after 7 days. If you'd rather your photo never leave your device, use the in-browser [passport photo maker](/tool/passport-photo-maker) instead. See the [privacy policy](/privacy-policy) for details.
+This tool uploads your photo, because face detection and background checks run on a server. The photo travels over an encrypted connection and is handled by our photo processing provider. We keep a record of your result so its page works, and that record is deleted automatically after 7 days. See the [privacy policy](/privacy-policy) for details.

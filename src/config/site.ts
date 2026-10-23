@@ -5,7 +5,7 @@ export const siteConfig = {
   url: publicEnv.NEXT_PUBLIC_SITE_URL,
   tagline: "Passport & ID photo tools and guides",
   description:
-    "Free tools and plain-English guides for U.S. passport, visa, and ID photos. Crop and compress photos in your browser — your images never leave your device.",
+    "Free tools and plain-English guides for passport, visa, and ID photos. Make a passport photo for the U.S. and 60+ countries, and compress photos for upload limits.",
   contactEmail: "hello@idphoto.us",
   nav: [
     { label: "Tools", href: "/tool" },
@@ -17,7 +17,6 @@ export const siteConfig = {
     {
       title: "Tools",
       links: [
-        { label: "Passport photo maker", href: "/tool/passport-photo-maker" },
         { label: "Passport photo editor", href: "/tool/passport-photo-editor" },
         { label: "Photo compressor", href: "/tool/photo-compressor" },
       ],

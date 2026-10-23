@@ -6,7 +6,7 @@ Every public page except the home page is a Markdown file in `content/`. Add a f
 
 | Folder            | `category` | URL                       | Example                                   |
 | ----------------- | ---------- | ------------------------- | ----------------------------------------- |
-| `content/tools/`  | `tool`     | `/tool/<slug>`            | `/tool/passport-photo-maker`              |
+| `content/tools/`  | `tool`     | `/tool/<slug>`            | `/tool/passport-photo-editor`             |
 | `content/guides/` | `guide`    | `/guide/<slug>`           | `/guide/us-passport-photo-size`           |
 | `content/about/`  | `about`    | `/<slug>`                 | `/about`, `/contact`, `/faq`              |
 | `content/legal/`  | `legal`    | `/<slug>`                 | `/privacy-policy`, `/terms`               |
@@ -40,9 +40,9 @@ ogImage: /images/og/custom.png                   # default: generated card at /o
 schemaType: Article                              # override the template default (see below)
 showTableOfContents: true
 showDisclaimer: true                             # "not an official source" notice
-widget: passport-photo-maker                     # passport-photo-maker | photo-compressor | photo-editor | contact-form
+widget: photo-editor                             # photo-compressor | photo-editor | contact-form
 country: IN                                      # photo-editor only: preselected country (code from src/lib/photo/countries.ts)
-relatedPages: [/guide/passport-photo-requirements, /tool/passport-photo-maker]
+relatedPages: [/guide/passport-photo-requirements, /tool/passport-photo-editor]
 author: editorial-team                           # id from content/authors.json
 reviewedBy: some-author-id                       # ONLY if that person really reviewed the page
 sources:

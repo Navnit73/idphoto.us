@@ -42,7 +42,7 @@ When using the site, you agree to:
 
 ## Your photos
 
-Our tools process photos on your device and don't upload them to us, so you keep full control of your images. We claim no rights in them.
+The photo compressor processes photos on your device. The passport photo editor uploads your photo to process it, as described in our [privacy policy](/privacy-policy). Either way, your images remain yours, and we claim no rights in them.
 
 ## Our content
 

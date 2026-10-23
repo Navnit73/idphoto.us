@@ -25,7 +25,7 @@ export const TEMPLATES = ["tool", "guide", "faq", "legal", "info", "hub"] as con
 export type TemplateName = (typeof TEMPLATES)[number];
 
 /** Interactive client components a page can embed via `widget`. */
-export const WIDGETS = ["passport-photo-maker", "photo-compressor", "photo-editor", "contact-form"] as const;
+export const WIDGETS = ["photo-compressor", "photo-editor", "contact-form"] as const;
 export type WidgetName = (typeof WIDGETS)[number];
 
 export const SCHEMA_TYPES = [

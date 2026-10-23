@@ -1,9 +1,11 @@
 import Link from "next/link";
+import type { FAQPage } from "schema-dts";
 
 import { PageCardList } from "@/components/content/page-card-list";
 import { JsonLd } from "@/components/seo/json-ld";
 import { buttonVariants } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
+import { Widget } from "@/components/widgets/registry";
 import { siteConfig } from "@/config/site";
 import { getPageSummaries } from "@/lib/content/loader";
 import { organizationJsonLd, websiteJsonLd } from "@/lib/seo/json-ld";
@@ -15,7 +17,7 @@ export const metadata = buildMetadata({
   title: `Passport Photo Online: Make a U.S. Passport Photo in Minutes | ${siteConfig.name}`,
   absoluteTitle: true,
   description:
-    "Make a 2 × 2 inch U.S. passport photo online. Crop to the official head size, shrink files for upload limits, and download. Your photo never leaves your device.",
+    "Make a passport photo online for the U.S. and 60+ countries. Upload a photo, and we crop it to the official size and check the background, ready to download.",
   path: "/",
   ogImage: "/og",
 });
@@ -26,7 +28,8 @@ export const metadata = buildMetadata({
  * exists before deploying, or point it at the closest live page.
  */
 const links = {
-  maker: "/tool/passport-photo-maker",
+  /** The photo tool section on this page. */
+  tool: "#photo-tool",
   requirements: "/guide/passport-photo-requirements",
   converter: "/tool/passport-photo-converter",
   twoByTwo: "/tool/2x2-photo-maker",
@@ -51,7 +54,7 @@ const links = {
 
 const trustPoints = [
   "Sized to U.S. Department of State specifications",
-  "Processed in your browser, never uploaded",
+  "Photo sizes for 60+ countries",
   "Works on any phone, tablet, or computer",
 ];
 
@@ -59,7 +62,7 @@ const documents = [
   {
     title: "U.S. passport",
     body: "Book and card applications, first-time or renewal. 2 × 2 inches.",
-    href: links.maker,
+    href: links.tool,
   },
   {
     title: "U.S. visa (DS-160)",
@@ -95,8 +98,8 @@ const steps = [
     link: { href: links.atHome, label: "how to take a passport photo at home" },
   },
   {
-    title: "Step 2: Crop to the correct head size",
-    body: "Line up the on-screen guides with your chin and the top of your head. The tool sizes the frame to 2 × 2 inches and keeps your head between 1 and 1 3/8 inches tall, the range the State Department requires.",
+    title: "Step 2: Let the tool crop and check it",
+    body: "Choose your country and upload the photo. The tool finds your face and the top of your head, crops the photo to your country's size, and checks the background. For a U.S. photo, that's 2 × 2 inches with your head positioned for the State Department's 1 to 1 3/8 inch range.",
     link: { href: links.size, label: "U.S. passport photo size" },
   },
   {
@@ -110,7 +113,7 @@ const comparison = [
   { label: "Where you take it", online: "Anywhere, on your own schedule", store: "During store or office hours" },
   { label: "Retakes", online: "As many as you like", store: "Depends on the location" },
   { label: "Digital file for online renewal", online: "Included in every download", store: "Not always available" },
-  { label: "Who handles your image", online: "Only you, on your device", store: "Store staff and equipment" },
+  { label: "Who handles your image", online: "Our automated processing service", store: "Store staff and equipment" },
   { label: "Best for", online: "Planning ahead and online renewals", store: "Hands-off help on the same day" },
 ];
 
@@ -158,7 +161,7 @@ const faqs = [
   {
     question: "How long does it take to make a passport photo online?",
     answer:
-      "Most people finish in a few minutes. Taking a good photo usually takes the longest, and cropping and downloading take less than a minute.",
+      "Most people finish in a few minutes. Taking a good photo usually takes the longest. Processing takes up to a minute, and then your photo is ready to download.",
   },
   {
     question: "Can I print my passport photo at home?",
@@ -168,14 +171,14 @@ const faqs = [
   {
     question: "Do you store my photos?",
     answer:
-      "No. Our photo tools run entirely in your browser, so your images are never uploaded to our servers. Close the page, and the photo is gone unless you saved it.",
+      "Your photo is uploaded to our processing service so it can be cropped and checked. Your result page and its download link expire after 7 days, so save the file before then. Our privacy policy explains exactly what is kept.",
   },
 ];
 
 const principles = [
   {
-    title: "Private by design",
-    body: "Our photo tools run entirely in your browser. Your images are never uploaded to our servers.",
+    title: "Clear about your data",
+    body: "We tell you before a photo is uploaded, expire your result page after 7 days, and never sell your information.",
   },
   {
     title: "Checked against official sources",
@@ -187,8 +190,7 @@ const principles = [
   },
 ];
 
-const faqJsonLd = {
-  "@context": "https://schema.org",
+const faqJsonLd: FAQPage = {
   "@type": "FAQPage",
   mainEntity: faqs.map((faq) => ({
     "@type": "Question",
@@ -216,14 +218,14 @@ export default async function Home() {
             Passport Photo Online: Create a Compliant U.S. Passport Photo in Minutes
           </h1>
           <p className="max-w-prose text-lg text-pretty text-muted-foreground">
-            Make a passport photo online without leaving home. Take a picture with your phone, crop it to the official 2 × 2
-            inch U.S. format, and download a file you can print or upload. You skip the store line, retake as often as you
-            like, and keep your photo private, because it never leaves your device.
+            Make a passport photo online without leaving home. Take a picture with your phone, upload it, and get a photo
+            cropped to the official 2 × 2 inch U.S. format, or the size for 60+ other countries. Download a file you can print
+            or upload, skip the store line, and retake as often as you like.
           </p>
           <div className="flex flex-wrap gap-3">
-            <Link href={links.maker} className={buttonVariants({ size: "lg" })}>
+            <a href={links.tool} className={buttonVariants({ size: "lg" })}>
               Make a passport photo
-            </Link>
+            </a>
             <Link href={links.requirements} className={buttonVariants({ variant: "outline", size: "lg" })}>
               Read the requirements
             </Link>
@@ -239,6 +241,22 @@ export default async function Home() {
         </Container>
       </section>
 
+      {/* Photo tool: the hero's main button scrolls here. */}
+      <section id="photo-tool" aria-labelledby="photo-tool-heading" className="border-b bg-surface py-section">
+        <Container className="flex flex-col gap-8">
+          <div className="flex max-w-prose flex-col gap-3">
+            <h2 id="photo-tool-heading" className={sectionHeading}>
+              Make your passport photo
+            </h2>
+            <p className="text-pretty text-muted-foreground">
+              Choose your country and upload a photo. We find your face, check the background, and crop the photo to the
+              right size. Your result opens on its own page, ready to download.
+            </p>
+          </div>
+          <Widget name="photo-editor" />
+        </Container>
+      </section>
+
       {/* Document selector */}
       <section aria-labelledby="documents-heading" className="py-section">
         <Container className="flex flex-col gap-8">
@@ -247,7 +265,7 @@ export default async function Home() {
               Choose your document
             </h2>
             <p className="text-pretty text-muted-foreground">
-              Each document has its own size and rules. Pick yours, and we'll show you the right tool or guide.
+              Each document has its own size and rules. Pick yours, and we&apos;ll show you the right tool or guide.
             </p>
           </div>
           <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -307,9 +325,9 @@ export default async function Home() {
               Why use an online passport photo maker instead of a store
             </h2>
             <p className="text-pretty text-muted-foreground">
-              Pharmacies, post offices, and photo studios take passport photos, and they're a good choice if you'd rather
-              hand the job to someone else. A passport photo maker gives you more control, more privacy, and a digital file
-              you can use for online applications.
+              Pharmacies, post offices, and photo studios take passport photos, and they&apos;re a good choice if you&apos;d rather
+              hand the job to someone else. A passport photo maker gives you more control and a digital file you can use
+              for online applications.
             </p>
           </div>
 
@@ -317,15 +335,15 @@ export default async function Home() {
             <div className="flex flex-col gap-2">
               <h3 className="text-xl font-semibold">Retake as many times as you like</h3>
               <p className="text-muted-foreground">
-                Blinked? Squinted? Shadow behind your ear? Take another photo. You can keep trying until you're happy,
+                Blinked? Squinted? Shadow behind your ear? Take another photo. You can keep trying until you&apos;re happy,
                 without paying for a second sitting or waiting in line again.
               </p>
             </div>
             <div className="flex flex-col gap-2">
-              <h3 className="text-xl font-semibold">Keep your photo on your own device</h3>
+              <h3 className="text-xl font-semibold">Get the right size for 60+ countries</h3>
               <p className="text-muted-foreground">
-                Our tools process your image in your browser. Nobody else sees it, and we can't store it, sell it, or
-                train anything on it.
+                Choose your country, and the tool crops to that country&apos;s photo size. That helps with foreign passports
+                and visas, which many U.S. stores can&apos;t print.
               </p>
             </div>
           </div>
@@ -428,7 +446,7 @@ export default async function Home() {
               <ul className="flex list-disc flex-col gap-2 pl-5 text-muted-foreground">
                 <li>You face the camera with both eyes open and a neutral expression or natural smile.</li>
                 <li>You removed your glasses. Exceptions require a signed medical statement.</li>
-                <li>You wear no hat or head covering unless it's for religious or medical reasons.</li>
+                <li>You wear no hat or head covering unless it&apos;s for religious or medical reasons.</li>
                 <li>No filters, retouching, or edits change how you look.</li>
               </ul>
             </div>
@@ -547,9 +565,9 @@ export default async function Home() {
           <p className="max-w-prose text-pretty text-muted-foreground">
             Grab your phone, find a plain wall near a window, and have a print-ready 2 × 2 inch photo in a few minutes. Not sure your photo will pass? Check it against the requirements first, then download with confidence.
           </p>
-          <Link href={links.maker} className={buttonVariants({ size: "lg" })}>
+          <a href={links.tool} className={buttonVariants({ size: "lg" })}>
             Make a passport photo
-          </Link>
+          </a>
         </Container>
       </section>
     </>

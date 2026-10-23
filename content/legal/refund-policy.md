@@ -12,7 +12,7 @@ updatedAt: 2026-10-23
 
 ## Our tools are free
 
-Everything on idphoto.us — the passport photo maker, the photo compressor, and all guides — is free to use. We don't sell products, subscriptions, or services, and we don't ask for payment details. Because we never charge you, there are no payments for us to refund.
+Everything on idphoto.us — the passport photo editor, the photo compressor, and all guides — is free to use. We don't sell products, subscriptions, or services, and we don't ask for payment details. Because we never charge you, there are no payments for us to refund.
 
 If we introduce a paid product or service in the future, we'll publish a full refund policy on this page before we accept any payments, and the terms that apply at the time of purchase will be shown before you pay.
 

@@ -12,7 +12,8 @@ import { getCountry } from "@/lib/photo/countries";
 import { downloadUrl, getPhotoResult } from "@/lib/photo/results";
 import { buildMetadata } from "@/lib/seo/metadata";
 
-const EDITOR_PATH = "/tool/passport-photo-editor";
+/** The photo tool section on the home page. */
+const EDITOR_PATH = "/#photo-tool";
 
 // Result pages are private links: never indexed, and their links aren't followed.
 export const metadata = buildMetadata({

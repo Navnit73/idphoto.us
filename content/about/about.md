@@ -25,7 +25,7 @@ We started the site because photo problems are one of the most common, and most 
 
 ## What we believe
 
-- **Your photos are yours.** Our tools run in your browser. We never upload, store, or look at your photos.
+- **Your photos are yours.** The photo compressor runs in your browser and never uploads anything. The passport photo editor uploads your photo only to process it, and your result page expires after 7 days. We never sell your photos.
 - **Accuracy over volume.** We'd rather publish a few pages that are correct and current than many that aren't. Every guide cites its official sources and shows when it was last updated.
 - **Honesty about limits.** No website can guarantee a photo will be accepted. The government agency handling your application makes that decision. We say so plainly, and we tell you what each tool does and doesn't check.
 

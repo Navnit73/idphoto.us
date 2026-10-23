@@ -11,7 +11,7 @@ showDisclaimer: true
 relatedPages:
   - /guide/passport-photo-requirements
   - /guide/us-passport-photo-size
-  - /tool/passport-photo-maker
+  - /tool/passport-photo-editor
 sources:
   - title: "U.S. Passport Photos"
     url: "https://travel.state.gov/content/travel/en/passports/how-apply/photos.html"
@@ -26,11 +26,11 @@ faq:
   - question: "What color should the background be?"
     answer: "Plain white or off-white, with no patterns, objects, or shadows."
   - question: "Can I take my passport photo at home with a phone?"
-    answer: "Yes. Have someone else take it from a few feet away in even light against a plain white or off-white wall, then crop it to 2 × 2 inches with our [passport photo maker](/tool/passport-photo-maker)."
+    answer: "Yes. Have someone else take it from a few feet away in even light against a plain white or off-white wall, then crop it to 2 × 2 inches with our [passport photo editor](/tool/passport-photo-editor)."
   - question: "Can I edit my photo or use a filter?"
     answer: "No. The Department of State doesn't accept photos changed with editing software, filters, or AI. Cropping and resizing to the required dimensions is fine."
   - question: "Do you store my photos?"
-    answer: "No. Our tools process photos entirely in your browser. They are never uploaded to our servers."
+    answer: "It depends on the tool. The photo compressor works entirely in your browser and never uploads your photo. The passport photo editor uploads your photo to process it, and your result page expires after 7 days. The [privacy policy](/privacy-policy) has the details."
   - question: "Do your tools cost anything?"
     answer: "No. All tools and guides are free, with no account needed."
   - question: "Are you part of the government?"

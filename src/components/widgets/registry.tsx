@@ -34,9 +34,6 @@ type WidgetProps = { country?: CountryCode };
  * doesn't code-split, which would ship every widget to every content page.
  */
 const widgets: Record<WidgetName, React.ComponentType<WidgetProps>> = {
-  "passport-photo-maker": dynamic(() => import("@/components/tools/passport-photo-maker").then((m) => m.PassportPhotoMaker), {
-    loading: ToolLoading,
-  }),
   "photo-compressor": dynamic(() => import("@/components/tools/photo-compressor").then((m) => m.PhotoCompressor), {
     loading: ToolLoading,
   }),
