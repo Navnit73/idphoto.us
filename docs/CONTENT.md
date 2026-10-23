@@ -41,6 +41,8 @@ schemaType: Article                              # override the template default
 showTableOfContents: true
 showDisclaimer: true                             # "not an official source" notice
 widget: photo-editor                             # photo-compressor | photo-editor | contact-form
+ctaLabel: "Make my passport photo"               # tool only: header button that scrolls to the widget
+heroImage: { src: /images/x.webp, width: 1200, height: 600, alt: "…" }  # tool only: image beside the header (/public or our Cloudinary)
 country: IN                                      # photo-editor only: preselected country (code from src/lib/photo/countries.ts)
 relatedPages: [/guide/passport-photo-requirements, /tool/passport-photo-editor]
 author: editorial-team                           # id from content/authors.json
@@ -59,7 +61,7 @@ faq:
 
 | Template | Use for                         | Renders                                                                                   | Default schema   |
 | -------- | ------------------------------- | ----------------------------------------------------------------------------------------- | ---------------- |
-| `tool`   | Interactive tools               | H1, then the widget, then the explanation, FAQ, sources, feedback, and related pages      | `WebApplication` |
+| `tool`   | Interactive tools               | H1 with a button that scrolls to the widget and an optional hero image, then the widget, explanation, FAQ, sources, feedback, and related pages | `WebApplication` |
 | `guide`  | Long-form articles              | Byline, reading time, sticky table of contents, optional widget, body, FAQ, sources, feedback, related | `Article`        |
 | `faq`    | Q&A pages                       | FAQ entries first, then the body                                                          | `FAQPage`        |
 | `legal`  | Policies                        | A narrow reading column with the last-updated date                                        | `WebPage`        |

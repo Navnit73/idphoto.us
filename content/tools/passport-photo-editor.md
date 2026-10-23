@@ -7,6 +7,12 @@ category: tool
 template: tool
 widget: photo-editor
 breadcrumbLabel: "Passport photo editor"
+ctaLabel: "Make my passport photo"
+heroImage:
+  src: "https://res.cloudinary.com/dipzpwbbk/image/upload/v1791864231/Upload_Edit_Print__Passport_Photos_uqasb5.webp"
+  width: 1774
+  height: 887
+  alt: "Two example U.S. passport photos, a man and a woman, each measured at 2 × 2 inches (600 × 600 pixels) with the head centered."
 publishedAt: 2026-10-23
 updatedAt: 2026-10-23
 keywords:
@@ -18,7 +24,6 @@ showDisclaimer: true
 relatedPages:
   - /guide/passport-photo-requirements
   - /guide/us-passport-photo-size
-  - /tool/photo-compressor
 sources:
   - title: "U.S. Passport Photos"
     url: "https://travel.state.gov/content/travel/en/passports/how-apply/photos.html"

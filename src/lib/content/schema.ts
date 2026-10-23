@@ -89,6 +89,22 @@ export const frontmatterSchema = z
     breadcrumbLabel: z.string().trim().max(40).optional(),
     showTableOfContents: z.boolean().default(false),
     widget: z.enum(WIDGETS).optional(),
+    /** Tool template: label of the header button that scrolls to the widget. */
+    ctaLabel: z.string().trim().min(3).max(40).optional(),
+    /** Tool template: image shown beside the header. A /public path or our Cloudinary account. */
+    heroImage: z
+      .object({
+        src: z
+          .string()
+          .regex(
+            /^(\/[\w\-/.]+|https:\/\/res\.cloudinary\.com\/dipzpwbbk\/image\/upload\/[\w\-/.]+)\.(png|jpe?g|webp|avif|svg)$/,
+            "must be a /public image path or a res.cloudinary.com/dipzpwbbk URL",
+          ),
+        width: z.number().int().positive(),
+        height: z.number().int().positive(),
+        alt: z.string().trim().min(10),
+      })
+      .optional(),
     /** Country preselected in the `photo-editor` widget (its API code, e.g. IN, GB, EU). */
     country: z.enum(COUNTRY_CODES).optional(),
     faq: z
@@ -109,6 +125,9 @@ export const frontmatterSchema = z
   .superRefine((data, ctx) => {
     if (data.template === "tool" && !data.widget) {
       ctx.addIssue({ code: "custom", path: ["widget"], message: "is required for the tool template" });
+    }
+    if ((data.ctaLabel || data.heroImage) && data.template !== "tool") {
+      ctx.addIssue({ code: "custom", path: ["heroImage"], message: "ctaLabel and heroImage only apply to the tool template" });
     }
     if (data.country && data.widget !== "photo-editor") {
       ctx.addIssue({ code: "custom", path: ["country"], message: "only applies to the photo-editor widget" });

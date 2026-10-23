@@ -32,6 +32,7 @@ export type PageSummary = {
   /** Absolute canonical path or URL; equals `path` unless overridden. */
   canonical: string;
   inSitemap: boolean;
+  widget?: Frontmatter["widget"];
 };
 
 export type Page = PageSummary & {
@@ -81,7 +82,8 @@ function routePath(frontmatter: Frontmatter) {
 function summarize(page: Omit<Page, "related">): PageSummary {
   const { path, title, heading, description, category, template, breadcrumbLabel, updatedAt, indexable, canonical, inSitemap } =
     page;
-  return { path, title, heading, description, category, template, breadcrumbLabel, updatedAt, indexable, canonical, inSitemap };
+  const { widget } = page.frontmatter;
+  return { path, title, heading, description, category, template, breadcrumbLabel, updatedAt, indexable, canonical, inSitemap, widget };
 }
 
 /**

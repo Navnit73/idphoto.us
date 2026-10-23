@@ -18,7 +18,6 @@ showDisclaimer: true
 relatedPages:
   - /guide/us-passport-photo-size
   - /tool/passport-photo-editor
-  - /tool/photo-compressor
 sources:
   - title: "U.S. Passport Photos"
     url: "https://travel.state.gov/content/travel/en/passports/how-apply/photos.html"
@@ -109,4 +108,4 @@ Children need their own photo, and the same rules apply. For babies, no other pe
 | Editing | No filters, retouching, or AI changes |
 | Print | Photo-quality paper, undamaged |
 
-When everything checks out, use our [passport photo editor](/tool/passport-photo-editor) to crop your photo to the correct size, or the [photo compressor](/tool/photo-compressor) if an online form needs a smaller file.
+When everything checks out, use our [passport photo editor](/tool/passport-photo-editor) to crop your photo to the correct size.

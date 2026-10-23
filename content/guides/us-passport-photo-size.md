@@ -18,7 +18,6 @@ showDisclaimer: true
 relatedPages:
   - /guide/passport-photo-requirements
   - /tool/passport-photo-editor
-  - /tool/photo-compressor
 sources:
   - title: "U.S. Passport Photos"
     url: "https://travel.state.gov/content/travel/en/passports/how-apply/photos.html"
@@ -64,7 +63,7 @@ Digital photos don't have a physical size until they're printed. The standard fo
 | Minimum head height | 1 | 25 | 300 | 600 |
 | Maximum head height | 1⅜ | 35 | 412 | 825 |
 
-For U.S. visa applications, the Department of State asks for a **square JPEG between 600 × 600 and 1200 × 1200 pixels, no larger than 240 KB**, with the head taking up 50% to 69% of the image height. If your file is too large, our [photo compressor](/tool/photo-compressor) can bring it under 240 KB without shrinking it below 600 pixels.
+For U.S. visa applications, the Department of State asks for a **square JPEG between 600 × 600 and 1200 × 1200 pixels, no larger than 240 KB**, with the head taking up 50% to 69% of the image height. If your file is too large, re-save it as a JPEG at a lower quality setting, keeping it at least 600 × 600 pixels.
 
 ## How to check your photo's size
 

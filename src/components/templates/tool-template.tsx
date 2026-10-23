@@ -10,27 +10,36 @@ import { Widget } from "@/components/widgets/registry";
 
 import type { TemplateProps } from "./types";
 
-/** Tool first, explanation second: the widget sits right under the H1. */
+const TOOL_ANCHOR = "tool";
+
+/** Tool first, explanation second: the widget sits right under the H1, and the header button jumps to it. */
 export function ToolTemplate({ page, crumbs }: TemplateProps) {
   const { frontmatter } = page;
 
   return (
     <Container className="pt-page pb-10 sm:pb-14">
       <article className="flex flex-col gap-12">
-        <PageHeader page={page} crumbs={crumbs} />
+        <PageHeader
+          page={page}
+          crumbs={crumbs}
+          cta={frontmatter.widget ? { label: frontmatter.ctaLabel ?? "Get started", href: `#${TOOL_ANCHOR}` } : undefined}
+          image={frontmatter.heroImage}
+        />
         {frontmatter.widget && (
-          <section aria-label="Tool">
+          <section id={TOOL_ANCHOR} aria-label="Tool">
             <Widget name={frontmatter.widget} country={frontmatter.country} />
           </section>
         )}
-        <div className="flex max-w-prose flex-col gap-12">
+        <div className="mx-auto flex w-full max-w-prose flex-col gap-12 border-t pt-12 sm:pt-16">
           {frontmatter.showDisclaimer && <Disclaimer />}
           <Markdown tree={page.tree} />
           <FaqSection faq={page.faq} />
           <Sources sources={frontmatter.sources} />
           <Feedback path={page.path} />
         </div>
-        <RelatedPages pages={page.related} />
+        <div className="mx-auto w-full max-w-4xl">
+          <RelatedPages pages={page.related} />
+        </div>
       </article>
     </Container>
   );

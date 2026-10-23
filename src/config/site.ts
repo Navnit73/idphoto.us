@@ -18,7 +18,6 @@ export const siteConfig = {
       title: "Tools",
       links: [
         { label: "Passport photo editor", href: "/tool/passport-photo-editor" },
-        { label: "Photo compressor", href: "/tool/photo-compressor" },
       ],
     },
     {

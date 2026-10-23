@@ -64,7 +64,6 @@ const links = {
   tool: "#photo-tool",
   requirements: "/guide/passport-photo-requirements",
   size: "/guide/us-passport-photo-size",
-  compressor: "/tool/photo-compressor",
   faq: "/faq",
 } as const;
 
@@ -436,11 +435,7 @@ export default async function Home() {
               <h3 className="text-xl font-semibold">Get a digital passport photo for online forms</h3>
               <p className="text-muted-foreground">
                 Online passport renewals, the DS-160 visa form, and many foreign e-visa portals ask for a digital photo
-                with pixel and file-size limits. If your file is too large, shrink it with our{" "}
-                <Link href={links.compressor} className={textLink}>
-                  free photo compressor
-                </Link>
-                .
+                with pixel and file-size limits. Our editor saves a JPEG at your country&apos;s pixel size, ready to upload.
               </p>
             </div>
           </div>
