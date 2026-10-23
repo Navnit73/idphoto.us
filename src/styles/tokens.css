@@ -94,6 +94,10 @@
   --danger: light-dark(var(--red-600), var(--red-400));
   --danger-subtle: light-dark(var(--red-100), var(--red-950));
 
+  /* Behind photo artwork with transparent areas and dark labels. Matches the
+     page in light mode and stays light in dark mode so the artwork is legible. */
+  --photo-backdrop: light-dark(var(--neutral-0), var(--neutral-100));
+
   --shadow-color: light-dark(
     color-mix(in oklab, var(--neutral-950) 10%, transparent),
     color-mix(in oklab, var(--neutral-950) 50%, transparent)

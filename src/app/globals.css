@@ -46,6 +46,7 @@
   --color-warning-subtle: var(--warning-subtle);
   --color-danger: var(--danger);
   --color-danger-subtle: var(--danger-subtle);
+  --color-photo-backdrop: var(--photo-backdrop);
 
   --font-sans: var(--font-family-sans);
   --font-display: var(--font-family-display);

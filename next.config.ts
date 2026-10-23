@@ -47,6 +47,8 @@ const nextConfig: NextConfig = {
   },
   images: {
     formats: ["image/avif", "image/webp"],
+    // Site imagery hosted on our Cloudinary account (e.g. the home page hero).
+    remotePatterns: [new URL("https://res.cloudinary.com/dipzpwbbk/image/upload/**")],
   },
   // Markdown is read from disk; make sure it ships with standalone/serverless output.
   outputFileTracingIncludes: {
