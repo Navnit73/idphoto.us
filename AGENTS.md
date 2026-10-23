@@ -10,6 +10,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 ## Styling rules
 
+- Visual language follows `DESIGN.md` (Apple: white/parchment canvases, single Action Blue, SF Pro type, no shadows anywhere — elevation tokens are `none`) — except corner radii, which stay our own.
 - All visual values come from design tokens in `src/styles/tokens.css`, exposed to Tailwind in `src/app/globals.css` (`@theme inline`). See README → Design system.
 - Never hardcode colors (hex, `rgb()`, `oklch()`, Tailwind palette classes like `bg-blue-500`). Use semantic utilities (`bg-surface`, `text-muted-foreground`, `border-border`). New color roles go in `tokens.css` first, then get mapped in `globals.css`.
 - Prefer semantic tokens (which already adapt to light/dark) over `dark:` overrides.

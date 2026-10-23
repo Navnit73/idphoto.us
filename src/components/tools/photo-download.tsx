@@ -204,7 +204,7 @@ export function PhotoDownload({
     <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,22rem)] lg:gap-5">
       <section
         aria-labelledby="photo-card-heading"
-        className="overflow-hidden rounded-xl border border-border bg-surface-raised lg:col-start-1 lg:row-start-1"
+        className="overflow-hidden rounded-md border border-border bg-surface-raised lg:col-start-1 lg:row-start-1"
       >
         <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1.5 border-b border-border px-4 py-2.5">
           <h2
@@ -276,7 +276,7 @@ export function PhotoDownload({
             setPanelFocused(false);
           }
         }}
-        className="flex flex-col gap-4 rounded-xl border border-border bg-surface-raised p-4 sm:p-5 lg:sticky lg:top-20 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:self-start"
+        className="flex flex-col gap-4 rounded-md border border-border bg-surface-raised p-4 sm:p-5 lg:sticky lg:top-20 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:self-start"
       >
         <h2
           id="download-heading"
@@ -287,7 +287,7 @@ export function PhotoDownload({
         </h2>
 
         {/* After the form on small screens, so email and button come right after the photo. */}
-        <div className="rounded-lg border-2 border-primary bg-primary-subtle p-3.5 max-lg:order-last">
+        <div className="rounded-md border-2 border-primary bg-primary-subtle p-3.5 max-lg:order-last">
           <div className="flex items-start justify-between gap-3">
             <p className="font-display font-semibold tracking-tight">
               {summary.title}
@@ -421,7 +421,7 @@ export function PhotoDownload({
           // A click on the backdrop lands on the <dialog> itself.
           if (event.target === event.currentTarget) event.currentTarget.close();
         }}
-        className="m-auto max-h-[90vh] max-w-[min(90vw,40rem)] rounded-xl border border-border bg-surface-raised p-4 text-foreground backdrop:bg-overlay"
+        className="m-auto max-h-[90vh] max-w-[min(90vw,40rem)] rounded-md border border-border bg-surface-raised p-4 text-foreground backdrop:bg-overlay"
       >
         <div className="flex flex-col items-center gap-4">
           {/* eslint-disable-next-line @next/next/no-img-element, jsx-a11y/no-noninteractive-element-interactions -- see above */}

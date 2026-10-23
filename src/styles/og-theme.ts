@@ -6,9 +6,9 @@
  */
 export const ogTheme = {
   background: "#ffffff", // --neutral-0
-  surface: "#f8f9fb", // --neutral-50
-  foreground: "#141922", // --neutral-900
-  muted: "#5b6170", // --neutral-600
-  primary: "#2050e0", // --brand-600
+  surface: "#f5f5f7", // --neutral-100
+  foreground: "#1d1d1f", // --neutral-900
+  muted: "#6e6e73", // --neutral-600
+  primary: "#0066cc", // --blue
   primaryForeground: "#ffffff", // --neutral-0
 } as const;
