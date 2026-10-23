@@ -44,7 +44,15 @@ export function PageHeader({ page, crumbs, byline = false, cta, image }: PageHea
         {byline && page.reviewer && (
           <div className="flex gap-1.5">
             <dt>Reviewed by</dt>
-            <dd className="font-medium text-foreground">{page.reviewer.name}</dd>
+            <dd className="font-medium text-foreground">
+              {page.reviewer.url ? (
+                <a href={page.reviewer.url} className="hover:text-primary">
+                  {page.reviewer.name}
+                </a>
+              ) : (
+                page.reviewer.name
+              )}
+            </dd>
           </div>
         )}
         <div className="flex gap-1.5">

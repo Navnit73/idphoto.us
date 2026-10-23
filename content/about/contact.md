@@ -1,5 +1,5 @@
 ---
-title: "Contact idphoto.us"
+title: "Contact Us: Questions and Corrections"
 heading: "Contact us"
 description: "Questions about a tool, a correction to a guide, or a privacy request? Send the idphoto.us team a message. We read every message and reply by email."
 slug: contact

@@ -54,7 +54,19 @@ const nextConfig: NextConfig = {
   outputFileTracingIncludes: {
     "/**": ["./content/**/*"],
   },
- 
+
+  // One canonical host: www.idphoto.us permanently redirects to idphoto.us. (HTTP → HTTPS is handled by the host.)
+  async redirects() {
+    return [
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "www.idphoto.us" }],
+        destination: "https://idphoto.us/:path*",
+        statusCode: 301,
+      },
+    ];
+  },
+
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
   },

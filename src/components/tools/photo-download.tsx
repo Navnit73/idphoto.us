@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState, useSyncExternalStore } from "react";
+import { flushSync } from "react-dom";
 
 import { Button } from "@/components/ui/button";
 import { Alert, Field, Input } from "@/components/ui/field";
@@ -90,7 +91,8 @@ export function PhotoDownload({
     ) as Record<string, string>;
     const parsed = photoEmailSchema.safeParse({ ...values, resultId });
     if (!parsed.success) {
-      setErrors(fieldErrors(parsed.error));
+      // Render the error first, so focusing the field announces it through aria-describedby.
+      flushSync(() => setErrors(fieldErrors(parsed.error)));
       emailRef.current?.focus();
       return;
     }
@@ -194,12 +196,15 @@ export function PhotoDownload({
           >
             {status.kind === "sending" ? "Sending…" : "Download photo"}
           </Button>
-          {sentNow && (
-            <p className="text-sm text-muted-foreground">
-              We also emailed you the link. Check your spam folder if it
-              isn&apos;t there.
-            </p>
-          )}
+          {/* Always mounted so the confirmation is announced when it appears. */}
+          <div role="status">
+            {sentNow && (
+              <p className="text-sm text-muted-foreground">
+                We also emailed you the link. Check your spam folder if it
+                isn&apos;t there.
+              </p>
+            )}
+          </div>
           {status.kind === "error" && (
             <Alert tone="danger">{status.message}</Alert>
           )}
@@ -208,6 +213,8 @@ export function PhotoDownload({
         {children}
       </div>
 
+      {/* Backdrop clicks are a pointer convenience; keyboard users close it with Escape or the Close button. */}
+      {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions */}
       <dialog
         ref={dialogRef}
         aria-label="Your photo"

@@ -1,5 +1,5 @@
 ---
-title: "Passport & ID Photo Guides"
+title: "Passport Photo Guides: U.S. Rules and Sizes"
 heading: "Passport and ID photo guides"
 description: "Plain-English guides to U.S. passport and ID photo rules — sizes, head height, background, glasses, and printing — checked against official government sources."
 slug: ""
@@ -8,8 +8,9 @@ template: hub
 breadcrumbLabel: "Guides"
 updatedAt: 2026-10-23
 keywords:
-  - passport photo guide
+  - passport photo guides
   - id photo requirements
+  - passport photo help
 ---
 
 ## How we write our guides

@@ -18,8 +18,6 @@ function WidgetLoading({ className }: { className?: string }) {
   );
 }
 
-/** The photo tools open on the file drop zone (see FileDrop). */
-const ToolLoading = () => <WidgetLoading className="min-h-56 border-2 border-dashed border-border-strong" />;
 const FormLoading = () => <WidgetLoading className="min-h-80 border" />;
 /** Country picker plus drop zone, inside a padded card. */
 const EditorLoading = () => <WidgetLoading className="min-h-96 border" />;
@@ -34,9 +32,6 @@ type WidgetProps = { country?: CountryCode };
  * doesn't code-split, which would ship every widget to every content page.
  */
 const widgets: Record<WidgetName, React.ComponentType<WidgetProps>> = {
-  "photo-compressor": dynamic(() => import("@/components/tools/photo-compressor").then((m) => m.PhotoCompressor), {
-    loading: ToolLoading,
-  }),
   "photo-editor": dynamic(() => import("@/components/tools/photo-editor").then((m) => m.PhotoEditor), {
     loading: EditorLoading,
   }),

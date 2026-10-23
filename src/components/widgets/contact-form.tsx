@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { flushSync } from "react-dom";
 
 import { Button } from "@/components/ui/button";
 import { Alert, Field, Input, Select, Textarea } from "@/components/ui/field";
@@ -16,6 +17,12 @@ const TOPIC_LABELS: Record<(typeof CONTACT_TOPICS)[number], string> = {
   other: "Something else",
 };
 
+/** Render the messages, then focus the first invalid field so its error is read out (it's linked by aria-describedby). */
+function showErrors(form: HTMLFormElement, errors: Record<string, string[]>, setErrors: (errors: Record<string, string[]>) => void) {
+  flushSync(() => setErrors(errors));
+  form.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus();
+}
+
 type Status = { kind: "idle" } | { kind: "sending" } | { kind: "sent" } | { kind: "error"; message: string };
 
 export function ContactForm() {
@@ -29,7 +36,7 @@ export function ContactForm() {
 
     const parsed = contactSchema.safeParse(values);
     if (!parsed.success) {
-      setErrors(fieldErrors(parsed.error));
+      showErrors(form, fieldErrors(parsed.error), setErrors);
       return;
     }
 
@@ -41,8 +48,8 @@ export function ContactForm() {
       setStatus({ kind: "sent" });
     } catch (error) {
       if (error instanceof ClientApiError) {
-        setErrors(error.fields);
         setStatus({ kind: "error", message: error.message });
+        showErrors(form, error.fields, setErrors);
       } else {
         setStatus({ kind: "error", message: "Something went wrong. Please try again." });
       }
@@ -51,7 +58,7 @@ export function ContactForm() {
 
   if (status.kind === "sent") {
     return (
-      <Alert tone="success">
+      <Alert tone="success" focus>
         <p className="font-semibold">Message sent</p>
         <p className="mt-1">Thanks for getting in touch. We read every message and usually reply within a few business days.</p>
       </Alert>

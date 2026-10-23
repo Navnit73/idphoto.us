@@ -18,18 +18,22 @@ function matchesQuery(country: (typeof PHOTO_COUNTRIES)[number], query: string) 
  */
 export function CountryPicker({
   id,
+  labelId,
   value,
   onChange,
   disabled,
   describedBy,
 }: {
   id: string;
+  /** The visible label's id. The trigger is named by the label plus the selected country, so both are announced. */
+  labelId: string;
   value: CountryCode;
   onChange: (code: CountryCode) => void;
   disabled?: boolean;
   describedBy?: string;
 }) {
   const listId = useId();
+  const valueId = `${id}-value`;
   const rootRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const searchRef = useRef<HTMLInputElement>(null);
@@ -109,6 +113,7 @@ export function CountryPicker({
         type="button"
         disabled={disabled}
         aria-haspopup="listbox"
+        aria-labelledby={`${labelId} ${valueId}`}
         aria-expanded={open}
         aria-controls={open ? listId : undefined}
         aria-describedby={describedBy}
@@ -119,12 +124,12 @@ export function CountryPicker({
             openList();
           }
         }}
-        className="flex h-12 w-full items-center gap-3 rounded-lg border border-border-strong bg-background px-4 text-left text-base font-medium text-foreground shadow-sm transition-colors hover:border-muted-foreground focus-visible:border-ring focus-visible:outline-1 focus-visible:outline-offset-0 disabled:opacity-50 sm:h-14 sm:text-lg"
+        className="flex h-12 w-full items-center gap-3 rounded-lg border border-input bg-background px-4 text-left text-base font-medium text-foreground shadow-sm transition-colors hover:border-muted-foreground focus-visible:border-ring focus-visible:outline-1 focus-visible:outline-offset-0 disabled:opacity-50 sm:h-14 sm:text-lg"
       >
         {selected && (
           <>
             <span aria-hidden="true">{flagEmoji(selected.code)}</span>
-            <span className="min-w-0 flex-1 truncate">
+            <span id={valueId} className="min-w-0 flex-1 truncate">
               {selected.name} ({displayCode(selected.code)})
               <span className="hidden sm:inline">
                 {" "}
@@ -178,13 +183,15 @@ export function CountryPicker({
                   setActive(0);
                 }}
                 onKeyDown={onSearchKeyDown}
-                className="h-11 w-full rounded-md border border-border-strong bg-background pr-3 pl-10 text-base text-foreground placeholder:text-muted-foreground focus-visible:border-ring focus-visible:outline-1 focus-visible:outline-offset-0"
+                className="h-11 w-full rounded-md border border-input bg-background pr-3 pl-10 text-base text-foreground placeholder:text-muted-foreground focus-visible:border-ring focus-visible:outline-1 focus-visible:outline-offset-0"
               />
             </div>
           </div>
 
           <ul ref={listRef} id={listId} role="listbox" aria-label="Countries" className="max-h-[min(20rem,50dvh)] overflow-y-auto overscroll-contain py-1">
             {matches.map((country, index) => (
+              // Keyboard selection happens in the search box (aria-activedescendant), so options only need pointer handlers.
+              // eslint-disable-next-line jsx-a11y/click-events-have-key-events
               <li
                 key={country.code}
                 id={optionId(country.code)}
@@ -209,11 +216,12 @@ export function CountryPicker({
               </li>
             ))}
           </ul>
-          {matches.length === 0 && (
-            <p role="status" className="px-4 py-6 text-center text-sm text-muted-foreground">
-              No country matches “{query.trim()}”.
-            </p>
-          )}
+          {/* Always mounted so screen readers hear the match count change as you type. */}
+          <p role="status" className={matches.length ? "sr-only" : "px-4 py-6 text-center text-sm text-muted-foreground"}>
+            {matches.length
+              ? `${matches.length} ${matches.length === 1 ? "country" : "countries"}`
+              : `No country matches “${query.trim()}”.`}
+          </p>
         </div>
       )}
     </div>

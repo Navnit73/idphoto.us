@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 import { CheckIcon } from "@/components/home/icons";
 import { Button } from "@/components/ui/button";
@@ -65,10 +65,15 @@ export function PhotoEditor({ country: initialCountry = DEFAULT_COUNTRY }: { cou
   const router = useRouter();
   const [country, setCountry] = useState<CountryCode>(initialCountry);
   const [status, setStatus] = useState<Status>({ kind: "idle" });
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const spec = getCountry(country);
   const thumbUrl = status.kind === "working" ? status.thumbUrl : undefined;
 
   useEffect(() => (thumbUrl ? () => URL.revokeObjectURL(thumbUrl) : undefined), [thumbUrl]);
+
+  // Cache Components keeps this page alive (hidden via <Activity>) after router.push to /preview.
+  // Reset progress when it's hidden so browser-back returns to an idle editor, not a stuck spinner.
+  useLayoutEffect(() => () => setStatus({ kind: "idle" }), []);
 
   async function onFile(file: File) {
     setStatus({ kind: "working", step: "preparing" });
@@ -93,15 +98,19 @@ export function PhotoEditor({ country: initialCountry = DEFAULT_COUNTRY }: { cou
   }
 
   const working = status.kind === "working";
+  const announcement = working
+    ? `${STEPS.find((step) => step.key === status.step)?.label}…${status.step === "processing" ? " This can take up to a minute." : ""}`
+    : "";
 
   return (
     <div className="flex flex-col gap-5">
       <div className="flex flex-col gap-2 rounded-xl border bg-surface-raised p-4 shadow-sm sm:p-6">
-        <label htmlFor="photo-editor-country" className="text-base font-semibold">
+        <label id="photo-editor-country-label" htmlFor="photo-editor-country" className="text-base font-semibold">
           Select country / destination
         </label>
         <CountryPicker
           id="photo-editor-country"
+          labelId="photo-editor-country-label"
           value={country}
           onChange={setCountry}
           disabled={working}
@@ -133,16 +142,19 @@ export function PhotoEditor({ country: initialCountry = DEFAULT_COUNTRY }: { cou
           Upload or take your photo
         </h3>
 
+        {/* Mounted before any progress so each step is announced; the visual list below is not a live region. */}
+        <p role="status" className="sr-only">
+          {announcement}
+        </p>
+
         {working ? (
           <div
-            role="status"
-            aria-live="polite"
             className="flex min-h-48 flex-col items-center gap-6 rounded-xl border bg-surface p-5 sm:min-h-56 sm:flex-row sm:items-center sm:p-8"
           >
             <div className="flex size-32 shrink-0 items-center justify-center overflow-hidden rounded-lg border bg-photo-backdrop sm:size-40">
               {status.thumbUrl ? (
                 // eslint-disable-next-line @next/next/no-img-element -- local blob preview, nothing to optimize
-                <img src={status.thumbUrl} alt="Your uploaded photo" className="size-full object-contain" />
+                <img src={status.thumbUrl} alt="Your upload" className="size-full object-contain" />
               ) : (
                 <span
                   aria-hidden="true"
@@ -194,6 +206,7 @@ export function PhotoEditor({ country: initialCountry = DEFAULT_COUNTRY }: { cou
           </div>
         ) : (
           <FileDrop
+            ref={fileInputRef}
             onFile={onFile}
             label="Tap to upload a photo or take a picture"
             hint="Drag and drop from your device · JPEG, PNG, or WebP (up to 25 MB)"
@@ -202,9 +215,17 @@ export function PhotoEditor({ country: initialCountry = DEFAULT_COUNTRY }: { cou
         )}
 
         {status.kind === "error" && (
-          <Alert tone="danger">
+          <Alert tone="danger" focus>
             <p>{status.message}</p>
-            <Button variant="outline" size="sm" className="mt-3" onClick={() => setStatus({ kind: "idle" })}>
+            <Button
+              variant="outline"
+              size="sm"
+              className="mt-3"
+              onClick={() => {
+                setStatus({ kind: "idle" });
+                fileInputRef.current?.focus();
+              }}
+            >
               Try another photo
             </Button>
           </Alert>

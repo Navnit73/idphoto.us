@@ -3,6 +3,7 @@ import type {
   BreadcrumbList,
   FAQPage,
   IdReference,
+  ItemList,
   Organization,
   Person,
   Thing,
@@ -27,8 +28,9 @@ export function organizationJsonLd(): Organization {
     "@id": ORGANIZATION_ID,
     name: siteConfig.name,
     url: siteConfig.url,
-    logo: absoluteUrl("/icon.svg"),
+    logo: absoluteUrl("/logo.png"),
     email: siteConfig.contactEmail,
+    founder: { "@type": "Person", name: siteConfig.owner },
   };
 }
 
@@ -44,6 +46,26 @@ export function websiteJsonLd(): WebSite {
   };
 }
 
+/** The home page's own node, tied to the site and the organization. */
+export function homePageJsonLd(input: { title: string; description: string; updatedAt?: string }): WebPage {
+  return {
+    "@type": "WebPage",
+    "@id": `${siteConfig.url}/#page`,
+    url: siteConfig.url,
+    name: input.title,
+    description: input.description,
+    ...(input.updatedAt && { dateModified: input.updatedAt }),
+    inLanguage: "en-US",
+    isPartOf: { "@id": WEBSITE_ID },
+    about: { "@id": ORGANIZATION_ID },
+  };
+}
+
+/** FAQ markup for a page. The questions and answers must match the visible FAQ text exactly. */
+export function faqPageJsonLd(path: string, faq: { question: string; answer: string }[]): FAQPage {
+  return { "@type": "FAQPage", "@id": `${absoluteUrl(path)}#faq`, mainEntity: faqEntities(faq) };
+}
+
 export function breadcrumbJsonLd(crumbs: Crumb[]): BreadcrumbList {
   return {
     "@type": "BreadcrumbList",
@@ -56,8 +78,13 @@ export function breadcrumbJsonLd(crumbs: Crumb[]): BreadcrumbList {
   };
 }
 
-function authorJsonLd(author: Author): Person | IdReference {
-  if (author.type === "Organization") return { "@id": ORGANIZATION_ID };
+function authorJsonLd(author: Author): Person | Organization | IdReference {
+  // An organization with an external URL is a third party; any other organization author is us.
+  if (author.type === "Organization") {
+    return author.url?.startsWith("http")
+      ? { "@type": "Organization", name: author.name, url: author.url }
+      : { "@id": ORGANIZATION_ID };
+  }
   return { "@type": "Person", name: author.name, ...(author.url && { url: absoluteUrl(author.url) }) };
 }
 
@@ -74,6 +101,8 @@ type PageInput = {
   reviewer?: Author | null;
   breadcrumbs: Crumb[];
   faq?: { question: string; answer: string }[];
+  /** CollectionPage: the pages it lists, in display order. */
+  items?: Crumb[];
 };
 
 /** Builds the structured-data graph for a content page. */
@@ -99,8 +128,10 @@ export function pageJsonLd(input: PageInput): Thing[] {
       headline: input.title,
       author: authorJsonLd(input.author),
       publisher: { "@id": ORGANIZATION_ID },
-      mainEntityOfPage: url,
-      ...(input.reviewer && { reviewedBy: authorJsonLd(input.reviewer) }),
+      // `reviewedBy` and `lastReviewed` belong to WebPage, not Article, so they go on the page the article lives on.
+      mainEntityOfPage: input.reviewer
+        ? { "@type": "WebPage", "@id": url, reviewedBy: authorJsonLd(input.reviewer), lastReviewed: input.updatedAt }
+        : url,
     } satisfies Article);
   } else if (input.type === "WebApplication") {
     graph.push({
@@ -116,19 +147,27 @@ export function pageJsonLd(input: PageInput): Thing[] {
   } else if (input.type === "FAQPage") {
     graph.push({ ...common, "@type": "FAQPage", mainEntity: faqEntities(input.faq ?? []) } satisfies FAQPage);
     return graph;
+  } else if (input.type === "CollectionPage" && input.items?.length) {
+    graph.push({ ...common, "@type": "CollectionPage", mainEntity: itemListJsonLd(input.items) } as WebPage);
   } else {
     graph.push({ ...common, "@type": input.type } as WebPage);
   }
 
-  if (input.faq?.length) {
-    graph.push({
-      "@type": "FAQPage",
-      "@id": `${url}#faq`,
-      mainEntity: faqEntities(input.faq),
-    } satisfies FAQPage);
-  }
+  if (input.faq?.length) graph.push(faqPageJsonLd(input.url, input.faq));
 
   return graph;
+}
+
+function itemListJsonLd(items: Crumb[]): ItemList {
+  return {
+    "@type": "ItemList",
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      url: absoluteUrl(item.path),
+    })),
+  };
 }
 
 function faqEntities(faq: { question: string; answer: string }[]): FAQPage["mainEntity"] {

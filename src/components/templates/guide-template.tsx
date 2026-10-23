@@ -28,7 +28,11 @@ export function GuideTemplate({ page, crumbs }: TemplateProps) {
             {frontmatter.showDisclaimer && <Disclaimer />}
             {/* Optional: lets a guide embed a tool, e.g. the photo editor preset to the guide's country. */}
             {frontmatter.widget && (
-              <section aria-label="Tool">
+              <section aria-labelledby="tool-heading">
+                {/* The widget's own headings are H3s, so this keeps the outline from skipping a level. */}
+                <h2 id="tool-heading" className="sr-only">
+                  Photo tool
+                </h2>
                 <Widget name={frontmatter.widget} country={frontmatter.country} />
               </section>
             )}

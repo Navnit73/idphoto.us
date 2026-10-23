@@ -2,7 +2,7 @@
 # OWNER REVIEW: have these terms reviewed by a qualified lawyer before launch. Add the
 # operator's legal name, governing law, and dispute-resolution terms appropriate to
 # your jurisdiction.
-title: "Terms of Service"
+title: "Terms of Service for Our Free Photo Tools"
 heading: "Terms of service"
 description: "The terms for using idphoto.us: free tools provided as-is, no guarantee of photo acceptance, your responsibilities, and the limits of our liability."
 slug: terms
@@ -42,7 +42,7 @@ When using the site, you agree to:
 
 ## Your photos
 
-The photo compressor processes photos on your device. The passport photo editor uploads your photo to process it, as described in our [privacy policy](/privacy-policy). Either way, your images remain yours, and we claim no rights in them.
+The passport photo editor uploads your photo to process it, as described in our [privacy policy](/privacy-policy). Your images remain yours, and we claim no rights in them.
 
 ## Our content
 

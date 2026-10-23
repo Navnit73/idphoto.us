@@ -1,5 +1,7 @@
 import "server-only";
 
+import { connection } from "next/server";
+
 import { collections, type PhotoResultDoc } from "@/lib/db/collections";
 import { getDb } from "@/lib/db/mongodb";
 import { PHOTO_RESULT_TTL_DAYS } from "@/lib/photo/limits";
@@ -40,6 +42,8 @@ export async function savePhotoResult(photo: ProcessedPhoto, meta: { countryCode
  */
 export async function getPhotoResult(id: string) {
   if (!photoResultIdSchema.safeParse(id).success) return null;
+  // The expiry check reads the current time, so it must run per request, never during prerender.
+  await connection();
   const db = await getDb();
   const doc = await collections.photoResults(db).findOne({ _id: id }, { projection: { ipHash: 0 } });
   return doc && doc.expiresAt > new Date() ? doc : null;

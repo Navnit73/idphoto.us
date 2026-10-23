@@ -5,8 +5,10 @@ export const siteConfig = {
   url: publicEnv.NEXT_PUBLIC_SITE_URL,
   tagline: "Passport & ID photo tools and guides",
   description:
-    "Free tools and plain-English guides for passport, visa, and ID photos. Make a passport photo for the U.S. and 60+ countries, and compress photos for upload limits.",
+    "Free tools and plain-English guides for passport and ID photos. Make a passport photo online for the U.S. and 60+ countries, then download, print, or upload it.",
   contactEmail: "hello@idphoto.us",
+  /** The person who owns and runs the site (shown on /about and in Organization structured data). */
+  owner: "Navnit Rai",
   nav: [
     { label: "Tools", href: "/tool" },
     { label: "Guides", href: "/guide" },

@@ -50,6 +50,7 @@ export default async function ContentPage({ params }: PageProps<"/[...path]">) {
 
   const all = await getPageSummaries();
   const crumbs = buildBreadcrumbs(page, all);
+  const listing = page.template === "hub" ? categoryListing(page, all) : [];
   const Template = templates[page.template];
 
   return (
@@ -67,9 +68,10 @@ export default async function ContentPage({ params }: PageProps<"/[...path]">) {
           reviewer: page.reviewer,
           breadcrumbs: crumbs,
           faq: page.faq.map((item) => ({ question: item.question, answer: toString(item.answer) })),
+          items: listing.map((item) => ({ name: item.heading, path: item.path })),
         })}
       />
-      <Template page={page} crumbs={crumbs} categoryPages={categoryListing(page, all)} />
+      <Template page={page} crumbs={crumbs} categoryPages={listing} />
     </>
   );
 }

@@ -17,9 +17,10 @@ publishedAt: 2026-10-23
 updatedAt: 2026-10-23
 keywords:
   - passport photo editor
-  - passport photo online
-  - passport photo size by country
-  - passport photo background
+  - edit passport photo
+  - passport photo editor online free
+  - passport photo for other countries
+  - international passport photo
 showDisclaimer: false
 relatedPages:
   - /guide/passport-photo-requirements
@@ -35,9 +36,9 @@ faq:
     answer: "No tool can promise that. The editor crops and sizes the photo and checks the background, but acceptance also depends on lighting, expression, focus, and the other [requirements](/guide/passport-photo-requirements), and the agency that receives your application makes the final decision."
   - question: "What happens if my background doesn't pass?"
     answer: "The editor may replace it automatically, and the result page tells you when it has. Some agencies don't accept photos changed by software, so check your country's rules. If you're unsure, retake the photo against a plain, light wall instead."
-  - question: "How long can I get my photo?"
+  - question: "How long can I download my photo?"
     answer: "Your result page and its download link work for 7 days. Download the photo, or use the \"Email me this photo\" option to send the links to yourself."
-  - question: "Can I print the photo?"
+  - question: "What pixel size is the download?"
     answer: "Yes. The download is a digital file at your country's pixel size. A U.S. photo is 600 × 600 pixels, which prints at exactly 2 × 2 inches at 300 DPI; choose actual size with no scaling. See the [U.S. passport photo size guide](/guide/us-passport-photo-size) for details."
 ---
 

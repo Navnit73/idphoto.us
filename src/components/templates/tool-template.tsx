@@ -26,7 +26,11 @@ export function ToolTemplate({ page, crumbs }: TemplateProps) {
           image={frontmatter.heroImage}
         />
         {frontmatter.widget && (
-          <section id={TOOL_ANCHOR} aria-label="Tool" className="mx-auto w-full max-w-4xl scroll-mt-20">
+          <section id={TOOL_ANCHOR} aria-labelledby="tool-heading" className="mx-auto w-full max-w-4xl scroll-mt-20">
+            {/* The widget's own headings are H3s, so this keeps the outline from skipping a level. */}
+            <h2 id="tool-heading" className="sr-only">
+              {page.breadcrumbLabel}
+            </h2>
             <Widget name={frontmatter.widget} country={frontmatter.country} />
           </section>
         )}

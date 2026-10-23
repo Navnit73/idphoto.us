@@ -1,5 +1,5 @@
 ---
-title: "U.S. Passport Photo Requirements: Complete Checklist"
+title: "U.S. Passport Photo Requirements Checklist"
 heading: "U.S. passport photo requirements: a complete checklist"
 description: "Every U.S. passport photo rule in one place — size, head height, background, glasses, expression, clothing, and printing — with links to the official sources."
 slug: passport-photo-requirements
@@ -8,11 +8,14 @@ template: guide
 breadcrumbLabel: "Passport photo requirements"
 publishedAt: 2026-10-23
 updatedAt: 2026-10-23
+reviewedBy: pixpassport-team
 keywords:
-  - passport photo requirements
-  - us passport photo rules
+  - us passport photo requirements
+  - passport photo rules
   - passport photo glasses
   - passport photo background
+  - passport photo smile
+  - digital passport photo for renewal
 showTableOfContents: true
 showDisclaimer: true
 relatedPages:
@@ -29,10 +32,6 @@ sources:
     url: "https://fam.state.gov/fam/08fam/08fam040201.html"
     publisher: "U.S. Department of State, Foreign Affairs Manual"
 faq:
-  - question: "Can I smile in my passport photo?"
-    answer: "Yes. The Department of State accepts a neutral expression or a natural smile, as long as both eyes are open and your face is clearly visible."
-  - question: "Can I wear glasses in a U.S. passport photo?"
-    answer: "Not normally. Glasses have not been accepted since 2016 unless you include a signed statement from a doctor explaining why you can't remove them, for example after eye surgery."
   - question: "How recent does my passport photo need to be?"
     answer: "It must have been taken within the last six months and show how you look now. If your appearance has changed noticeably, take a new photo."
   - question: "Can I take my passport photo at home?"

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Alert, Textarea } from "@/components/ui/field";
@@ -16,6 +16,13 @@ type State =
 export function Feedback({ path }: { path: string }) {
   const [state, setState] = useState<State>({ step: "ask" });
   const [comment, setComment] = useState("");
+  const commentRef = useRef<HTMLTextAreaElement>(null);
+  const askedForComment = state.step === "comment";
+
+  // The Yes/No buttons are gone once clicked, so move focus to the comment box that replaces them.
+  useEffect(() => {
+    if (askedForComment) commentRef.current?.focus();
+  }, [askedForComment]);
 
   async function submit(helpful: boolean) {
     setState({ step: "sending" });
@@ -60,7 +67,7 @@ export function Feedback({ path }: { path: string }) {
             {state.helpful ? "Great! Anything we could add?" : "Sorry about that. What was missing or wrong?"} (optional — please
             don&apos;t include personal details)
           </label>
-          <Textarea id="feedback-comment" value={comment} maxLength={1000} onChange={(event) => setComment(event.target.value)} />
+          <Textarea ref={commentRef} id="feedback-comment" value={comment} maxLength={1000} onChange={(event) => setComment(event.target.value)} />
           <div>
             <Button type="submit" size="sm">
               Send feedback
@@ -69,15 +76,21 @@ export function Feedback({ path }: { path: string }) {
         </form>
       )}
 
-      {state.step === "sending" && <p className="mt-4 text-sm text-muted-foreground">Sending…</p>}
+      {state.step === "sending" && (
+        <p role="status" className="mt-4 text-sm text-muted-foreground">
+          Sending…
+        </p>
+      )}
       {state.step === "done" && (
-        <Alert tone="success" className="mt-4">
+        <Alert tone="success" focus className="mt-4">
           Thanks — your feedback helps us keep this page accurate.
         </Alert>
       )}
       {state.step === "error" && (
         <div className="mt-4 flex flex-col items-start gap-3">
-          <Alert tone="danger">{state.message}</Alert>
+          <Alert tone="danger" focus>
+            {state.message}
+          </Alert>
           <Button variant="outline" size="sm" onClick={() => setState({ step: "comment", helpful: state.helpful })}>
             Try again
           </Button>

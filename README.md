@@ -4,7 +4,7 @@ SEO-focused passport and ID photo tools and guides. Built with Next.js 16 (App R
 
 - **Markdown-driven pages.** Every page except the home page is a Markdown file in `content/`. Frontmatter controls the route, template, metadata, structured data, and SEO settings. See [docs/CONTENT.md](docs/CONTENT.md).
 - **Static by default.** Content pages are prerendered at build time (`ensureStatic = "navigation"`). Only `/api/*` runs per request.
-- **Photo tools.** The passport photo editor (on the home page and `/tool/passport-photo-editor`) uploads photos to the PixPassport API for cropping and background checks. The photo compressor runs entirely in the browser.
+- **Photo tools.** The passport photo editor (on the home page and `/tool/passport-photo-editor`) uploads photos to the PixPassport API for cropping and background checks.
 - **Validated content.** The build fails on duplicate titles, thin pages, broken internal links, bad canonicals, or a wrong heading structure.
 
 ## Getting started
@@ -23,6 +23,7 @@ npm run dev                  # http://localhost:3000
 | `npm run lint`        | ESLint + design-token check                                    |
 | `npm run lint:tokens` | Fail on hardcoded colors outside the token file                |
 | `npm run typecheck`   | TypeScript, no emit                                            |
+| `npm run test:a11y`   | Builds, then runs axe (WCAG 2.2 AA) and keyboard checks in Playwright; see `ACCESSIBILITY.md` |
 
 Deployment, environment variables, security, and the launch checklist are covered in [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
 
@@ -43,7 +44,7 @@ src/
   components/
     content/                Markdown renderer, page header, TOC, FAQ, sources, breadcrumbs
     templates/              tool, guide, faq, legal, info, hub (+ registry)
-    tools/                  Photo editor (PixPassport upload), photo compressor (client-side)
+    tools/                  Photo editor (PixPassport upload)
     widgets/                Lazy widget registry, contact form, feedback
     ui/, layout/, theme/    Primitives, header/footer, theme toggle
   config/site.ts            Site name, nav, footer links
@@ -90,6 +91,8 @@ All visual values live in [`src/styles/tokens.css`](src/styles/tokens.css). Chan
 | Radius / shadow | `rounded-sm…xl`, `shadow-sm…lg`                                                 |
 | Motion          | `transition-*` defaults to `--duration-base` and `--easing-standard`; `ease-emphasized` |
 | Raw CSS         | `var(--color-primary)`, `var(--space-gutter)`, …                                |
+
+Form controls (inputs, selects, the country picker) use `border-input`, which meets 3:1 against every surface. `border-border` and `border-border-strong` are for decorative edges only.
 
 Tailwind's default color palette and shadows are switched off, so classes like `bg-blue-500` don't generate. `npm run lint` also fails on hex, `rgb()`, `oklch()` and similar values anywhere outside `tokens.css`.
 

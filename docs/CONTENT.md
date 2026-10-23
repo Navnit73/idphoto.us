@@ -40,7 +40,7 @@ ogImage: /images/og/custom.png                   # default: generated card at /o
 schemaType: Article                              # override the template default (see below)
 showTableOfContents: true
 showDisclaimer: true                             # "not an official source" notice
-widget: photo-editor                             # photo-compressor | photo-editor | contact-form
+widget: photo-editor                             # photo-editor | contact-form
 ctaLabel: "Make my passport photo"               # tool only: header button that scrolls to the widget
 heroImage: { src: /images/x.webp, width: 1200, height: 600, alt: "…" }  # tool only: image beside the header (/public or our Cloudinary)
 country: IN                                      # photo-editor only: preselected country (code from src/lib/photo/countries.ts)

@@ -1,7 +1,7 @@
 import { cn } from "@/lib/cn";
 
 const control =
-  "w-full rounded-md border border-border-strong bg-background px-3 py-2 text-base text-foreground shadow-sm transition-colors placeholder:text-muted-foreground hover:border-muted-foreground focus-visible:border-ring aria-invalid:border-danger disabled:opacity-50";
+  "w-full rounded-md border border-input bg-background px-3 py-2 text-base text-foreground shadow-sm transition-colors placeholder:text-muted-foreground hover:border-muted-foreground focus-visible:border-ring aria-invalid:border-danger disabled:opacity-50";
 
 type FieldProps = {
   id: string;
@@ -49,7 +49,16 @@ export function Select({ className, ...props }: React.ComponentProps<"select">) 
   return <select className={cn(control, "h-10", className)} {...props} />;
 }
 
-type AlertProps = { tone: "success" | "danger" | "warning"; children: React.ReactNode; className?: string };
+type AlertProps = {
+  tone: "success" | "danger" | "warning";
+  children: React.ReactNode;
+  className?: string;
+  /**
+   * Move focus here when it appears. For client widgets whose result replaces
+   * the control that had focus, so keyboard and screen reader users land on it.
+   */
+  focus?: boolean;
+};
 
 const tones = {
   success: "border-success/40 bg-success-subtle",
@@ -57,9 +66,16 @@ const tones = {
   warning: "border-warning/40 bg-warning-subtle",
 };
 
-export function Alert({ tone, children, className }: AlertProps) {
+const focusOnMount = (element: HTMLElement | null) => element?.focus();
+
+export function Alert({ tone, children, className, focus = false }: AlertProps) {
   return (
-    <div role={tone === "danger" ? "alert" : "status"} className={cn("rounded-md border px-4 py-3 text-sm", tones[tone], className)}>
+    <div
+      role={tone === "danger" ? "alert" : "status"}
+      tabIndex={focus ? -1 : undefined}
+      ref={focus ? focusOnMount : undefined}
+      className={cn("rounded-md border px-4 py-3 text-sm", tones[tone], className)}
+    >
       {children}
     </div>
   );

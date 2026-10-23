@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import type { FAQPage } from "schema-dts";
 
 import { PageCardList } from "@/components/content/page-card-list";
 import {
@@ -23,7 +22,7 @@ import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/cn";
 import { getPageSummaries } from "@/lib/content/loader";
 import { PHOTO_COUNTRIES, type CountryCode } from "@/lib/photo/countries";
-import { organizationJsonLd, websiteJsonLd } from "@/lib/seo/json-ld";
+import { faqPageJsonLd, homePageJsonLd, organizationJsonLd, websiteJsonLd } from "@/lib/seo/json-ld";
 import { buildMetadata } from "@/lib/seo/metadata";
 
 export const ensureStatic = "navigation";
@@ -33,21 +32,22 @@ export const ensureStatic = "navigation";
  * It does not target requirements, size, 2x2, crop/converter, checker, visa or
  * near-me terms. Each of those gets one sentence and a link to its own page.
  */
+const title = `Passport Photo Online: Free Passport Photo Maker | ${siteConfig.name}`;
+const description =
+  "Make a passport photo online for free. Our passport photo maker creates a U.S. passport picture or a photo for 60+ countries. Download, print, or upload.";
+
 export const metadata = buildMetadata({
-  title: `Passport Photo Online: Free Passport Photo Maker | ${siteConfig.name}`,
+  title,
   absoluteTitle: true,
-  description:
-    "Make a passport photo online for free. Our passport photo maker creates a U.S. passport picture or a photo for 60+ countries. Download, print, or upload.",
+  description,
   path: "/",
   ogImage: "/og",
   keywords: [
     "passport photo online",
     "passport photo maker",
-    "passport size photo",
-    "passport size pic",
-    "passport size photo for passport",
-    "us passport photo",
+    "free passport photo",
     "us passport picture",
+    "make passport photo at home",
   ],
 });
 
@@ -58,22 +58,12 @@ const heroImage = {
   alt: "Two example U.S. passport photos, a man and a woman, each with the head centered against a plain background.",
 };
 
-/**
- * Internal link targets.
- * TODO: confirm each path below exists before you deploy. Only the first four
- * are known to exist today; swap the rest for your real URLs, or delete the
- * matching row in `relatedTopics`, so the page never links to a 404.
- */
+/** Internal link targets. Each must be a published page (or an anchor on this one). */
 const links = {
   tool: "#photo-tool",
   requirements: "/guide/passport-photo-requirements",
   size: "/guide/us-passport-photo-size",
   faq: "/faq",
- 
-  crop: "/tool/passport-photo-cropper",
-  checker: "/tool/passport-photo-checker",
-  visa: "/guide/visa-photo-requirements",
-  nearMe: "/guide/passport-photo-near-me",
 } as const;
 
 const steps = [
@@ -184,21 +174,8 @@ const faqs = [
     answer:
       "Most people finish in a few minutes. Taking a good photo takes the longest. Processing takes up to a minute, and then you can download your file.",
   },
-  {
-    question: "Do you store my photos?",
-    answer:
-      "We upload your photo to our processing service so we can prepare it. Your result page and download link expire after 7 days, so save your file before then. Our privacy policy explains what we keep.",
-  },
 ];
 
-const faqJsonLd: FAQPage = {
-  "@type": "FAQPage",
-  mainEntity: faqs.map((faq) => ({
-    "@type": "Question",
-    name: faq.question,
-    acceptedAnswer: { "@type": "Answer", text: faq.answer },
-  })),
-};
 
 const textLink = "font-medium text-primary underline underline-offset-4 hover:text-primary-hover";
 const arrowLink = "group inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-primary-hover";
@@ -250,7 +227,9 @@ export default async function Home() {
 
   return (
     <>
-      <JsonLd data={[organizationJsonLd(), websiteJsonLd(), faqJsonLd]} />
+      <JsonLd
+        data={[organizationJsonLd(), websiteJsonLd(), homePageJsonLd({ title, description }), faqPageJsonLd("/", faqs)]}
+      />
 
       {/* Hero */}
       <section className="border-b pt-page pb-12 sm:pb-16">
@@ -322,7 +301,7 @@ export default async function Home() {
                   <span className="flex size-11 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-sm">
                     <Icon className="size-5" />
                   </span>
-                  <span aria-hidden="true" className="font-display text-4xl font-semibold text-border-strong">
+                  <span aria-hidden="true" className="font-display text-4xl font-semibold text-muted-foreground">
                     {index + 1}
                   </span>
                 </div>
@@ -376,7 +355,7 @@ export default async function Home() {
               <ul className="grid grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-3">
                 {countryTiles.map((country) => (
                   <li key={country.code} className="rounded-lg border px-3 py-2.5">
-                    <span className="block truncate text-sm font-medium">{country.name}</span>
+                    <span className="block text-sm font-medium break-words">{country.name}</span>
                   </li>
                 ))}
               </ul>

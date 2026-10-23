@@ -1,10 +1,9 @@
 ---
-# OWNER REVIEW: add who operates idphoto.us (person or company name, location) under
-# "Who runs idphoto.us". Real, verifiable ownership details strengthen trust. Do not
-# add credentials or affiliations that aren't true.
-title: "About idphoto.us: Who We Are and How We Work"
+# OWNER REVIEW: optionally add a location (city, state) under "Who runs idphoto.us".
+# Do not add credentials or affiliations that aren't true.
+title: "About Us: Who We Are and How We Work"
 heading: "About idphoto.us"
-description: "idphoto.us offers free, private passport and ID photo tools and plain-English guides. Learn who we are, how we work, how we're funded, and what we don't do."
+description: "idphoto.us offers free passport and ID photo tools and plain-English guides. Learn who we are, how we work, how we're funded, and what we don't do."
 slug: about
 category: about
 template: info
@@ -25,13 +24,13 @@ We started the site because photo problems are one of the most common, and most 
 
 ## What we believe
 
-- **Your photos are yours.** The photo compressor runs in your browser and never uploads anything. The passport photo editor uploads your photo only to process it, and your result page expires after 7 days. We never sell your photos.
+- **Your photos are yours.** The passport photo editor uploads your photo only to process it, and your result page expires after 7 days. We never sell your photos.
 - **Accuracy over volume.** We'd rather publish a few pages that are correct and current than many that aren't. Every guide cites its official sources and shows when it was last updated.
 - **Honesty about limits.** No website can guarantee a photo will be accepted. The government agency handling your application makes that decision. We say so plainly, and we tell you what each tool does and doesn't check.
 
 ## Who runs idphoto.us
 
-idphoto.us is an independent website run by a small team. Our guides are written and maintained by the idphoto.us Editorial Team. We research official government sources, test our tools on real photos and devices, and update pages when the rules change.
+idphoto.us is an independent website owned and run by Navnit Rai. Our guides are written and maintained by the idphoto.us Editorial Team and reviewed by the PixPassport.com team, which also provides the photo processing service behind our passport photo editor. We research official government sources, test our tools on real photos and devices, and update pages when the rules change.
 
 We are not lawyers, government officials, or professional photographers, and we don't claim to be. When a question depends on your personal circumstances, we point you to the official agency that can answer it.
 

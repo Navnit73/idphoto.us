@@ -5,5 +5,12 @@
     "bio": "The people who build idphoto.us. We research official U.S. government photo requirements, write and test our guides and tools, and update pages when the rules change. We are not government employees and don't hold professional photography credentials.",
     "url": "/about",
     "type": "Organization"
+  },
+  "pixpassport-team": {
+    "name": "PixPassport.com Team",
+    "role": "Guide review",
+    "bio": "The team behind PixPassport.com, the photo processing service that powers the idphoto.us passport photo editor. They review our passport photo guides for accuracy.",
+    "url": "https://www.pixpassport.com",
+    "type": "Organization"
   }
 }

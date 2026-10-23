@@ -5,6 +5,33 @@ import { ogTheme } from "@/styles/og-theme";
 
 export const OG_SIZE = { width: 1200, height: 630 };
 
+/**
+ * Square raster version of src/app/icon.svg. Google needs a raster logo for
+ * Organization markup, and iOS needs a PNG home-screen icon.
+ */
+export function renderLogo(size: number) {
+  return new ImageResponse(
+    (
+      <div
+        style={{
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          background: ogTheme.primary,
+          color: ogTheme.primaryForeground,
+          fontSize: size * 0.4,
+          fontWeight: 700,
+        }}
+      >
+        ID
+      </div>
+    ),
+    { width: size, height: size },
+  );
+}
+
 /** Shared 1200×630 social card used for every page without a custom `ogImage`. */
 export function renderOgImage({ eyebrow, title }: { eyebrow: string; title: string }) {
   return new ImageResponse(
@@ -46,7 +73,7 @@ export function renderOgImage({ eyebrow, title }: { eyebrow: string; title: stri
             {title}
           </div>
         </div>
-        <div style={{ fontSize: 26, color: ogTheme.muted }}>Free tools · Plain-English guides · Private by design</div>
+        <div style={{ fontSize: 26, color: ogTheme.muted }}>Free tools · Plain-English guides · Official sources cited</div>
       </div>
     ),
     OG_SIZE,

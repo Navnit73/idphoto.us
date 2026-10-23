@@ -8,12 +8,15 @@ import { ACCEPTED_TYPES } from "./image-utils";
 
 /** Accessible file picker that also accepts drag-and-drop. */
 export function FileDrop({
+  ref,
   onFile,
   label,
   hint = "JPEG, PNG, or WebP up to 25 MB · drag and drop or tap to choose",
   className,
   privacyNote = "Processed on your device. Nothing is uploaded.",
 }: {
+  /** The file input, e.g. to return focus to it after an error. */
+  ref?: React.Ref<HTMLInputElement>;
   onFile: (file: File) => void;
   label: string;
   hint?: string;
@@ -22,9 +25,14 @@ export function FileDrop({
   privacyNote?: string;
 }) {
   const id = useId();
+  const labelId = `${id}-label`;
+  const hintId = `${id}-hint`;
+  const privacyId = `${id}-privacy`;
   const [dragging, setDragging] = useState(false);
 
   return (
+    // Drag-and-drop is a pointer shortcut; keyboard and screen reader users get the same result from the file input.
+    // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
     <label
       htmlFor={id}
       onDragOver={(event) => {
@@ -42,7 +50,7 @@ export function FileDrop({
         if (file) onFile(file);
       }}
       className={cn(
-        "flex min-h-48 cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-border-strong bg-surface p-5 text-center sm:min-h-56 sm:p-8 transition-colors hover:border-primary focus-within:border-primary",
+        "flex min-h-48 cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-border-strong bg-surface p-5 text-center sm:min-h-56 sm:p-8 transition-colors hover:border-primary focus-within:border-primary has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-ring",
         dragging && "border-primary bg-primary-subtle",
         className,
       )}
@@ -57,11 +65,21 @@ export function FileDrop({
           <circle cx="8.5" cy="8.5" r="1.5" />
         </svg>
       </span>
-      <span className="text-lg font-semibold text-balance sm:text-xl">{label}</span>
-      <span className="text-sm text-pretty text-muted-foreground sm:text-base">{hint}</span>
-      <span className="mt-1 max-w-md text-xs text-pretty text-muted-foreground">{privacyNote}</span>
+      <span id={labelId} className="text-lg font-semibold text-balance sm:text-xl">
+        {label}
+      </span>
+      <span id={hintId} className="text-sm text-pretty text-muted-foreground sm:text-base">
+        {hint}
+      </span>
+      <span id={privacyId} className="mt-1 max-w-md text-xs text-pretty text-muted-foreground">
+        {privacyNote}
+      </span>
+      {/* Named by the label text alone; the format and privacy notes are its description. */}
       <input
+        ref={ref}
         id={id}
+        aria-labelledby={labelId}
+        aria-describedby={`${hintId} ${privacyId}`}
         type="file"
         accept={ACCEPTED_TYPES}
         className="sr-only"

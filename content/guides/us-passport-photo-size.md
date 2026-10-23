@@ -1,18 +1,20 @@
 ---
 title: "U.S. Passport Photo Size: Inches, mm & Pixels"
 heading: "U.S. passport photo size in inches, millimeters, and pixels"
-description: "A U.S. passport photo is 2 × 2 inches with a 1–1⅜ inch head. See the exact sizes in millimeters and pixels, how to measure, and how to fix common sizing mistakes."
+description: "A U.S. passport photo is 2 × 2 inches with a 1–1⅜ inch head. Get the exact size in millimeters and pixels, learn how to measure, and fix sizing mistakes."
 slug: us-passport-photo-size
 category: guide
 template: guide
 breadcrumbLabel: "Passport photo size"
 publishedAt: 2026-10-23
 updatedAt: 2026-10-23
+reviewedBy: pixpassport-team
 keywords:
   - us passport photo size
-  - passport photo size in pixels
   - 2x2 photo
+  - passport photo size in pixels
   - passport photo head size
+  - 600x600 passport photo
 showTableOfContents: true
 showDisclaimer: true
 relatedPages:

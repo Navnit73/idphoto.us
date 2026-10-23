@@ -9,9 +9,21 @@ import { cn } from "@/lib/cn";
 const linkClass = "font-medium text-primary underline decoration-primary/40 underline-offset-4 transition-colors hover:text-primary-hover hover:decoration-primary-hover";
 
 const components: Partial<Components> = {
-  h2: (props) => <h2 {...props} className="mt-12 font-display text-2xl font-semibold tracking-tight text-balance first:mt-0" />,
-  h3: (props) => <h3 {...props} className="mt-8 text-xl font-semibold text-balance" />,
-  h4: (props) => <h4 {...props} className="mt-6 text-lg font-semibold" />,
+  h2: ({ children, ...props }) => (
+    <h2 {...props} className="mt-12 font-display text-2xl font-semibold tracking-tight text-balance first:mt-0">
+      {children}
+    </h2>
+  ),
+  h3: ({ children, ...props }) => (
+    <h3 {...props} className="mt-8 text-xl font-semibold text-balance">
+      {children}
+    </h3>
+  ),
+  h4: ({ children, ...props }) => (
+    <h4 {...props} className="mt-6 text-lg font-semibold">
+      {children}
+    </h4>
+  ),
   p: (props) => <p {...props} className="mt-4 first:mt-0" />,
   ul: (props) => <ul {...props} className="mt-4 list-disc space-y-2 pl-6 marker:text-muted-foreground" />,
   ol: (props) => <ol {...props} className="mt-4 list-decimal space-y-2 pl-6 marker:text-muted-foreground" />,
@@ -37,6 +49,8 @@ const components: Partial<Components> = {
     );
   },
   table: (props) => (
+    // Focusable so keyboard users can scroll a wide table sideways (WCAG 2.1.1).
+    // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
     <div role="region" aria-label="Scrollable table" tabIndex={0} className="mt-6 overflow-x-auto rounded-lg border">
       <table {...props} className="w-full border-collapse text-left text-sm" />
     </div>

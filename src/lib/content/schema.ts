@@ -25,7 +25,7 @@ export const TEMPLATES = ["tool", "guide", "faq", "legal", "info", "hub"] as con
 export type TemplateName = (typeof TEMPLATES)[number];
 
 /** Interactive client components a page can embed via `widget`. */
-export const WIDGETS = ["photo-compressor", "photo-editor", "contact-form"] as const;
+export const WIDGETS = ["photo-editor", "contact-form"] as const;
 export type WidgetName = (typeof WIDGETS)[number];
 
 export const SCHEMA_TYPES = [
@@ -149,7 +149,8 @@ export const authorSchema = z.object({
   name: z.string().min(2),
   role: z.string().min(2),
   bio: z.string().min(20),
-  url: sitePath.optional(),
+  /** A site path for our own authors, or an external URL for a third party. */
+  url: z.union([sitePath, z.httpUrl()]).optional(),
   type: z.enum(["Person", "Organization"]),
 });
 

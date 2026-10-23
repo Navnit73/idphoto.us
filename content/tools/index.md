@@ -1,15 +1,16 @@
 ---
-title: "Free Passport & ID Photo Tools"
+title: "Free Passport Photo Tools for 60+ Countries"
 heading: "Passport and ID photo tools"
-description: "Free tools to make passport photos for the U.S. and 60+ countries, cropped and sized to each country's rules. No sign-up needed."
+description: "Free online tools that crop and size passport photos for the U.S. and 60+ countries and check the background. No sign-up needed. Pick a tool to start."
 slug: ""
 category: tool
 template: hub
 breadcrumbLabel: "Tools"
 updatedAt: 2026-10-23
 keywords:
-  - passport photo tools
+  - free passport photo tools
   - id photo tools
+  - passport photo tools online
 relatedPages: []
 ---
 

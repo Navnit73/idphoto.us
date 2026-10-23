@@ -1,5 +1,5 @@
 ---
-title: "Editorial Policy: How We Create and Update Content"
+title: "Editorial Policy: Our Content Standards"
 heading: "Editorial policy"
 description: "The standards behind every idphoto.us guide: official sources first, clear update dates, open corrections, no invented expertise, and editorial independence."
 slug: editorial-policy
@@ -27,7 +27,7 @@ We don't treat other photo websites, forums, or social media as authoritative. W
 
 Guides are written and maintained by the idphoto.us Editorial Team. We name the author on every guide and show the date it was last updated.
 
-We only show a "Reviewed by" credit when a named person has actually reviewed the page, and we never invent credentials, titles, or expert endorsements. If we work with outside experts in the future, we'll name them and describe their qualifications accurately.
+Our passport photo guides are reviewed by the PixPassport.com team, which also provides the photo processing service behind our passport photo editor. We only show a "Reviewed by" credit when a named person or team has actually reviewed the page, and we never invent credentials, titles, or expert endorsements. If we work with outside experts in the future, we'll name them and describe their qualifications accurately.
 
 ## Accuracy and updates
 
