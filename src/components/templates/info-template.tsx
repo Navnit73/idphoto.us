@@ -20,7 +20,7 @@ export function InfoTemplate({ page, crumbs }: TemplateProps) {
           {frontmatter.showTableOfContents && <TableOfContents headings={page.headings} />}
           <Markdown tree={page.tree} />
           {frontmatter.widget && <Widget name={frontmatter.widget} country={frontmatter.country} />}
-          <FaqSection faq={page.faq} />
+          <FaqSection faq={page.faq} title={frontmatter.faqTitle} />
         </div>
         <RelatedPages pages={page.related} />
       </article>

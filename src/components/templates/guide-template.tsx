@@ -37,7 +37,7 @@ export function GuideTemplate({ page, crumbs }: TemplateProps) {
               </section>
             )}
             <Markdown tree={page.tree} />
-            <FaqSection faq={page.faq} />
+            <FaqSection faq={page.faq} title={frontmatter.faqTitle} />
             <Sources sources={frontmatter.sources} />
             <Feedback path={page.path} />
           </div>

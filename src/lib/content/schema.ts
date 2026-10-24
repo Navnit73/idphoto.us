@@ -28,6 +28,10 @@ export type TemplateName = (typeof TEMPLATES)[number];
 export const WIDGETS = ["photo-editor", "contact-form"] as const;
 export type WidgetName = (typeof WIDGETS)[number];
 
+/** Icons a page can show on hub and related-page cards. */
+export const CARD_ICONS = ["camera", "crop", "globe", "id-card", "printer"] as const;
+export type CardIcon = (typeof CARD_ICONS)[number];
+
 export const SCHEMA_TYPES = [
   "WebPage",
   "Article",
@@ -87,6 +91,12 @@ export const frontmatterSchema = z
     schemaType: z.enum(SCHEMA_TYPES).optional(),
 
     breadcrumbLabel: z.string().trim().max(40).optional(),
+    /** One-line pitch for hub and related-page cards. Defaults to `description`. */
+    summary: z.string().trim().min(20).max(120).optional(),
+    /** Icon on hub and related-page cards. */
+    icon: z.enum(CARD_ICONS).optional(),
+    /** Position on the category hub, lowest first. Unordered pages follow, newest first. */
+    order: z.number().int().nonnegative().optional(),
     showTableOfContents: z.boolean().default(false),
     widget: z.enum(WIDGETS).optional(),
     /** Tool template: label of the header button that scrolls to the widget. */
@@ -107,6 +117,8 @@ export const frontmatterSchema = z
       .optional(),
     /** Country preselected in the `photo-editor` widget (its API code, e.g. IN, GB, EU). */
     country: z.enum(COUNTRY_CODES).optional(),
+    /** Heading of the FAQ section. Defaults to the template's own heading. */
+    faqTitle: z.string().trim().min(5).max(80).optional(),
     faq: z
       .array(z.object({ question: z.string().trim().min(8), answer: z.string().trim().min(20) }))
       .default([]),

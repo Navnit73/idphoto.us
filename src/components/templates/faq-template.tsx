@@ -19,7 +19,7 @@ export function FaqTemplate({ page, crumbs }: TemplateProps) {
         <PageHeader page={page} crumbs={crumbs} />
         <div className="flex max-w-prose flex-col gap-12">
           {frontmatter.showDisclaimer && <Disclaimer />}
-          <FaqSection faq={page.faq} title="Questions and answers" />
+          <FaqSection faq={page.faq} title={frontmatter.faqTitle ?? "Questions and answers"} />
           <Markdown tree={page.tree} />
           <Sources sources={frontmatter.sources} />
           <Feedback path={page.path} />

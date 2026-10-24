@@ -7,6 +7,9 @@ category: tool
 template: tool
 widget: photo-editor
 breadcrumbLabel: "Passport photo editor"
+summary: "Crop, size and check a passport photo for the U.S. and 60+ other countries."
+icon: globe
+order: 1
 ctaLabel: "Make my passport photo"
 heroImage:
   src: "https://res.cloudinary.com/dipzpwbbk/image/upload/v1791864231/Upload_Edit_Print__Passport_Photos_uqasb5.webp"

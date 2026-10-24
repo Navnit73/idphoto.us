@@ -25,5 +25,5 @@ export function buildBreadcrumbs(page: PageSummary, all: PageSummary[]): Crumb[]
 export function categoryListing(page: PageSummary, all: PageSummary[]) {
   return all
     .filter((candidate) => candidate.category === page.category && candidate.template !== "hub" && candidate.indexable)
-    .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
+    .sort((a, b) => (a.order ?? Infinity) - (b.order ?? Infinity) || b.updatedAt.localeCompare(a.updatedAt));
 }

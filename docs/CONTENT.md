@@ -30,6 +30,9 @@ updatedAt: 2026-10-23                                    # shown on the page and
 # Optional
 heading: "U.S. passport photo size in inches…"   # visible H1 (defaults to title)
 breadcrumbLabel: "Passport photo size"           # short name for breadcrumbs and hub cards
+summary: "Make a 2 × 2 inch photo for U.S. passports."  # one-line card text (default: description)
+icon: camera                                     # card icon: camera | crop | globe | id-card | printer
+order: 2                                         # position on the hub, lowest first (default: newest first)
 publishedAt: 2026-10-23
 published: true                                  # false = not built, not linked, 404
 indexable: true                                  # false = noindex + left out of the sitemap
@@ -51,6 +54,7 @@ sources:
   - title: "U.S. Passport Photos"
     url: "https://travel.state.gov/…"
     publisher: "U.S. Department of State"
+faqTitle: "FAQ: 2x2 photo questions answered"        # FAQ section heading (default: the template's own)
 faq:
   - question: "Can I smile in my passport photo?"
     answer: "Yes. A natural smile is fine… Markdown links like [this](/faq) work."

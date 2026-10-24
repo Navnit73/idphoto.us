@@ -69,6 +69,14 @@ export const GlobeIcon = (props: IconProps) => (
   </Icon>
 );
 
+export const IdCardIcon = (props: IconProps) => (
+  <Icon {...props}>
+    <rect x="3" y="5" width="18" height="14" rx="2" />
+    <circle cx="8.5" cy="11" r="2" />
+    <path d="M5.5 16c.5-1.5 1.6-2.25 3-2.25s2.5.75 3 2.25M14 10h4m-4 3.5h3" />
+  </Icon>
+);
+
 export const ShieldIcon = (props: IconProps) => (
   <Icon {...props}>
     <path d="M12 3 5 6v5.5c0 4.4 3 8.2 7 9.5 4-1.3 7-5.1 7-9.5V6z" />

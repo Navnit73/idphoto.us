@@ -32,7 +32,11 @@ export type PageSummary = {
   /** Absolute canonical path or URL; equals `path` unless overridden. */
   canonical: string;
   inSitemap: boolean;
+  /** Short card text: `summary`, or the description. */
+  summary: string;
   widget?: Frontmatter["widget"];
+  icon?: Frontmatter["icon"];
+  order?: number;
 };
 
 export type Page = PageSummary & {
@@ -80,10 +84,10 @@ function routePath(frontmatter: Frontmatter) {
 }
 
 function summarize(page: Omit<Page, "related">): PageSummary {
-  const { path, title, heading, description, category, template, breadcrumbLabel, updatedAt, indexable, canonical, inSitemap } =
+  const { path, title, heading, description, summary, category, template, breadcrumbLabel, updatedAt, indexable, canonical, inSitemap } =
     page;
-  const { widget } = page.frontmatter;
-  return { path, title, heading, description, category, template, breadcrumbLabel, updatedAt, indexable, canonical, inSitemap, widget };
+  const { widget, icon, order } = page.frontmatter;
+  return { path, title, heading, description, summary, category, template, breadcrumbLabel, updatedAt, indexable, canonical, inSitemap, widget, icon, order };
 }
 
 /**
@@ -142,6 +146,7 @@ async function loadAllPages(version: string): Promise<Page[]> {
           title: frontmatter.title,
           heading: frontmatter.heading ?? frontmatter.title,
           description: frontmatter.description,
+          summary: frontmatter.summary ?? frontmatter.description,
           category: frontmatter.category,
           template: frontmatter.template,
           breadcrumbLabel: frontmatter.breadcrumbLabel ?? frontmatter.heading ?? frontmatter.title,

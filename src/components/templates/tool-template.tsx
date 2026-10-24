@@ -38,7 +38,7 @@ export function ToolTemplate({ page, crumbs }: TemplateProps) {
           {frontmatter.showDisclaimer && <Disclaimer />}
           <Markdown tree={page.tree} />
           {frontmatter.widget === "photo-editor" && <SupportedCountries />}
-          <FaqSection faq={page.faq} />
+          <FaqSection faq={page.faq} title={frontmatter.faqTitle} />
           <Sources sources={frontmatter.sources} />
         </div>
         <div className="mx-auto w-full max-w-6xl">
