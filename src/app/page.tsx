@@ -48,6 +48,10 @@ export const metadata = buildMetadata({
     "free passport photo",
     "us passport picture",
     "make passport photo at home",
+    "id photo editor online",
+    "photo id maker",
+    "photo id photo",
+    "passport id picture",
   ],
 });
 
@@ -164,6 +168,11 @@ const faqs = [
       "Yes. Choose your country in the tool, and it formats the photo for that country. Over 60 countries are available.",
   },
   {
+    question: "Is this also an ID photo editor online, not just for passports?",
+    answer:
+      "Yes. Beyond a passport ID picture, our photo ID maker also builds visa photos, 2x2 ID photos, and other official ID photo formats. Pick the format you need in the tool.",
+  },
+  {
     question: "Can I print my passport photo at home?",
     answer:
       "Yes. Print it on photo-quality paper at 100% scale, or send the file to a photo lab. Check the printed result with a ruler before you mail it.",
@@ -238,8 +247,9 @@ export default async function Home() {
               Passport Photo Online: Free Passport Photo Maker
             </h1>
             <p className="max-w-xl text-lg text-pretty text-muted-foreground">
-              Make a U.S. passport photo online in minutes, or choose from 60+ other countries. Upload a photo,
-              download your file, and print it or submit it online.
+              Make a U.S. passport photo online in minutes, or choose from 60+ other countries. This free ID photo
+              editor online crops, resizes, and checks your photo, then lets you download, print, or submit it
+              online.
             </p>
             <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
               <a href={links.tool} className={buttonVariants({ size: "lg", className: "group" })}>
@@ -278,8 +288,8 @@ export default async function Home() {
       <section id="photo-tool" aria-labelledby="photo-tool-heading" className="scroll-mt-header py-section">
         <Container className="flex flex-col gap-10">
           <SectionHeader id="photo-tool-heading" title="Make your passport photo online">
-            Choose your country and upload a photo. Your finished passport picture opens on its own page, ready to
-            download.
+            Choose your country and upload a photo. This photo ID maker builds your passport ID picture and opens it
+            on its own page, ready to download.
           </SectionHeader>
 
           <Widget name="photo-editor" />
@@ -319,8 +329,8 @@ export default async function Home() {
       <section aria-labelledby="people-heading" className="py-section">
         <Container className="flex flex-col gap-10">
           <SectionHeader id="people-heading" title="Who makes a passport photo online with us">
-            People across the U.S. use our passport photo maker for every kind of application. People in 60+ countries
-            use it too.
+            People across the U.S. use our passport photo maker and photo ID editor for every kind of application.
+            People in 60+ countries use it too.
           </SectionHeader>
 
           <div className="grid gap-6 lg:grid-cols-2">

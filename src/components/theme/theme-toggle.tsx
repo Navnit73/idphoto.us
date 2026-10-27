@@ -10,9 +10,9 @@ const listeners = new Set<() => void>();
 function readTheme(): Theme {
   try {
     const stored = localStorage.getItem(THEME_STORAGE_KEY);
-    return isTheme(stored) ? stored : "system";
+    return isTheme(stored) ? stored : "light";
   } catch {
-    return "system";
+    return "light";
   }
 }
 
@@ -55,7 +55,7 @@ const options: { value: Theme; label: string; icon: React.ReactNode }[] = [
 ];
 
 export function ThemeToggle({ className }: { className?: string }) {
-  const theme = useSyncExternalStore(subscribe, readTheme, () => "system" as const);
+  const theme = useSyncExternalStore(subscribe, readTheme, () => "light" as const);
 
   // Strict Mode's dev remount resets <html> attributes set by the inline
   // script; re-apply before paint. No-op in production.

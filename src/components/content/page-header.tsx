@@ -81,17 +81,17 @@ export function PageHeader({ page, crumbs, byline = false, cta, image }: PageHea
     <header className="flex flex-col gap-4 border-b pb-6 sm:pb-8">
       <Breadcrumbs crumbs={crumbs} />
       {image ? (
-        <div className="grid items-center gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-12">
+        <div className="grid items-center gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,22rem)] lg:gap-12">
           {intro}
-          <figure className="rounded-xl bg-photo-backdrop p-2 sm:p-4">
+          <figure className="mx-auto w-full max-w-sm rounded-xl bg-photo-backdrop p-2 sm:p-4 lg:mx-0 lg:max-w-none">
             <Image
               src={image.src}
               width={image.width}
               height={image.height}
               alt={image.alt}
-              sizes="(min-width: 80rem) 35rem, (min-width: 64rem) 45vw, 100vw"
+              sizes="(min-width: 64rem) 22rem, 24rem"
               preload
-              className="h-auto w-full"
+              className="mx-auto h-auto w-full max-w-sm lg:max-w-none"
             />
           </figure>
         </div>

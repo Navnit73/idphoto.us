@@ -11,6 +11,11 @@ summary: "4 × 6 layouts, paper and printer settings for 2 × 2 prints."
 icon: printer
 order: 5
 ctaLabel: "Make my photo to print"
+heroImage:
+  src: "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786118129/final_result_vzs9an.jpg"
+  width: 1774
+  height: 887
+  alt: "Two example U.S. passport photos, a man and a woman, each measured at 2 × 2 inches (600 × 600 pixels) with the head centered."
 publishedAt: 2026-10-24
 updatedAt: 2026-10-24
 keywords:

@@ -12,6 +12,11 @@ summary: "Crop, resize, and check your passport photo to DIA specs."
 icon: id-card
 order: 6
 ctaLabel: "Make my photo"
+heroImage:
+  src: "https://res.cloudinary.com/dipzpwbbk/image/upload/v1790742513/Passport-Photo-With-iPhone_szopjq.webp"
+  width: 1774
+  height: 887
+  alt: "Two example U.S. passport photos, a man and a woman, each measured at 2 × 2 inches (600 × 600 pixels) with the head centered."
 publishedAt: 2026-10-26
 updatedAt: 2026-10-26
 keywords:

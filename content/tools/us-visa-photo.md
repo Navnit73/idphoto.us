@@ -12,6 +12,11 @@ summary: "A square JPEG sized and checked for the DS-160 visa upload."
 icon: id-card
 order: 3
 ctaLabel: "Make my visa photo"
+heroImage:
+  src: "https://res.cloudinary.com/dipzpwbbk/image/upload/v1792744005/us_passport_photo_example_1_pmj70g.webp"
+  width: 1774
+  height: 887
+  alt: "Two example U.S. passport photos, a man and a woman, each measured at 2 × 2 inches (600 × 600 pixels) with the head centered."
 publishedAt: 2026-10-24
 updatedAt: 2026-10-24
 keywords:
@@ -70,15 +75,15 @@ The photo is uploaded over an encrypted connection, because face detection and b
 
 The Department of State publishes [digital image requirements](https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/photos/digital-image-requirements.html) for visa photos. The DS-160 checks your file against them when you upload it.
 
-| Requirement | U.S. visa digital photo |
-| --- | --- |
-| Dimensions | 600 × 600 to 1200 × 1200 pixels |
-| Aspect ratio | Square (width equals height) |
-| Format | JPEG (.jpg) |
-| File size | 240 kB or less |
-| Head height | 50–69% of the image height, chin to top of head |
-| Background | Plain white or off-white |
-| Age of photo | Taken in the last 6 months |
+| Requirement  | U.S. visa digital photo                         |
+| ------------ | ----------------------------------------------- |
+| Dimensions   | 600 × 600 to 1200 × 1200 pixels                 |
+| Aspect ratio | Square (width equals height)                    |
+| Format       | JPEG (.jpg)                                     |
+| File size    | 240 kB or less                                  |
+| Head height  | 50–69% of the image height, chin to top of head |
+| Background   | Plain white or off-white                        |
+| Age of photo | Taken in the last 6 months                      |
 
 ### Pixel Dimensions and Square Aspect Ratio
 

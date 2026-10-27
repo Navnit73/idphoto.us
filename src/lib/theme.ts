@@ -10,7 +10,8 @@ export function isTheme(value: unknown): value is Theme {
 /**
  * Runs in <head> before first paint so a saved theme never flashes.
  * "system" is represented by the absence of `data-theme`.
+ * With nothing stored (first visit), the default is "light", not the OS preference.
  */
 export const themeInitScript = `(function(){try{var t=localStorage.getItem(${JSON.stringify(
   THEME_STORAGE_KEY,
-)});if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)}catch(e){}})()`;
+)});if(t==="dark")document.documentElement.setAttribute("data-theme","dark");else if(t!=="system")document.documentElement.setAttribute("data-theme","light")}catch(e){}})()`;

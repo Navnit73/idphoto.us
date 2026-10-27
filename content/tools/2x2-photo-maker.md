@@ -12,6 +12,11 @@ summary: "Make a 2 × 2 inch photo for U.S. passports, visas and green cards."
 icon: camera
 order: 2
 ctaLabel: "Make my 2x2 photo"
+heroImage:
+  src: "https://res.cloudinary.com/dipzpwbbk/image/upload/v1792744005/us_passport_photo_example_1_pmj70g.webp"
+  width: 1774
+  height: 887
+  alt: "Two example U.S. passport photos, a man and a woman, each measured at 2 × 2 inches (600 × 600 pixels) with the head centered."
 publishedAt: 2026-10-24
 updatedAt: 2026-10-24
 keywords:
