@@ -24,8 +24,8 @@ function applyTheme(theme: Theme) {
 
 function setTheme(theme: Theme) {
   try {
-    if (theme === "system") localStorage.removeItem(THEME_STORAGE_KEY);
-    else localStorage.setItem(THEME_STORAGE_KEY, theme);
+    // Stored explicitly: an empty slot means "first visit", which defaults to light, not system.
+    localStorage.setItem(THEME_STORAGE_KEY, theme);
   } catch {
     // Storage unavailable (private mode, blocked cookies): still apply for this page.
   }

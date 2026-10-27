@@ -12,7 +12,7 @@ const ROUTES = [
   "/tool/passport-photo-editor",
   "/guide",
   "/guide/passport-photo-requirements",
-  "/guide/us-passport-photo-size",
+  "/tool/print-passport-photos",
   "/faq",
   "/contact",
   "/about",
@@ -96,7 +96,7 @@ for (const scheme of ["light", "dark"] as const) {
     });
 
     test("axe: feedback comment step", async ({ page }) => {
-      await page.goto("/guide/us-passport-photo-size");
+      await page.goto("/guide/passport-photo-requirements");
       await settle(page);
       await page.getByRole("button", { name: "Yes", exact: true }).click();
       await expect(page.locator("#feedback-comment")).toBeFocused();

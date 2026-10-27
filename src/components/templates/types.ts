@@ -7,3 +7,6 @@ export type TemplateProps = {
   /** Other published pages in the same category (used by hub templates). */
   categoryPages: PageSummary[];
 };
+
+/** Id of the section holding a page's widget; the header button scrolls to it. */
+export const TOOL_ANCHOR = "tool";

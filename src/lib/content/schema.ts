@@ -99,9 +99,16 @@ export const frontmatterSchema = z
     order: z.number().int().nonnegative().optional(),
     showTableOfContents: z.boolean().default(false),
     widget: z.enum(WIDGETS).optional(),
-    /** Tool template: label of the header button that scrolls to the widget. */
+    /** Tool and guide templates: label of the header button that scrolls to the widget. */
     ctaLabel: z.string().trim().min(3).max(40).optional(),
-    /** Tool template: image shown beside the header. A /public path or our Cloudinary account. */
+    /** Tool and guide templates: "band" gives the header the home page hero's full-width band and larger type. */
+    heroStyle: z.enum(["plain", "band"]).default("plain"),
+    /** Tool and guide templates: up to three key figures under the header, each stated (and sourced) in the body. */
+    heroFacts: z
+      .array(z.object({ value: z.string().trim().min(1).max(12), label: z.string().trim().min(3).max(40) }))
+      .max(3)
+      .optional(),
+    /** Tool and guide templates: image shown beside the header. A /public path or our Cloudinary account. */
     heroImage: z
       .object({
         src: z
@@ -138,8 +145,16 @@ export const frontmatterSchema = z
     if (data.template === "tool" && !data.widget) {
       ctx.addIssue({ code: "custom", path: ["widget"], message: "is required for the tool template" });
     }
-    if ((data.ctaLabel || data.heroImage) && data.template !== "tool") {
-      ctx.addIssue({ code: "custom", path: ["heroImage"], message: "ctaLabel and heroImage only apply to the tool template" });
+    const customHero = data.ctaLabel || data.heroImage || data.heroFacts || data.heroStyle !== "plain";
+    if (customHero && data.template !== "tool" && data.template !== "guide") {
+      ctx.addIssue({
+        code: "custom",
+        path: ["heroStyle"],
+        message: "ctaLabel, heroImage, heroFacts, and heroStyle only apply to the tool and guide templates",
+      });
+    }
+    if (data.ctaLabel && !data.widget) {
+      ctx.addIssue({ code: "custom", path: ["ctaLabel"], message: "needs a widget for the button to scroll to" });
     }
     if (data.country && data.widget !== "photo-editor") {
       ctx.addIssue({ code: "custom", path: ["country"], message: "only applies to the photo-editor widget" });

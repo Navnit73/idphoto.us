@@ -5,7 +5,9 @@ export type LoadedImage = { element: HTMLImageElement; url: string; width: numbe
 
 /** Decodes a user-selected file. The caller owns `url` and must revoke it. */
 export async function loadImage(file: File): Promise<LoadedImage> {
-  if (!file.type.startsWith("image/")) throw new Error("That file isn't an image. Choose a JPEG, PNG, or WebP photo.");
+  // Some browsers report HEIC/HEIF files with an empty type; let decode() decide whether they open.
+  const heic = !file.type && /\.hei[cf]$/i.test(file.name);
+  if (!file.type.startsWith("image/") && !heic) throw new Error("That file isn't an image. Choose a JPEG, PNG, or WebP photo.");
   if (file.size > MAX_INPUT_BYTES) throw new Error("That image is over 25 MB. Choose a smaller photo.");
 
   const url = URL.createObjectURL(file);

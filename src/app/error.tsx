@@ -6,7 +6,10 @@ import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 
 /** Recoverable error boundary for route segments. Details are logged server-side, never shown. */
-export default function Error({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
+export default function Error({ error, retry }: { error: unknown; retry: () => void }) {
+  // Values thrown in Client Components may not be Error instances; only server errors carry a digest.
+  const digest = error instanceof globalThis.Error && "digest" in error ? String(error.digest) : undefined;
+
   return (
     <Container className="flex flex-col items-start gap-6 pt-page pb-section">
       <h1 className="font-display text-4xl font-semibold tracking-tight">Something went wrong</h1>
@@ -17,8 +20,9 @@ export default function Error({ error, reset }: { error: Error & { digest?: stri
         </Link>
         .
       </p>
-      {error.digest && <p className="font-mono text-sm text-muted-foreground">Reference: {error.digest}</p>}
-      <Button onClick={reset}>Try again</Button>
+      {digest && <p className="font-mono text-sm text-muted-foreground">Reference: {digest}</p>}
+      {/* retry() re-fetches the segment; reset() would only re-render the same failed payload. */}
+      <Button onClick={retry}>Try again</Button>
     </Container>
   );
 }

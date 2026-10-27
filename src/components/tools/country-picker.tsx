@@ -85,7 +85,7 @@ export function CountryPicker({
     switch (event.key) {
       case "ArrowDown":
         event.preventDefault();
-        setActive((index) => Math.min(index + 1, matches.length - 1));
+        setActive((index) => Math.max(0, Math.min(index + 1, matches.length - 1)));
         break;
       case "ArrowUp":
         event.preventDefault();

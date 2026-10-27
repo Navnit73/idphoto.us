@@ -31,6 +31,7 @@
   --color-muted-foreground: var(--muted-foreground);
   --color-border: var(--border);
   --color-border-strong: var(--border-strong);
+  --color-header-rule: var(--header-rule);
   --color-input: var(--input);
   --color-ring: var(--ring);
   --color-primary: var(--primary);

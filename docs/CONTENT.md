@@ -44,8 +44,10 @@ schemaType: Article                              # override the template default
 showTableOfContents: true
 showDisclaimer: true                             # "not an official source" notice
 widget: photo-editor                             # photo-editor | contact-form
-ctaLabel: "Make my passport photo"               # tool only: header button that scrolls to the widget
-heroImage: { src: /images/x.webp, width: 1200, height: 600, alt: "…" }  # tool only: image beside the header (/public or our Cloudinary)
+ctaLabel: "Make my passport photo"               # tool/guide, needs a widget: header button that scrolls to the widget
+heroStyle: band                                  # tool/guide: plain (default) | band = the home page's full-width hero band
+heroImage: { src: /images/x.webp, width: 1200, height: 600, alt: "…" }  # tool/guide: image beside the header (/public or our Cloudinary)
+heroFacts: [{ value: "2 × 2 in", label: "Photo size" }]  # tool/guide: up to 3 key figures under the header; state and source each in the body
 country: IN                                      # photo-editor only: preselected country (code from src/lib/photo/countries.ts)
 relatedPages: [/guide/passport-photo-requirements, /tool/passport-photo-editor]
 author: editorial-team                           # id from content/authors.json
@@ -66,7 +68,7 @@ faq:
 | Template | Use for                         | Renders                                                                                   | Default schema   |
 | -------- | ------------------------------- | ----------------------------------------------------------------------------------------- | ---------------- |
 | `tool`   | Interactive tools               | H1 with a button that scrolls to the widget and an optional hero image, then the widget, explanation, FAQ, sources, feedback, and related pages | `WebApplication` |
-| `guide`  | Long-form articles              | Byline, reading time, sticky table of contents, optional widget, body, FAQ, sources, feedback, related | `Article`        |
+| `guide`  | Long-form articles              | Byline, reading time, optional hero image and button to the widget, the widget, sticky table of contents, body, FAQ, sources, feedback, related | `Article`        |
 | `faq`    | Q&A pages                       | FAQ entries first, then the body                                                          | `FAQPage`        |
 | `legal`  | Policies                        | A narrow reading column with the last-updated date                                        | `WebPage`        |
 | `info`   | About, contact, policies        | Body, then an optional widget (for example, the contact form), FAQ, and related pages     | `WebPage`        |

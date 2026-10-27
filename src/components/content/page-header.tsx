@@ -3,6 +3,8 @@ import Link from "next/link";
 
 import { ArrowRightIcon } from "@/components/home/icons";
 import { buttonVariants } from "@/components/ui/button";
+import { Container } from "@/components/ui/container";
+import { cn } from "@/lib/cn";
 
 import type { Page } from "@/lib/content/loader";
 import type { Crumb } from "@/lib/seo/json-ld";
@@ -19,13 +21,27 @@ type PageHeaderProps = {
   cta?: { label: string; href: `#${string}` };
   /** Image shown to the right of the text on large screens. */
   image?: { src: string; width: number; height: number; alt: string };
+  /** Key figures under the intro, like the home page hero's stats. */
+  facts?: { value: string; label: string }[];
+  /**
+   * The home page hero's look: a full-width white (dark: black) band with larger type.
+   * It brings its own Container, so templates render it outside theirs.
+   */
+  band?: boolean;
 };
 
-export function PageHeader({ page, crumbs, byline = false, cta, image }: PageHeaderProps) {
+export function PageHeader({ page, crumbs, byline = false, cta, image, facts, band = false }: PageHeaderProps) {
   const intro = (
-    <div className="flex flex-col gap-4">
-      <h1 className="font-display text-3xl font-semibold sm:text-4xl tracking-tight text-balance">{page.heading}</h1>
-      <p className="max-w-prose text-base text-pretty sm:text-lg text-muted-foreground">{page.description}</p>
+    <div className={cn("flex flex-col", band ? "gap-6" : "gap-4")}>
+      <h1
+        className={cn(
+          "font-display font-semibold tracking-tight text-balance",
+          band ? "text-4xl sm:text-5xl" : "text-3xl sm:text-4xl",
+        )}
+      >
+        {page.heading}
+      </h1>
+      <p className="max-w-prose text-base text-pretty text-muted-foreground sm:text-lg">{page.description}</p>
       <dl className="flex flex-wrap gap-x-6 gap-y-1 text-sm text-muted-foreground">
         {byline && (
           <div className="flex gap-1.5">
@@ -74,30 +90,60 @@ export function PageHeader({ page, crumbs, byline = false, cta, image }: PageHea
           <ArrowRightIcon className="size-4 transition-transform group-hover:translate-x-0.5" />
         </a>
       )}
+      {facts?.length ? (
+        <dl className="grid w-full grid-cols-3 gap-4 border-t border-border-strong pt-6">
+          {facts.map((fact) => (
+            <div key={fact.label} className="flex flex-col gap-0.5">
+              <dt className="order-2 text-xs text-muted-foreground">{fact.label}</dt>
+              <dd className="order-1 font-display text-xl font-semibold sm:text-3xl">{fact.value}</dd>
+            </div>
+          ))}
+        </dl>
+      ) : null}
     </div>
   );
+
+  const body = image ? (
+    <div
+      className={cn(
+        "grid items-center",
+        band ? "gap-10 lg:grid-cols-2 lg:gap-16" : "gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,22rem)] lg:gap-12",
+      )}
+    >
+      {intro}
+      <figure
+        className={cn("rounded-xl bg-photo-backdrop p-2 sm:p-4", !band && "mx-auto w-full max-w-sm lg:mx-0 lg:max-w-none")}
+      >
+        <Image
+          src={image.src}
+          width={image.width}
+          height={image.height}
+          alt={image.alt}
+          sizes={band ? "(min-width: 80rem) 35rem, (min-width: 64rem) 45vw, 100vw" : "(min-width: 64rem) 22rem, 24rem"}
+          preload
+          className={cn("h-auto w-full", band ? "rounded-lg" : "mx-auto max-w-sm lg:max-w-none")}
+        />
+      </figure>
+    </div>
+  ) : (
+    intro
+  );
+
+  if (band) {
+    return (
+      <header className="border-b bg-background">
+        <Container className="flex flex-col gap-6 pt-page pb-12 lg:gap-8 lg:pb-20">
+          <Breadcrumbs crumbs={crumbs} />
+          {body}
+        </Container>
+      </header>
+    );
+  }
 
   return (
     <header className="flex flex-col gap-4 border-b pb-6 sm:pb-8">
       <Breadcrumbs crumbs={crumbs} />
-      {image ? (
-        <div className="grid items-center gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,22rem)] lg:gap-12">
-          {intro}
-          <figure className="mx-auto w-full max-w-sm rounded-xl bg-photo-backdrop p-2 sm:p-4 lg:mx-0 lg:max-w-none">
-            <Image
-              src={image.src}
-              width={image.width}
-              height={image.height}
-              alt={image.alt}
-              sizes="(min-width: 64rem) 22rem, 24rem"
-              preload
-              className="mx-auto h-auto w-full max-w-sm lg:max-w-none"
-            />
-          </figure>
-        </div>
-      ) : (
-        intro
-      )}
+      {body}
     </header>
   );
 }

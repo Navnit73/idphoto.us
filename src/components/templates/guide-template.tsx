@@ -8,17 +8,44 @@ import { TableOfContents } from "@/components/content/table-of-contents";
 import { Container } from "@/components/ui/container";
 import { Feedback } from "@/components/widgets/feedback";
 import { Widget } from "@/components/widgets/registry";
+import { cn } from "@/lib/cn";
 
-import type { TemplateProps } from "./types";
+import { TOOL_ANCHOR, type TemplateProps } from "./types";
 
 export function GuideTemplate({ page, crumbs }: TemplateProps) {
   const { frontmatter } = page;
   const toc = frontmatter.showTableOfContents;
+  const band = frontmatter.heroStyle === "band";
+
+  const header = (
+    <PageHeader
+      page={page}
+      crumbs={crumbs}
+      byline
+      band={band}
+      cta={frontmatter.widget ? { label: frontmatter.ctaLabel ?? "Try the tool", href: `#${TOOL_ANCHOR}` } : undefined}
+      image={frontmatter.heroImage}
+      facts={frontmatter.heroFacts}
+    />
+  );
 
   return (
-    <Container className="pt-page pb-10 sm:pb-14">
-      <article className="flex flex-col gap-10">
-        <PageHeader page={page} crumbs={crumbs} byline />
+    <article>
+      {/* The band header is full-bleed, so it sits outside the page Container. */}
+      {band && header}
+      <Container className={cn("flex flex-col gap-10 pb-10 sm:pb-14", band ? "pt-10 sm:pt-14" : "pt-page")}>
+        {!band && header}
+
+        {/* Optional: lets a guide embed a tool, e.g. the photo editor preset to the guide's country. */}
+        {frontmatter.widget && (
+          <section id={TOOL_ANCHOR} aria-labelledby="tool-heading" className="mx-auto w-full max-w-6xl">
+            {/* The widget's own headings are H3s, so this keeps the outline from skipping a level. */}
+            <h2 id="tool-heading" className="sr-only">
+              Photo tool
+            </h2>
+            <Widget name={frontmatter.widget} country={frontmatter.country} />
+          </section>
+        )}
 
         <div className={toc ? "grid gap-10 lg:grid-cols-[minmax(0,1fr)_16rem]" : undefined}>
           {toc && (
@@ -26,16 +53,6 @@ export function GuideTemplate({ page, crumbs }: TemplateProps) {
           )}
           <div className="flex max-w-prose min-w-0 flex-col gap-12">
             {frontmatter.showDisclaimer && <Disclaimer />}
-            {/* Optional: lets a guide embed a tool, e.g. the photo editor preset to the guide's country. */}
-            {frontmatter.widget && (
-              <section aria-labelledby="tool-heading">
-                {/* The widget's own headings are H3s, so this keeps the outline from skipping a level. */}
-                <h2 id="tool-heading" className="sr-only">
-                  Photo tool
-                </h2>
-                <Widget name={frontmatter.widget} country={frontmatter.country} />
-              </section>
-            )}
             <Markdown tree={page.tree} />
             <FaqSection faq={page.faq} title={frontmatter.faqTitle} />
             <Sources sources={frontmatter.sources} />
@@ -44,7 +61,7 @@ export function GuideTemplate({ page, crumbs }: TemplateProps) {
         </div>
 
         <RelatedPages pages={page.related} />
-      </article>
-    </Container>
+      </Container>
+    </article>
   );
 }

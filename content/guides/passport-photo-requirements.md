@@ -17,6 +17,21 @@ keywords:
   - passport photo smile
   - digital passport photo for renewal
 showTableOfContents: true
+widget: photo-editor
+heroStyle: band
+ctaLabel: "Make my passport photo"
+heroImage:
+  src: "https://res.cloudinary.com/dipzpwbbk/image/upload/v1791864231/Upload_Edit_Print__Passport_Photos_uqasb5.webp"
+  width: 1774
+  height: 887
+  alt: "Three steps to a passport photo: upload a photo, edit it online, then get a sheet of printed passport photos."
+heroFacts:
+  - value: "2 × 2 in"
+    label: "Photo size"
+  - value: "1–1⅜ in"
+    label: "Head height, chin to hair"
+  - value: "White"
+    label: "Or off-white background"
 showDisclaimer: true
 relatedPages:
   - /tool/passport-photo-editor

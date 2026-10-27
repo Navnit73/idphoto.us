@@ -31,6 +31,7 @@ export function ContactForm() {
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (status.kind === "sending") return;
     const form = event.currentTarget;
     const values = Object.fromEntries(new FormData(form)) as Record<string, string>;
 
@@ -115,7 +116,12 @@ export function ContactForm() {
             </Link>
             .
           </p>
-          <Button type="submit" disabled={status.kind === "sending"}>
+          <Button
+            type="submit"
+            className="aria-disabled:opacity-50"
+            // Not `disabled`: that would drop keyboard focus to <body> mid-submit.
+            aria-disabled={status.kind === "sending" || undefined}
+          >
             {status.kind === "sending" ? "Sending…" : "Send message"}
           </Button>
         </div>

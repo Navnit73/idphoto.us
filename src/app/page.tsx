@@ -6,6 +6,7 @@ import {
   ArrowRightIcon,
   CameraIcon,
   CheckIcon,
+  ClockIcon,
   CropIcon,
   DownloadIcon,
   GlobeIcon,
@@ -18,7 +19,6 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { buttonVariants } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { Widget } from "@/components/widgets/registry";
-import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/cn";
 import { getPageSummaries } from "@/lib/content/loader";
 import { PHOTO_COUNTRIES, type CountryCode } from "@/lib/photo/countries";
@@ -59,7 +59,7 @@ const heroImage = {
   src: "https://res.cloudinary.com/dipzpwbbk/image/upload/v1791864231/Upload_Edit_Print__Passport_Photos_uqasb5.webp",
   width: 1774,
   height: 887,
-  alt: "Two example U.S. passport photos, a man and a woman, each with the head centered against a plain background.",
+  alt: "Three steps to a passport photo: upload a photo, edit it online, then get a sheet of printed passport photos.",
 };
 
 /** Internal link targets. Each must be a published page (or an anchor on this one). */
@@ -68,6 +68,12 @@ const links = {
   requirements: "/guide/passport-photo-requirements",
   faq: "/faq",
 } as const;
+
+const heroStats = [
+  { label: "Countries supported", value: "60+" },
+  { label: "Free, no account", value: "$0" },
+  { label: "Time to download", value: "<5 min" },
+] as const;
 
 const steps = [
   {
@@ -126,8 +132,6 @@ const countryTiles = internationalCountries.flatMap(({ code, label }) => {
 });
 const moreCountries = PHOTO_COUNTRIES.length - 1 - countryTiles.length;
 
-
-
 const principles = [
   {
     icon: ShieldIcon,
@@ -175,7 +179,7 @@ const faqs = [
   {
     question: "Can I print my passport photo at home?",
     answer:
-      "Yes. Print it on photo-quality paper at 100% scale, or send the file to a photo lab. Check the printed result with a ruler before you mail it.",
+      "Yes. Print it on photo-quality paper at 100% scale, or send the file to a photo lab or pharmacy counter. Check the printed result with a ruler before you mail it.",
   },
   {
     question: "How long does it take to make a passport photo online?",
@@ -184,24 +188,36 @@ const faqs = [
   },
 ];
 
-
 const textLink = "font-medium text-primary underline underline-offset-4 hover:text-primary-hover";
 const arrowLink = "group inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-primary-hover";
-const card = "rounded-xl border bg-surface-raised shadow-sm";
+const card = "rounded-xl border bg-surface-raised";
 
 function SectionHeader({
   id,
+  eyebrow,
   title,
   children,
   className,
+  align = "left",
 }: {
   id: string;
+  eyebrow?: string;
   title: string;
   children?: React.ReactNode;
   className?: string;
+  align?: "left" | "center";
 }) {
   return (
-    <div className={cn("flex max-w-2xl flex-col gap-3", className)}>
+    <div
+      className={cn(
+        "flex max-w-2xl flex-col gap-3",
+        align === "center" && "mx-auto items-center text-center",
+        className,
+      )}
+    >
+      {eyebrow && (
+        <span className="text-sm font-semibold tracking-wide text-primary uppercase">{eyebrow}</span>
+      )}
       <h2 id={id} className="font-display text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
         {title}
       </h2>
@@ -239,35 +255,44 @@ export default async function Home() {
         data={[organizationJsonLd(), websiteJsonLd(), homePageJsonLd({ title, description }), faqPageJsonLd("/", faqs)]}
       />
 
-      {/* Hero */}
-      <section className="border-b pt-page pb-12 sm:pb-16">
-        <Container className="grid items-center gap-10 lg:grid-cols-2 lg:gap-12 lg:py-8">
+      {/* Hero — Apple white canvas (black in dark mode). */}
+      <section className="border-b bg-background">
+        <Container className="grid items-center gap-10 pt-page pb-12 lg:grid-cols-2 lg:gap-16 lg:py-20">
           <div className="flex flex-col items-start gap-6 text-left">
-            <h1 className="font-display text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
-              Passport Photo Online: Free Passport Photo Maker
+            <span className="inline-flex items-center gap-2 rounded-full border border-border-strong px-3 py-1 text-xs font-medium text-muted-foreground">
+              <span className="size-1.5 rounded-full bg-success" aria-hidden="true" />
+              Trusted for 60+ countries&apos; requirements
+            </span>
+            <h1 className="font-display text-4xl font-semibold tracking-tight text-balance sm:text-5xl">
+              Passport photos,{" "}
+              <span className="text-primary">done right</span>, in minutes.
             </h1>
             <p className="max-w-xl text-lg text-pretty text-muted-foreground">
-              Make a U.S. passport photo online in minutes, or choose from 60+ other countries. This free ID photo
-              editor online crops, resizes, and checks your photo, then lets you download, print, or submit it
-              online.
+              Make a U.S. passport photo online, or choose from 60+ other countries. This free ID photo editor
+              crops, resizes, and checks your photo, then lets you download, print, or submit it online.
             </p>
             <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
               <a href={links.tool} className={buttonVariants({ size: "lg", className: "group" })}>
                 Make my passport photo
                 <ArrowRightIcon className="size-4 transition-transform group-hover:translate-x-0.5" />
               </a>
-              <Link href={links.requirements} className={buttonVariants({ variant: "outline", size: "lg" })}>
+              <Link
+                href={links.requirements}
+                className={buttonVariants({ variant: "outline", size: "lg" })}
+              >
                 See photo requirements
               </Link>
             </div>
-            <ul className="flex flex-wrap gap-x-5 gap-y-2 text-sm text-muted-foreground">
-              {["No account needed", "Retake as often as you like", "Print or digital file"].map((point) => (
-                <li key={point} className="flex items-center gap-1.5">
-                  <CheckIcon className="size-4 text-success" />
-                  {point}
-                </li>
+            <dl className="grid w-full grid-cols-3 gap-4 border-t border-border-strong pt-6">
+              {heroStats.map((stat) => (
+                <div key={stat.label} className="flex flex-col gap-0.5">
+                  <dt className="order-2 text-xs text-muted-foreground">{stat.label}</dt>
+                  <dd className="order-1 font-display text-2xl font-semibold sm:text-3xl">
+                    {stat.value}
+                  </dd>
+                </div>
               ))}
-            </ul>
+            </dl>
           </div>
 
           <figure className="rounded-xl bg-photo-backdrop p-2 sm:p-4">
@@ -278,16 +303,32 @@ export default async function Home() {
               alt={heroImage.alt}
               sizes="(min-width: 80rem) 35rem, (min-width: 64rem) 45vw, 100vw"
               preload
-              className="h-auto w-full"
+              className="h-auto w-full rounded-lg"
             />
           </figure>
+        </Container>
+      </section>
+
+      {/* Reassurance strip */}
+      <section className="border-b bg-surface">
+        <Container>
+          <ul className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 py-5 text-sm text-muted-foreground">
+            {["No account needed", "Retake as often as you like", "Print or digital file", "Privacy-first by default"].map(
+              (point) => (
+                <li key={point} className="flex items-center gap-1.5">
+                  <CheckIcon className="size-4 text-success" />
+                  {point}
+                </li>
+              ),
+            )}
+          </ul>
         </Container>
       </section>
 
       {/* Photo tool: the hero's main button scrolls here. */}
       <section id="photo-tool" aria-labelledby="photo-tool-heading" className="scroll-mt-header py-section">
         <Container className="flex flex-col gap-10">
-          <SectionHeader id="photo-tool-heading" title="Make your passport photo online">
+          <SectionHeader id="photo-tool-heading" eyebrow="The tool" title="Make your passport photo online">
             Choose your country and upload a photo. This photo ID maker builds your passport ID picture and opens it
             on its own page, ready to download.
           </SectionHeader>
@@ -297,27 +338,23 @@ export default async function Home() {
       </section>
 
       {/* How it works */}
-      <section aria-labelledby="how-heading" className="border-y py-section">
+      <section aria-labelledby="how-heading" className="border-y bg-surface py-section">
         <Container className="flex flex-col gap-10">
-          <SectionHeader id="how-heading" title="How to make a passport photo online in 3 steps">
+          <SectionHeader id="how-heading" eyebrow="How it works" title="Three steps to a finished photo">
             You need a phone, a plain wall, and good light. Our passport photo maker handles the rest.
           </SectionHeader>
 
           <ol className="grid gap-4 md:grid-cols-3 md:gap-6">
             {steps.map(({ icon: Icon, title, body }, index) => (
               <li key={title} className={cn(card, "relative flex flex-col gap-4 p-6 sm:p-7")}>
-                <div className="flex items-center justify-between">
-                  <span className="flex size-11 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-sm">
-                    <Icon className="size-5" />
-                  </span>
-                  <span aria-hidden="true" className="font-display text-4xl font-semibold text-muted-foreground">
+                <div className="flex items-center gap-3">
+                  <span className="flex size-10 items-center justify-center rounded-full bg-primary text-sm font-semibold text-primary-foreground">
+                    <span className="sr-only">Step </span>
                     {index + 1}
                   </span>
+                  <Icon className="size-6 text-muted-foreground" />
                 </div>
-                <h3 className="text-xl font-semibold">
-                  <span className="sr-only">Step {index + 1}: </span>
-                  {title}
-                </h3>
+                <h3 className="text-xl font-semibold">{title}</h3>
                 <p className="text-muted-foreground">{body}</p>
               </li>
             ))}
@@ -328,7 +365,7 @@ export default async function Home() {
       {/* People in the U.S. and other countries */}
       <section aria-labelledby="people-heading" className="py-section">
         <Container className="flex flex-col gap-10">
-          <SectionHeader id="people-heading" title="Who makes a passport photo online with us">
+          <SectionHeader id="people-heading" eyebrow="Who it's for" title="Built for every passport photo need">
             People across the U.S. use our passport photo maker and photo ID editor for every kind of application.
             People in 60+ countries use it too.
           </SectionHeader>
@@ -377,13 +414,13 @@ export default async function Home() {
       </section>
 
       {/* Print or digital */}
-      <section aria-labelledby="output-heading" className="border-y py-section">
+      <section aria-labelledby="output-heading" className="border-y bg-surface py-section">
         <Container className="flex flex-col gap-10">
-          <SectionHeader id="output-heading" title="Print your passport photo or upload it online">
+          <SectionHeader id="output-heading" eyebrow="Your file" title="Print it, or upload it — your choice">
             Every download is a high-resolution file, so you can use one photo on paper and on screen.
           </SectionHeader>
 
-          <div className="grid gap-6 md:grid-cols-2">
+          <div className="grid gap-6 md:grid-cols-3">
             <div className={cn(card, "flex flex-col gap-4 p-6 sm:p-8")}>
               <span className="flex size-11 items-center justify-center rounded-lg bg-primary-subtle text-primary-subtle-foreground">
                 <PrinterIcon />
@@ -400,19 +437,28 @@ export default async function Home() {
               </span>
               <h3 className="text-xl font-semibold">Upload a digital passport photo</h3>
               <p className="text-muted-foreground">
-                Online renewals and e-forms ask for a digital photo. Our editor saves a JPEG you can upload right away.
+                Online renewals and e-forms ask for a digital photo. Our editor saves a JPEG you can upload right
+                away.
+              </p>
+            </div>
+            <div className={cn(card, "flex flex-col gap-4 p-6 sm:p-8")}>
+              <span className="flex size-11 items-center justify-center rounded-lg bg-primary-subtle text-primary-subtle-foreground">
+                <ClockIcon />
+              </span>
+              <h3 className="text-xl font-semibold">Ready in minutes</h3>
+              <p className="text-muted-foreground">
+                No account, no waiting on a studio appointment. Upload, crop, and download — most people finish in
+                under five minutes.
               </p>
             </div>
           </div>
         </Container>
       </section>
 
-     
-
       {/* Tools and guides */}
-      <section aria-labelledby="resources-heading" className="border-y py-section">
+      <section aria-labelledby="resources-heading" className="py-section">
         <Container className="flex flex-col gap-10">
-          <SectionHeader id="resources-heading" title="Free passport photo tools and guides">
+          <SectionHeader id="resources-heading" eyebrow="Resources" title="Free passport photo tools and guides">
             Plain-English explanations of official rules, with links to the agency sources we used.
           </SectionHeader>
 
@@ -435,12 +481,12 @@ export default async function Home() {
       </section>
 
       {/* How we work */}
-      <section aria-labelledby="principles-heading" className="py-section">
+      <section aria-labelledby="principles-heading" className="border-t bg-surface py-section">
         <Container className="flex flex-col gap-10">
-          <SectionHeader id="principles-heading" title="How we work" />
+          <SectionHeader id="principles-heading" eyebrow="Our standards" title="How we work" align="center" />
           <ul className="grid gap-6 md:grid-cols-3">
             {principles.map(({ icon: Icon, title, body }) => (
-              <li key={title} className="flex gap-4">
+              <li key={title} className={cn(card, "flex flex-col items-start gap-4 p-6 sm:p-7")}>
                 <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary-subtle text-primary-subtle-foreground">
                   <Icon />
                 </span>
@@ -451,7 +497,7 @@ export default async function Home() {
               </li>
             ))}
           </ul>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-center text-sm text-muted-foreground">
             Read our{" "}
             <Link href="/editorial-policy" className={textLink}>
               editorial policy
@@ -470,6 +516,7 @@ export default async function Home() {
         <Container className="grid gap-10 lg:grid-cols-[minmax(0,20rem)_minmax(0,1fr)] lg:gap-16">
           <SectionHeader
             id="faq-heading"
+            eyebrow="FAQ"
             title="Passport photo online: frequently asked questions"
             className="lg:sticky lg:top-[calc(var(--spacing-header)+2rem)] lg:self-start"
           >
@@ -481,7 +528,7 @@ export default async function Home() {
           </SectionHeader>
           <div className="flex flex-col gap-3">
             {faqs.map((faq) => (
-              <details key={faq.question} className={cn(card, "group shadow-none open:shadow-sm")}>
+              <details key={faq.question} className={cn(card, "group open:border-border-strong")}>
                 <summary className="flex cursor-pointer list-none items-center justify-between gap-4 rounded-xl p-5 [&::-webkit-details-marker]:hidden">
                   <h3 className="text-base font-semibold sm:text-lg">{faq.question}</h3>
                   <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-muted text-muted-foreground transition-transform group-open:rotate-45">
@@ -494,8 +541,6 @@ export default async function Home() {
           </div>
         </Container>
       </section>
-
-      
     </>
   );
 }
