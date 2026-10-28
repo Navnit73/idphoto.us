@@ -3,6 +3,8 @@
  * Protected photo download — validates token, payment status and expiry.
  */
 
+import { after } from "next/server";
+
 import { collections } from "@/lib/db/collections";
 import { getDb } from "@/lib/db/mongodb";
 import { logger } from "@/lib/logger";
@@ -35,7 +37,7 @@ export async function GET(_request: Request, { params }: RouteContext<"/api/down
     const countryCode = payment.metadata?.countryCode?.toLowerCase() || "photo";
     const filename = `passport-photo-${countryCode}-${payment.paymentId.slice(0, 8)}.jpg`;
 
-    await logActivity({ event: "image_downloaded", status: "success", paymentId: payment.paymentId, email: payment.email });
+    after(() => logActivity({ event: "image_downloaded", status: "success", paymentId: payment.paymentId, email: payment.email }));
 
     return new Response(image.body, {
       headers: {

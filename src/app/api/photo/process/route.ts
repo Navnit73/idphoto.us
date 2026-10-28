@@ -1,6 +1,5 @@
 import { ApiError, formHandler, ok, rateLimit } from "@/lib/api/server";
 import type { PhotoProcessResult } from "@/lib/api/types";
-import { getDb } from "@/lib/db/mongodb";
 import { processPhoto } from "@/lib/photo/pixpassport";
 import { savePhotoResult } from "@/lib/photo/results";
 import { MAX_PHOTO_UPLOAD_BYTES, PHOTO_UPLOAD_TYPES, photoProcessSchema } from "@/lib/validation/forms";
@@ -20,8 +19,7 @@ export const POST = formHandler(
       throw new ApiError("unsupported_media_type", "Upload a JPEG, PNG, or WebP photo.");
     }
 
-    // Fail fast with 503 before spending an API call if results couldn't be saved anyway.
-    await getDb();
+    // Also fails fast with 503 (no database) before spending an API call if results couldn't be saved anyway.
     await rateLimit("photo-process", ipHash, { limit: 20, windowSeconds: 3600 });
 
     const photo = await processPhoto({

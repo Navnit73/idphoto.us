@@ -24,6 +24,10 @@ export const GET = queryHandler<{ paymentId: string }>("payments-status", async 
     after(() => fulfillPayment(paymentId).catch((error) => logger.error("fulfillment retry failed", { paymentId, error })));
   }
 
+  // The document we just read usually carries a valid token; only touch the database again when it doesn't.
+  const tokenValid = payment.downloadToken && (!payment.downloadTokenExpiresAt || payment.downloadTokenExpiresAt > new Date());
+  const downloadToken = !isPaid ? undefined : tokenValid ? payment.downloadToken : await ensureDownloadToken(paymentId);
+
   return ok<PaymentStatusResult>({
     paymentId: payment.paymentId,
     status: payment.status,
@@ -32,7 +36,7 @@ export const GET = queryHandler<{ paymentId: string }>("payments-status", async 
     planType: payment.planType ?? "standard",
     fulfillmentStatus: payment.fulfillmentStatus,
     emailStatus: payment.emailDelivery.status,
-    downloadToken: isPaid ? await ensureDownloadToken(paymentId) : undefined,
+    downloadToken,
     invoiceNumber: payment.invoice?.invoiceNumber,
     paidAt: payment.paidAt?.toISOString(),
   });

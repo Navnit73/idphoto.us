@@ -169,7 +169,7 @@ export const collections = {
   counters: (db: Db) => db.collection<CounterDoc>("counters"),
 };
 
-/** Idempotent; runs once per process when the connection is first opened. */
+/** Idempotent; runs once per process, in the background, when the connection is first opened. */
 export async function ensureIndexes(db: Db) {
   await Promise.all([
     collections.contactMessages(db).createIndex({ createdAt: -1 }),
@@ -184,7 +184,8 @@ export async function ensureIndexes(db: Db) {
       { key: { email: 1 } },
       { key: { status: 1 } },
       { key: { createdAt: -1 } },
-      { key: { "image.resultId": 1 } },
+      // Serves the per-photo "already paid?" lookup on every preview and checkout.
+      { key: { "image.resultId": 1, status: 1 } },
       { key: { downloadToken: 1 }, sparse: true },
     ]),
     // Unique eventId dedupes retried webhooks.

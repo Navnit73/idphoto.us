@@ -1,3 +1,5 @@
+import { after } from "next/server";
+
 import { ApiError, jsonHandler, ok, rateLimit } from "@/lib/api/server";
 import type { CreateOrderResult } from "@/lib/api/types";
 import { logActivity } from "@/lib/payments/activity-log";
@@ -32,7 +34,7 @@ export const POST = jsonHandler({ name: "payments-create-order", schema: createO
     );
   }
 
-  await logActivity({ event: "checkout_initiated", status: "started", email, metadata: { resultId, planType, currency } });
+  after(() => logActivity({ event: "checkout_initiated", status: "started", email, metadata: { resultId, planType, currency } }));
 
   try {
     const order = await createPaymentOrder({

@@ -6,6 +6,8 @@ import "server-only";
 
 import crypto from "node:crypto";
 
+import { after } from "next/server";
+
 import { collections, type PaymentDoc, type PaymentStatus } from "@/lib/db/collections";
 import { getDb } from "@/lib/db/mongodb";
 import { logger } from "@/lib/logger";
@@ -62,28 +64,29 @@ export async function createPaymentOrder(params: {
   currency: string;
   keyId: string;
 }> {
-  // Image details come from our own record, never from the client
-  const photo = await collections.photoResults(await getDb()).findOne({ _id: params.resultId });
-  if (!photo || photo.expiresAt <= new Date()) throw new PaymentError("This photo has expired. Please create a new one.", 404);
-
-  // Never charge twice for the same photo
-  const paid = await getPaidPaymentByResultId(params.resultId);
-  if (paid) throw new PaymentError("This photo has already been purchased.", 409, paid.paymentId);
-
-  const col = await paymentsCollection();
+  const db = await getDb();
+  const col = collections.payments(db);
   const plan = params.planType;
   let pricing = getPlanPricing(plan, params.currency);
 
-  // Reuse a recent pending order for the same photo, email, plan & price
-  const existing = await col.findOne({
-    "image.resultId": params.resultId,
-    email: params.email,
-    planType: plan,
-    currency: pricing.currency,
-    amount: pricing.amountInSubunits,
-    status: "pending",
-    createdAt: { $gte: new Date(Date.now() - 30 * 60 * 1000) }, // within 30 min
-  });
+  // Independent lookups, run side by side: the photo (image details come from our own record,
+  // never from the client), a paid order (never charge twice for the same photo), and a recent
+  // pending order for the same photo, email, plan & price to reuse
+  const [photo, paid, existing] = await Promise.all([
+    collections.photoResults(db).findOne({ _id: params.resultId }, { projection: { ipHash: 0 } }),
+    getPaidPaymentByResultId(params.resultId),
+    col.findOne({
+      "image.resultId": params.resultId,
+      email: params.email,
+      planType: plan,
+      currency: pricing.currency,
+      amount: pricing.amountInSubunits,
+      status: "pending",
+      createdAt: { $gte: new Date(Date.now() - 30 * 60 * 1000) }, // within 30 min
+    }),
+  ]);
+  if (!photo || photo.expiresAt <= new Date()) throw new PaymentError("This photo has expired. Please create a new one.", 404);
+  if (paid) throw new PaymentError("This photo has already been purchased.", 409, paid.paymentId);
 
   if (existing) {
     return {
@@ -166,7 +169,8 @@ export async function createPaymentOrder(params: {
 
   await col.insertOne(payment);
 
-  await logActivity({
+  // Audit trail only; written after the response so it doesn't delay opening checkout
+  after(() => logActivity({
     event: "razorpay_order_created",
     status: "success",
     paymentId,
@@ -178,7 +182,7 @@ export async function createPaymentOrder(params: {
       amount: pricing.amountInSubunits,
       currency: pricing.currency,
     },
-  });
+  }));
 
   return {
     paymentId,

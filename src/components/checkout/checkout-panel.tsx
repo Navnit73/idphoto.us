@@ -2,7 +2,7 @@
 
 import { CrownIcon, LockIcon, ScanFaceIcon, UserRoundCheckIcon, WandSparklesIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useRef, useState, useSyncExternalStore } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 
 import { ArrowRightIcon, CheckIcon, DownloadIcon, MailIcon, ShieldIcon, XIcon } from "@/components/home/icons";
 import { Button } from "@/components/ui/button";
@@ -89,17 +89,24 @@ type RazorpayResponse = { razorpay_payment_id: string; razorpay_order_id: string
 type RazorpayInstance = { open: () => void; on: (event: string, cb: (resp: unknown) => void) => void };
 type RazorpayConstructor = new (options: Record<string, unknown>) => RazorpayInstance;
 
-/** Load Razorpay's checkout script once */
+let razorpayScript: Promise<boolean> | null = null;
+
+/** Load Razorpay's checkout script once; concurrent callers share the request, and a failed load can be retried. */
 function loadRazorpayScript(): Promise<boolean> {
-  return new Promise((resolve) => {
-    if ((window as unknown as { Razorpay?: unknown }).Razorpay) return resolve(true);
+  if ((window as unknown as { Razorpay?: unknown }).Razorpay) return Promise.resolve(true);
+  razorpayScript ??= new Promise((resolve) => {
     const script = document.createElement("script");
     script.src = "https://checkout.razorpay.com/v1/checkout.js";
     script.async = true;
     script.onload = () => resolve(true);
-    script.onerror = () => resolve(false);
+    script.onerror = () => {
+      script.remove();
+      razorpayScript = null;
+      resolve(false);
+    };
     document.body.appendChild(script);
   });
+  return razorpayScript;
 }
 
 /** Razorpay's modal takes a literal color; read Action Blue from the design tokens. */
@@ -137,6 +144,17 @@ export function CheckoutPanel({
   const [error, setError] = useState("");
   const dialogRef = useRef<HTMLDialogElement>(null);
   const dialogEmailRef = useRef<HTMLInputElement>(null);
+
+  // Fetch the checkout script once the page is idle, so Pay opens the modal without waiting on it
+  useEffect(() => {
+    const preload = () => void loadRazorpayScript();
+    if (typeof requestIdleCallback === "function") {
+      const handle = requestIdleCallback(preload, { timeout: 3000 });
+      return () => cancelIdleCallback(handle);
+    }
+    const timer = setTimeout(preload, 1500);
+    return () => clearTimeout(timer);
+  }, []);
 
   const plans = { standard: getPlanPricing("standard", currency), expert_edit: getPlanPricing("expert_edit", currency) };
 
@@ -176,21 +194,21 @@ export function CheckoutPanel({
     const targetEmail = email.trim().toLowerCase();
 
     try {
-      // 1. Load Razorpay checkout script
-      if (!(await loadRazorpayScript())) {
-        throw new Error("Unable to load the payment gateway. Please check your connection.");
-      }
-
-      // 2. Create order on server (amount is set server-side)
-      // expectedCurrency/expectedAmount let the server refuse to charge a price we didn't show
-      const order = await apiPost<CreateOrderResult>("/payments/create-order", {
-        email: targetEmail,
-        resultId: id,
-        planType: plan,
-        timeZone: browserTimeZone(),
-        expectedCurrency: selected.currency,
-        expectedAmount: selected.amountInSubunits,
-      });
+      // 1. Load Razorpay's checkout script (usually already preloaded) while the server
+      // creates the order (amount is set server-side). expectedCurrency/expectedAmount let
+      // the server refuse to charge a price we didn't show.
+      const [scriptLoaded, order] = await Promise.all([
+        loadRazorpayScript(),
+        apiPost<CreateOrderResult>("/payments/create-order", {
+          email: targetEmail,
+          resultId: id,
+          planType: plan,
+          timeZone: browserTimeZone(),
+          expectedCurrency: selected.currency,
+          expectedAmount: selected.amountInSubunits,
+        }),
+      ]);
+      if (!scriptLoaded) throw new Error("Unable to load the payment gateway. Please check your connection.");
       const { paymentId, razorpayOrderId, amount, currency, keyId } = order;
 
       // 3. Open Razorpay Checkout

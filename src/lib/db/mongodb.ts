@@ -40,9 +40,10 @@ export function getDb(): Promise<Db> {
     });
     const ready = client
       .connect()
-      .then(async (connected) => {
+      .then((connected) => {
         const db = connected.db(serverEnv.MONGODB_DB);
-        await ensureIndexes(db);
+        // Indexes already exist after the first deploy, so a cold start doesn't wait on ~20 createIndex round trips.
+        ensureIndexes(db).catch((error) => logger.error("mongodb ensureIndexes failed", { error }));
         logger.info("mongodb connected", { db: serverEnv.MONGODB_DB });
         return db;
       })

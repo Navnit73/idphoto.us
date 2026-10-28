@@ -1,6 +1,7 @@
 import { headers } from "next/headers";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { connection } from "next/server";
 import { Suspense } from "react";
 
 import { CheckoutPanel } from "@/components/checkout/checkout-panel";
@@ -47,13 +48,13 @@ export default function PreviewPage({ params }: PageProps<"/preview/[id]">) {
 
 async function PhotoPreview({ params }: Pick<PageProps<"/preview/[id]">, "params">) {
   const { id } = await params;
-  // getPhotoResult opts out of prerendering, so it runs before the payments query.
-  const result = await getPhotoResult(id);
+  // The queries read the clock, so opt out of prerendering first; then run them side by side.
+  await connection();
+  const [result, paid, requestHeaders] = await Promise.all([getPhotoResult(id), getPaidPaymentByResultId(id), headers()]);
   if (!result) notFound();
-  const paid = await getPaidPaymentByResultId(id);
 
   // Price in the visitor's currency from the country header (create-order re-checks it)
-  const { country: geoCountry, currency } = resolveCurrencyFromHeaders(await headers());
+  const { country: geoCountry, currency } = resolveCurrencyFromHeaders(requestHeaders);
 
   const country = getCountry(result.countryCode);
   const countryName = country?.name ?? result.countryCode;
