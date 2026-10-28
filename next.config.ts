@@ -13,12 +13,15 @@ const contentSecurityPolicy = [
   // then beacons to *.clarity.ms and c.bing.com.
   // The photo checker runs MediaPipe in the browser: its WebAssembly loader comes from jsDelivr
   // ('wasm-unsafe-eval' allows compiling WebAssembly only, not JavaScript eval) and its models from Google Storage.
-  `script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://*.clarity.ms${isDev ? " 'unsafe-eval'" : ""}`,
+  // Razorpay checkout: checkout.js from checkout.razorpay.com, which opens its payment
+  // iframe on api.razorpay.com and reports to lumberjack.razorpay.com.
+  `script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://*.clarity.ms https://checkout.razorpay.com${isDev ? " 'unsafe-eval'" : ""}`,
   "style-src 'self' 'unsafe-inline'",
   // Cloudinary serves photo-editor results (shown on /preview/<id>).
-  "img-src 'self' data: blob: https://res.cloudinary.com https://*.clarity.ms https://c.bing.com",
+  "img-src 'self' data: blob: https://res.cloudinary.com https://*.clarity.ms https://c.bing.com https://*.razorpay.com",
   "font-src 'self'",
-  "connect-src 'self' https://cdn.jsdelivr.net https://storage.googleapis.com https://*.clarity.ms https://c.bing.com",
+  "connect-src 'self' https://cdn.jsdelivr.net https://storage.googleapis.com https://*.clarity.ms https://c.bing.com https://*.razorpay.com",
+  "frame-src https://api.razorpay.com https://checkout.razorpay.com",
   "worker-src 'self' blob:",
   "object-src 'none'",
   "base-uri 'self'",

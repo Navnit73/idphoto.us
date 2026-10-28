@@ -15,12 +15,20 @@ Copy `.env.example` and set these values in your host's settings. Never commit r
 | `CONTACT_WEBHOOK_URL`  | No                           | Slack-compatible webhook, pinged on new messages (no message body or email is sent).      |
 | `PASSPORT_API_URL`     | No (default `https://api.pixpassport.com`) | PixPassport base URL for the photo editor.                                 |
 | `PASSPORT_API_KEY`     | For the photo editor         | Sent as `X-API-Key`. Without it, `/api/photo/process` returns 503.                        |
-| `SMTP_HOST`            | For email                    | e.g. `smtp.gmail.com`. Without it, "Email me this photo" returns 503 and contact emails are skipped. |
+| `SMTP_HOST`            | For email                    | e.g. `smtp.gmail.com`. Without it, order emails fail (the thank-you page still offers the download) and contact emails are skipped. |
 | `SMTP_PORT`            | No (default `587`)           |                                                                                           |
 | `SMTP_SECURE`          | No (default `false`)         | `true` for port 465 (implicit TLS), `false` for 587 (STARTTLS, required).                 |
 | `SMTP_USER` / `SMTP_PASS` | Usually                   | For Gmail, use an [app password](https://support.google.com/accounts/answer/185833), not the account password. |
 | `MAIL_FROM`            | No (default `SMTP_USER`)     | Sender, e.g. `idphoto.us <hello@idphoto.us>`. Gmail only sends as the account or its aliases. |
-| `MAIL_TO`              | No                           | Inbox that receives a copy of each contact message (Reply-To is the sender).              |
+| `MAIL_TO`              | No                           | Inbox that receives a copy of each contact message (Reply-To is the sender) and expert-edit order alerts. |
+| `NEXT_PUBLIC_RAZORPAY_KEY_ID` / `RAZORPAY_KEY_SECRET` | For payments | Without both, checkout returns 503. Use `rzp_test_…` keys outside production. |
+| `RAZORPAY_WEBHOOK_SECRET` | For payments              | Secret of the webhook below. Without it, webhooks are rejected and orders rely on the browser's verify call. |
+| `NEXT_PUBLIC_PAYMENT_CURRENCY` | No (default `USD`)   | Fallback currency. Prices per currency live in `src/lib/payments/currency.ts`.            |
+| `NEXT_PUBLIC_PAYMENT_AMOUNT` / `NEXT_PUBLIC_EXPERT_EDIT_AMOUNT` | No | Override the base-currency price (major units), e.g. `1` for test payments. |
+| `PAYMENT_ENABLED_CURRENCIES` | No (default all)       | Comma-separated currencies enabled on the Razorpay account.                               |
+| `GEO_PRICING_ENABLED`  | No (default `true`)          | `false` charges the fallback currency everywhere.                                         |
+| `GEO_COUNTRY_OVERRIDE` | No, development only         | Pretend requests come from this country, e.g. `GB`.                                       |
+| `CLOUDINARY_CLOUD_NAME` / `CLOUDINARY_API_KEY` / `CLOUDINARY_API_SECRET` | Recommended | Keeps our own copy of each processed photo (what paid orders deliver) and stores invoice PDFs. |
 | `LOG_LEVEL`            | No (default `info`)          | `debug`, `info`, `warn`, or `error`.                                                      |
 
 `NEXT_PUBLIC_*` values are baked in at build time, so rebuild after changing them. Server variables are validated when the app starts; invalid values fail fast with a clear message.
@@ -32,7 +40,11 @@ Copy `.env.example` and set these values in your host's settings. Never commit r
 3. Restrict network access to your host's egress IPs where possible.
 4. Set `MONGODB_URI`. Indexes, including the TTL index that expires rate-limit records, are created automatically on first connection.
 
-Collections: `contact_messages`, `feedback`, `photo_results` (expire after 7 days via a TTL index), `rate_limits`. Read messages with Atlas or `mongosh`; there's no admin UI.
+Collections: `contact_messages`, `feedback`, `photo_results` (expire after 7 days via a TTL index), `rate_limits`, `payments`, `webhook_events`, `user_activity_logs` (expire after 90 days), `counters` (invoice numbers). Read messages and orders with Atlas or `mongosh`; there's no admin UI.
+
+### Payments
+
+Checkout runs on Razorpay: `/api/payments/create-order` → Razorpay modal → `/api/payments/verify` → fulfillment (invoice number, invoice PDF, one-hour download link, and an email with the photo and invoice attached). In the Razorpay Dashboard → Settings → Webhooks, add `https://idphoto.us/api/webhooks/razorpay` with the events `payment.captured` and `payment.failed`, and set its secret as `RAZORPAY_WEBHOOK_SECRET`. The webhook fulfils orders even when the customer closes the tab before verify runs; fulfillment is idempotent, so both paths are safe.
 
 ## 3. Build and run
 
@@ -65,11 +77,11 @@ On **Docker or a VM**, run `npm ci && npm run build && npm run start` behind a T
 ## 5. Security
 
 - **Headers:** `next.config.ts` sends CSP, HSTS (with preload), `X-Content-Type-Options`, `X-Frame-Options: DENY`, `Referrer-Policy`, `Permissions-Policy`, and COOP on every response.
-- **CSP tradeoff:** pages are statically prerendered, and a nonce-based CSP would force every page to render per request. The policy therefore allows `'unsafe-inline'` scripts (needed for Next's inline bootstrap) and locks everything else to `'self'`. Markdown can't inject scripts, because raw HTML is stripped. If you add third-party scripts (analytics, ads), add their origins to the CSP.
+- **CSP tradeoff:** pages are statically prerendered, and a nonce-based CSP would force every page to render per request. The policy therefore allows `'unsafe-inline'` scripts (needed for Next's inline bootstrap) and locks everything else to `'self'`. Markdown can't inject scripts, because raw HTML is stripped. Razorpay checkout is allowed explicitly (`checkout.razorpay.com` in `script-src`, its payment iframe in `frame-src`, `*.razorpay.com` in `connect-src`/`img-src`). If you add third-party scripts (analytics, ads), add their origins to the CSP.
 - **API endpoints:** same-origin `Origin` check, JSON bodies (or multipart uploads via `formHandler`) with size caps, Zod validation, MongoDB-backed rate limits keyed by salted IP hashes, a honeypot field, and generic error messages. Stack traces are never returned.
 - **Client IP:** rate limiting reads the first `X-Forwarded-For` entry. Make sure your proxy or CDN overwrites that header rather than appending to client-supplied values (Vercel does this).
 - **Secrets:** only `NEXT_PUBLIC_*` values reach the browser. Server modules import `server-only`, so importing them into client code fails the build.
-- **Photos:** the photo editor (home page and `/tool/passport-photo-editor`) uploads: `/api/photo/process` accepts a JPEG/PNG/WebP up to 8 MB (the browser re-encodes and downsizes first), forwards it to PixPassport, and stores only the result links and metrics. Result pages (`/preview/<id>`) are `noindex`, keyed by an unguessable UUID, and expire after 7 days; the images themselves stay in PixPassport's Cloudinary storage. Cloudinary (`res.cloudinary.com`) is allowed in the CSP `img-src`.
+- **Photos:** the photo editor (home page and `/tool/passport-photo-editor`) uploads: `/api/photo/process` accepts a JPEG/PNG/WebP up to 8 MB (the browser re-encodes and downsizes first), forwards it to PixPassport, and stores only the result links and metrics. Result pages (`/preview/<id>`) are `noindex`, keyed by an unguessable UUID, and expire after 7 days. The full-resolution photo is copied to our own Cloudinary account (when configured) and only served after payment, through `/api/download/<token>`; the preview page shows the guides version. Cloudinary (`res.cloudinary.com`) is allowed in the CSP `img-src`.
 - **Email:** all mail goes through `src/lib/mail` (`sendMail` + templates in `templates.ts`). Templates escape user input and include a plain-text part. Addresses and message content are never logged.
 
 ## 6. Logging and monitoring

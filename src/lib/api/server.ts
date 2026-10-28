@@ -19,6 +19,7 @@ const STATUS: Record<ApiErrorCode, number> = {
   validation_failed: 422,
   forbidden: 403,
   not_found: 404,
+  conflict: 409,
   payload_too_large: 413,
   unsupported_media_type: 415,
   rate_limited: 429,
@@ -35,6 +36,8 @@ export class ApiError extends Error {
     message: string,
     readonly fields?: Record<string, string[]>,
     readonly headers?: Record<string, string>,
+    /** Machine-readable extras for the client, e.g. the currency a price changed to. */
+    readonly details?: Record<string, string>,
   ) {
     super(message);
     this.name = "ApiError";
@@ -46,7 +49,10 @@ export function ok<T>(data: T, status = 200) {
 }
 
 function fail(error: ApiError) {
-  const body: ApiFailure = { ok: false, error: { code: error.code, message: error.message, fields: error.fields } };
+  const body: ApiFailure = {
+    ok: false,
+    error: { code: error.code, message: error.message, fields: error.fields, details: error.details },
+  };
   return Response.json(body, { status: STATUS[error.code], headers: { ...NO_STORE, ...error.headers } });
 }
 
@@ -96,20 +102,37 @@ export function formHandler<S extends z.ZodType>(
   });
 }
 
+/**
+ * For read-only GET routes polled by our own pages. Same error handling and
+ * logging as `jsonHandler`, without the Origin check: browsers don't send an
+ * Origin header on same-origin GETs.
+ */
+export function queryHandler<P>(
+  name: string,
+  handler: (request: Request, context: { params: Promise<P> } & HandlerContext) => Promise<Response>,
+) {
+  return (request: Request, { params }: { params: Promise<P> }) =>
+    withApiErrors(name, (req, context) => handler(req, { ...context, params }), { sameOrigin: false })(request);
+}
+
 function parse<S extends z.ZodType>(schema: S, value: unknown): z.infer<S> {
   const parsed = schema.safeParse(value);
   if (!parsed.success) throw new ApiError("validation_failed", "Some fields need attention.", fieldErrors(parsed.error));
   return parsed.data;
 }
 
-function withApiErrors(name: string, run: (request: Request, context: HandlerContext) => Promise<Response>) {
+function withApiErrors(
+  name: string,
+  run: (request: Request, context: HandlerContext) => Promise<Response>,
+  { sameOrigin = true }: { sameOrigin?: boolean } = {},
+) {
   return async (request: Request) => {
     const requestId = crypto.randomUUID();
     const log = rootLogger.child({ route: name, requestId });
     const started = performance.now();
 
     try {
-      assertSameOrigin(request);
+      if (sameOrigin) assertSameOrigin(request);
       const response = await run(request, { request, log, ipHash: hashIp(clientIp(request)) });
       log.info("request handled", { status: response.status, ms: Math.round(performance.now() - started) });
       return response;

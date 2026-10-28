@@ -6,6 +6,7 @@ export type ApiErrorCode =
   | "validation_failed"
   | "forbidden"
   | "not_found"
+  | "conflict"
   | "payload_too_large"
   | "unsupported_media_type"
   | "rate_limited"
@@ -15,10 +16,42 @@ export type ApiErrorCode =
 
 export type ApiFailure = {
   ok: false;
-  error: { code: ApiErrorCode; message: string; fields?: Record<string, string[]> };
+  error: { code: ApiErrorCode; message: string; fields?: Record<string, string[]>; details?: Record<string, string> };
 };
 
 export type ApiResponse<T> = ApiSuccess<T> | ApiFailure;
+
+/** POST /api/payments/create-order */
+export type CreateOrderResult = {
+  paymentId: string;
+  razorpayOrderId: string;
+  amount: number;
+  currency: string;
+  keyId: string;
+};
+
+/**
+ * `conflict` details from create-order: `reason` is "price_changed" (with the
+ * `currency` the server will charge) or "already_paid" (with `paidPaymentId`).
+ */
+export type CreateOrderConflict = { reason?: "price_changed" | "already_paid"; currency?: string; paidPaymentId?: string };
+
+/** POST /api/payments/verify */
+export type VerifyPaymentResult = { paymentId: string; status: "paid"; downloadToken?: string; invoiceNumber?: string };
+
+/** GET /api/payments/status/<paymentId>, polled by the thank-you page */
+export type PaymentStatusResult = {
+  paymentId: string;
+  status: "pending" | "authorized" | "paid" | "failed" | "refunded" | "cancelled";
+  amount: number;
+  currency: string;
+  planType: "standard" | "expert_edit";
+  fulfillmentStatus: "pending" | "processing" | "completed" | "failed";
+  emailStatus: "pending" | "sending" | "sent" | "failed";
+  downloadToken?: string;
+  invoiceNumber?: string;
+  paidAt?: string;
+};
 
 /** POST /api/photo/process */
 export type PhotoProcessResult = { resultId: string };

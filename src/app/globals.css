@@ -52,6 +52,14 @@
   --color-contrast-border: var(--contrast-border);
   --color-contrast-foreground: var(--contrast-foreground);
   --color-contrast-muted-foreground: var(--contrast-muted-foreground);
+  --color-premium: var(--premium);
+  --color-premium-subtle: var(--premium-subtle);
+  --color-premium-bright: var(--premium-bright);
+  --color-premium-bright-hover: var(--premium-bright-hover);
+  --color-premium-foreground: var(--premium-foreground);
+  --color-download: var(--download);
+  --color-download-hover: var(--download-hover);
+  --color-download-foreground: var(--download-foreground);
   --color-photo-backdrop: var(--photo-backdrop);
   --color-overlay: var(--overlay);
 

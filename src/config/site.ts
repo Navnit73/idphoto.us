@@ -7,6 +7,20 @@ export const siteConfig = {
   description:
     "Free tools and plain-English guides for passport and ID photos. Make a passport photo online for the U.S. and 60+ countries, then download, print, or upload it.",
   contactEmail: "hello@idphoto.us",
+  /** Reply-to on order emails and shown on invoices. */
+  supportEmail: "hello@idphoto.us",
+  logo: `${publicEnv.NEXT_PUBLIC_SITE_URL}/logo.png`,
+  /** Seller address printed on invoices. OWNER REVIEW: confirm before payments go live. */
+  business: {
+    locality: "Varanasi",
+    region: "Uttar Pradesh",
+    country: "India",
+    countryCode: "IN",
+  },
+  privacy: {
+    /** Paid download links (/api/download/<token>) expire after this. */
+    linkExpiryMinutes: 60,
+  },
   /** The person who owns and runs the site (shown on /about and in Organization structured data). */
   owner: "Navnit Rai",
   nav: [

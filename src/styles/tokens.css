@@ -53,6 +53,17 @@
   --amber-700: oklch(0.555 0.163 49);
   --amber-950: oklch(0.279 0.077 46);
 
+  /* Lime (Tailwind lime-700/800): download actions only. */
+  --lime-700: oklch(0.532 0.157 131.589);
+  --lime-800: oklch(0.453 0.124 130.933);
+
+  /* Champagne gold: the premium tier (Expert edit) only. Blue stays the action color. */
+  --gold-100: oklch(0.955 0.035 88);
+  --gold-400: oklch(0.82 0.105 84);
+  --gold-600: oklch(0.66 0.115 76);
+  --gold-700: oklch(0.52 0.1 70);
+  --gold-950: oklch(0.27 0.05 70);
+
   /* ── Semantic: color ───────────────────────────────────────────────── */
 
   color-scheme: light dark;
@@ -101,6 +112,21 @@
   --contrast-border: light-dark(var(--neutral-800), var(--neutral-300));
   --contrast-foreground: light-dark(var(--neutral-0), var(--neutral-900));
   --contrast-muted-foreground: light-dark(var(--neutral-400), var(--neutral-600));
+
+  /* Premium tier (Expert edit). `premium` is text/icons on normal surfaces;
+     `premium-bright` sits on the contrast tile; `premium-foreground` is text on
+     a gold fill (dark in both themes, ≥ 5:1 on either gold). */
+  --premium: light-dark(var(--gold-700), var(--gold-400));
+  --premium-subtle: light-dark(var(--gold-100), color-mix(in oklab, var(--gold-950) 70%, var(--neutral-950)));
+  --premium-bright: light-dark(var(--gold-400), var(--gold-600));
+  --premium-bright-hover: light-dark(color-mix(in oklab, var(--gold-400) 85%, var(--neutral-0)), var(--gold-700));
+  --premium-foreground: var(--neutral-950);
+
+  /* Download actions (buy and download, get the file). White text on lime-700
+     is ~5:1, so one value works in both themes. */
+  --download: var(--lime-700);
+  --download-hover: var(--lime-800);
+  --download-foreground: var(--neutral-0);
 
   /* Behind photo artwork with transparent areas and dark labels. Matches the
      page in light mode and stays light in dark mode so the artwork is legible. */

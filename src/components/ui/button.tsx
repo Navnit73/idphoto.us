@@ -6,6 +6,10 @@ const base =
 
 const variants = {
   primary: "bg-primary text-primary-foreground hover:bg-primary-hover",
+  /** The premium tier's action (Expert edit), on the contrast tile. */
+  premium: "bg-premium-bright text-premium-foreground hover:bg-premium-bright-hover",
+  /** Download actions: buying and getting the photo file. */
+  download: "bg-download text-download-foreground hover:bg-download-hover",
   secondary: "bg-secondary text-secondary-foreground hover:bg-secondary-hover",
   outline: "border border-border-strong bg-background text-foreground hover:border-muted-foreground hover:bg-surface",
   ghost: "text-foreground hover:bg-muted",

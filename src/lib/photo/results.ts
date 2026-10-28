@@ -2,6 +2,7 @@ import "server-only";
 
 import { connection } from "next/server";
 
+import { isCloudinaryConfigured, saveToCloudinary } from "@/lib/cloudinary";
 import { collections, type PhotoResultDoc } from "@/lib/db/collections";
 import { getDb } from "@/lib/db/mongodb";
 import { PHOTO_RESULT_TTL_DAYS } from "@/lib/photo/limits";
@@ -10,12 +11,14 @@ import { photoResultIdSchema } from "@/lib/validation/forms";
 import type { ProcessedPhoto } from "./pixpassport";
 
 export async function savePhotoResult(photo: ProcessedPhoto, meta: { countryCode: string; documentType: string; ipHash: string }) {
+  // Keep our own copy of the full-resolution photo: it's what paid orders download and email.
+  const imageUrl = isCloudinaryConfigured() ? await saveToCloudinary(photo.image_url, photo.result_id) : photo.image_url;
   const createdAt = new Date();
   const doc: PhotoResultDoc = {
     _id: photo.result_id,
     countryCode: meta.countryCode,
     documentType: meta.documentType,
-    imageUrl: photo.image_url,
+    imageUrl,
     previewUrl: photo.preview_url ?? null,
     dimensions: photo.dimensions,
     format: photo.format,
@@ -47,13 +50,4 @@ export async function getPhotoResult(id: string) {
   const db = await getDb();
   const doc = await collections.photoResults(db).findOne({ _id: id }, { projection: { ipHash: 0 } });
   return doc && doc.expiresAt > new Date() ? doc : null;
-}
-
-/**
- * Cloudinary serves a URL with the `fl_attachment` flag as a download
- * (Content-Disposition: attachment), which a cross-origin `<a download>` can't do.
- */
-export function downloadUrl(imageUrl: string, filename: string) {
-  const safeName = filename.replace(/[^\w-]+/g, "-").slice(0, 60);
-  return imageUrl.replace("/image/upload/", `/image/upload/fl_attachment:${safeName}/`);
 }

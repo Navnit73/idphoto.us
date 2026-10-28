@@ -58,7 +58,7 @@ src/
     logger.ts               Structured JSON logger with redaction
   proxy.ts                  Lowercase-URL redirects
   instrumentation.ts        Logs unhandled server errors
-  styles/                   tokens.css (design tokens), og-theme.ts
+  styles/                   tokens.css (design tokens), og-theme.ts, document-theme.ts
 ```
 
 ## How a request becomes a page

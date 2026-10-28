@@ -13,18 +13,24 @@ export class ClientApiError extends Error {
     readonly code: ApiErrorCode,
     message: string,
     readonly fields: Record<string, string[]> = {},
+    readonly details: Record<string, string> = {},
   ) {
     super(message);
     this.name = "ClientApiError";
   }
 }
 
-async function request<T>(path: string, body: BodyInit, { timeout, headers }: { timeout: number; headers?: HeadersInit }): Promise<T> {
+async function request<T>(
+  path: string,
+  body: BodyInit | null,
+  { timeout, headers, method = "POST" }: { timeout: number; headers?: HeadersInit; method?: "GET" | "POST" },
+): Promise<T> {
   let response: Response;
   try {
     response = await fetch(`${API_BASE}${path}`, {
-      method: "POST",
+      method,
       body,
+      cache: "no-store",
       headers: { Accept: "application/json", ...headers },
       credentials: "same-origin",
       signal: AbortSignal.timeout(timeout),
@@ -39,12 +45,17 @@ async function request<T>(path: string, body: BodyInit, { timeout, headers }: { 
   // Our routes always answer with an ApiResponse; anything else (a proxy error page, say) is unexpected.
   const data = (await response.json().catch(() => null)) as ApiResponse<T> | null;
   if (data?.ok === true) return data.data;
-  if (data?.ok === false) throw new ClientApiError(data.error.code, data.error.message, data.error.fields);
+  if (data?.ok === false) throw new ClientApiError(data.error.code, data.error.message, data.error.fields, data.error.details);
   throw new ClientApiError("internal_error", "Something went wrong. Please try again.");
 }
 
 export function apiPost<T>(path: string, body: unknown): Promise<T> {
   return request<T>(path, JSON.stringify(body), { timeout: DEFAULT_TIMEOUT_MS, headers: { "Content-Type": "application/json" } });
+}
+
+/** Reads from a GET route, e.g. a status endpoint a page polls. */
+export function apiGet<T>(path: string): Promise<T> {
+  return request<T>(path, null, { timeout: DEFAULT_TIMEOUT_MS, method: "GET" });
 }
 
 /** Posts a FormData upload. No Content-Type header, so the browser sets multipart with its boundary. */

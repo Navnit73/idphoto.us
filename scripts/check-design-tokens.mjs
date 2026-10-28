@@ -2,7 +2,8 @@
 // Fails if a raw color value appears outside src/styles/tokens.css.
 // Colors must come from design tokens (e.g. `bg-primary`, `var(--color-border)`).
 // Escape hatches, for values that aren't UI styling (e.g. pixel data drawn to
-// a canvas): `og-theme.ts` (Satori can't read CSS variables), and any line
+// a canvas): `og-theme.ts` (Satori can't read CSS variables), `document-theme.ts`
+// (emails, the printable invoice and its PDF can't either), and any line
 // ending in a `design-tokens-ignore-line` comment.
 
 import { readdirSync, readFileSync } from "node:fs";
@@ -10,7 +11,7 @@ import { join, relative } from "node:path";
 
 const root = join(import.meta.dirname, "..");
 const srcDir = join(root, "src");
-const allowed = new Set(["src/styles/tokens.css", "src/styles/og-theme.ts"]);
+const allowed = new Set(["src/styles/tokens.css", "src/styles/og-theme.ts", "src/styles/document-theme.ts"]);
 const extensions = /\.(css|ts|tsx|js|jsx|mdx)$/;
 
 const rules = [

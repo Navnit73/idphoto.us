@@ -41,14 +41,31 @@ export const PHOTO_UPLOAD_TYPES = ["image/jpeg", "image/png", "image/webp"] as c
 
 export const photoResultIdSchema = z.uuid();
 
-export const photoEmailSchema = z.object({
+/** POST /api/payments/create-order. The amount is never taken from the client. */
+export const createOrderSchema = z.object({
   resultId: photoResultIdSchema,
-  email: z.email("Please enter a valid email address").max(200),
-  /** Honeypot, as in the contact form. */
-  website: z.string().max(200).optional(),
+  email: z
+    .string()
+    .trim()
+    .toLowerCase()
+    .pipe(z.email("Please enter a valid email address.").max(254)),
+  planType: z.enum(["standard", "expert_edit"], "Please choose a plan."),
+  /** Browser timezone; only used to pick a currency when the request has no country header. */
+  timeZone: z.string().max(64).optional(),
+  /** What the page showed, so the server never charges a different price. */
+  expectedCurrency: z.string().max(3).optional(),
+  expectedAmount: z.number().int().nonnegative().optional(),
 });
 
-export type PhotoEmailInput = z.infer<typeof photoEmailSchema>;
+/** POST /api/payments/verify: the values Razorpay checkout hands back. */
+export const verifyPaymentSchema = z.object({
+  paymentId: z.uuid(),
+  razorpayOrderId: z.string().min(1).max(64),
+  razorpayPaymentId: z.string().min(1).max(64),
+  razorpaySignature: z.string().regex(/^[a-f0-9]{64}$/i, "Invalid signature."),
+});
+
+export const paymentIdSchema = z.uuid();
 
 /** Flattens Zod issues to `{ field: [messages] }` for form display. */
 export function fieldErrors(error: z.ZodError): Record<string, string[]> {

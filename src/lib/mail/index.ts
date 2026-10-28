@@ -1,6 +1,6 @@
 import "server-only";
 
-import nodemailer, { type Transporter } from "nodemailer";
+import nodemailer, { type SendMailOptions, type Transporter } from "nodemailer";
 
 import { serverEnv } from "@/lib/env/server";
 import { logger } from "@/lib/logger";
@@ -46,12 +46,15 @@ function transport(): Transporter {
 
 type Envelope = { to: string; replyTo?: string };
 
+export type MailAttachment = Pick<NonNullable<SendMailOptions["attachments"]>[number], "filename" | "content" | "contentType">;
+
 /**
  * The site's single way to send email. Build the content with a template from
  * `./templates` so every message has a plain-text part and escaped HTML.
  * `kind` is only for logs; addresses and content are never logged.
+ * Resolves to the SMTP message id.
  */
-export async function sendMail(kind: string, envelope: Envelope, content: MailContent) {
+export async function sendMail(kind: string, envelope: Envelope, content: MailContent, attachments?: MailAttachment[]) {
   const mailer = transport();
   try {
     const info = await mailer.sendMail({
@@ -61,8 +64,10 @@ export async function sendMail(kind: string, envelope: Envelope, content: MailCo
       subject: content.subject,
       text: content.text,
       html: content.html,
+      attachments,
     });
     logger.info("mail sent", { kind, messageId: info.messageId });
+    return info.messageId as string;
   } catch (error) {
     const code = (error as { code?: string }).code;
     logger.error("mail failed", { kind, code, responseCode: (error as { responseCode?: number }).responseCode });

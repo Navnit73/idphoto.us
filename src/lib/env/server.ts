@@ -32,6 +32,16 @@ const schema = z
     MAIL_FROM: z.string().min(3).optional(),
     /** Inbox for site notifications (new contact messages). */
     MAIL_TO: z.email().optional(),
+
+    /** Razorpay checkout (src/lib/payments). Without the secret, create-order responds 503. */
+    RAZORPAY_KEY_SECRET: z.string().min(8).optional(),
+    /** Secret set on the Razorpay webhook (Dashboard → Settings → Webhooks). */
+    RAZORPAY_WEBHOOK_SECRET: z.string().min(8).optional(),
+
+    /** Cloudinary: keeps our own copy of each processed photo, and invoice PDFs. Optional. */
+    CLOUDINARY_CLOUD_NAME: z.string().min(1).optional(),
+    CLOUDINARY_API_KEY: z.string().min(1).optional(),
+    CLOUDINARY_API_SECRET: z.string().min(1).optional(),
   })
   .superRefine((env, ctx) => {
     if (env.SMTP_HOST && !env.MAIL_FROM && !env.SMTP_USER) {

@@ -1,416 +1,112 @@
 "use client";
 
-import { useEffect, useRef, useState, useSyncExternalStore } from "react";
-import { flushSync } from "react-dom";
+import { useRef, useState } from "react";
 
-import {
-  CheckIcon,
-  ClockIcon,
-  DownloadIcon,
-  EyeIcon,
-  ExpandIcon,
-  MailIcon,
-  ShieldIcon,
-} from "@/components/home/icons";
-import { Button } from "@/components/ui/button";
-import { Alert, Field, Input } from "@/components/ui/field";
-import { cn } from "@/lib/cn";
-import { apiPost, ClientApiError } from "@/lib/http/client";
-import { fieldErrors, photoEmailSchema } from "@/lib/validation/forms";
+import { CameraIcon, ExpandIcon, XIcon } from "@/components/home/icons";
 
-type Status =
-  { kind: "idle" } | { kind: "sending" } | { kind: "error"; message: string };
-
-type PhotoDownloadProps = {
-  resultId: string;
-  /** The finished photo, as downloaded. */
+type PhotoResultProps = {
+  /**
+   * The photo shown before purchase: the guides preview when the API provides
+   * one. The full-resolution file is only ever served after payment.
+   */
   imageSrc: string;
-  /** The photo with measurement guides drawn on, when the API provides one. */
-  guidesSrc?: string;
-  downloadHref: string;
   alt: string;
   width: number;
   height: number;
-  /** Heading of the photo card, e.g. flag and document name. */
-  title: React.ReactNode;
-  /** Chip beside the title, e.g. the pixel size. */
-  badge?: React.ReactNode;
+  /** Heading above the photo, in the photo column. */
+  intro?: React.ReactNode;
+  /** Status chips under the photo, e.g. background check and sizing. */
+  chips?: React.ReactNode;
   /** Short line under the photo, e.g. format and file size. */
   caption: React.ReactNode;
-  /** Highlighted summary in the download panel. */
-  summary: {
-    title: React.ReactNode;
-    meta: React.ReactNode;
-    includes: string[];
-  };
-  /** When the result expires, for the panel's footer. */
-  expires: React.ReactNode;
-  /** Shown under the photo card (checks, help). */
+  /** Side panel: checkout, or the link to an existing order. */
+  panel: React.ReactNode;
+  /** Shown under the photo (measurements, help). */
   children?: React.ReactNode;
 };
 
-const storageKey = (resultId: string) => `idphoto:emailed:${resultId}`;
-
-function readEmailed(resultId: string) {
-  try {
-    return localStorage.getItem(storageKey(resultId)) === "1";
-  } catch {
-    return false;
-  }
-}
-
-function rememberEmailed(resultId: string) {
-  try {
-    localStorage.setItem(storageKey(resultId), "1");
-  } catch {
-    // Storage unavailable: the visitor just enters their email again next time.
-  }
-}
-
-const noopSubscribe = () => () => {};
-
-// Discourage saving the photo outside the download flow. Only a deterrent (the
-// image URL is still reachable through dev tools), and scoped to the photo so
-// the rest of the page keeps its context menu (paste into the email field, open
-// links in a new tab).
+// Discourage saving the preview outside checkout. Only a deterrent, scoped to
+// the photo so the rest of the page keeps its context menu.
 const blockContextMenu = (event: React.MouseEvent) => event.preventDefault();
 
-function startDownload(href: string) {
-  const link = document.createElement("a");
-  link.href = href;
-  link.rel = "noopener";
-  document.body.append(link);
-  link.click();
-  link.remove();
-}
-
 /**
- * The result photo with measurement guides, a full-size dialog, and a download
- * panel that stays in view: sticky beside the photo on wide screens, and
- * backed by a bottom bar on small ones until its button scrolls into view. The
- * first download asks for an email (the links are sent there); after that,
- * this browser downloads straight away for this result.
+ * The result photo on a parchment stage with a full-size dialog, beside a
+ * panel that stays in view: sticky next to the photo from tablet width up,
+ * below it on phones. The intro sits in the photo column, so the panel (and
+ * its pay button) starts at the top of the page.
  */
-export function PhotoDownload({
-  resultId,
-  imageSrc,
-  guidesSrc,
-  downloadHref,
-  alt,
-  width,
-  height,
-  title,
-  badge,
-  caption,
-  summary,
-  expires,
-  children,
-}: PhotoDownloadProps) {
+export function PhotoResult({ intro, imageSrc, alt, width, height, chips, caption, panel, children }: PhotoResultProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
-  const submitRef = useRef<HTMLButtonElement>(null);
-  const [showGuides, setShowGuides] = useState(true);
-  const [submitInView, setSubmitInView] = useState(false);
-  // While focus is in the panel, the bar would cover the field being typed in (WCAG 2.4.11).
-  const [panelFocused, setPanelFocused] = useState(false);
-  const hideBar = submitInView || panelFocused;
-  // The card and the full-size dialog show the same image, guides included.
-  const guidesShown = Boolean(guidesSrc) && showGuides;
-  const shownSrc = guidesShown ? guidesSrc! : imageSrc;
-  const shownAlt = guidesShown ? `${alt}, with measurement guides` : alt;
-  const emailRef = useRef<HTMLInputElement>(null);
-  const [status, setStatus] = useState<Status>({ kind: "idle" });
-  const [errors, setErrors] = useState<Record<string, string[]>>({});
-  const [sentNow, setSentNow] = useState(false);
-  const storedEmailed = useSyncExternalStore(
-    noopSubscribe,
-    () => readEmailed(resultId),
-    () => false,
-  );
-  const unlocked = sentNow || storedEmailed;
-
-  async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    if (status.kind === "sending") return;
-    if (unlocked) {
-      startDownload(downloadHref);
-      return;
-    }
-
-    const values = Object.fromEntries(
-      new FormData(event.currentTarget),
-    ) as Record<string, string>;
-    const parsed = photoEmailSchema.safeParse({ ...values, resultId });
-    if (!parsed.success) {
-      // Render the error first, so focusing the field announces it through aria-describedby.
-      flushSync(() => setErrors(fieldErrors(parsed.error)));
-      emailRef.current?.focus();
-      return;
-    }
-
-    setErrors({});
-    setStatus({ kind: "sending" });
-    try {
-      await apiPost("/photo/email", parsed.data);
-      rememberEmailed(resultId);
-      setSentNow(true);
-      setStatus({ kind: "idle" });
-      startDownload(downloadHref);
-    } catch (error) {
-      if (error instanceof ClientApiError) {
-        setErrors(error.fields);
-        setStatus({ kind: "error", message: error.message });
-      } else {
-        setStatus({
-          kind: "error",
-          message: "Something went wrong. Please try again.",
-        });
-      }
-    }
-  }
-
-  // The mobile download bar hides while the real download button is fully on screen.
-  useEffect(() => {
-    const submit = submitRef.current;
-    if (!submit) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => setSubmitInView(entry.isIntersecting),
-      {
-        threshold: 1,
-      },
-    );
-    observer.observe(submit);
-    return () => observer.disconnect();
-  }, []);
-
-  function downloadFromBar() {
-    if (unlocked) {
-      startDownload(downloadHref);
-      return;
-    }
-    emailRef.current?.scrollIntoView({ block: "center" });
-    emailRef.current?.focus({ preventScroll: true });
-  }
-
-  function downloadFromDialog() {
-    if (unlocked) {
-      startDownload(downloadHref);
-      return;
-    }
-    dialogRef.current?.close();
-    emailRef.current?.focus();
-  }
+  // Upstream preview files can be removed before our record expires.
+  const [failed, setFailed] = useState(false);
 
   return (
-    <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,22rem)] lg:gap-5">
-      <section
-        aria-labelledby="photo-card-heading"
-        className="overflow-hidden rounded-md border border-border bg-surface-raised lg:col-start-1 lg:row-start-1"
-      >
-        <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1.5 border-b border-border px-4 py-2.5">
-          <h2
-            id="photo-card-heading"
-            className="font-display text-base font-semibold tracking-tight"
-          >
-            {title}
-          </h2>
-          {badge}
-        </div>
+    // The last row is flexible, so the panel spanning all rows can't stretch the gaps above the photo.
+    <div className="grid gap-5 md:grid-cols-[minmax(0,1fr)_minmax(0,22rem)] md:grid-rows-[auto_auto_1fr] md:gap-x-8 md:gap-y-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,24rem)] lg:gap-x-10">
+      {intro && <div className="md:col-start-1 md:row-start-1">{intro}</div>}
 
-        <figure className="m-0">
-          {/* Fixed height, so switching between the two images doesn't move the page. */}
-          <div className="flex h-[min(27svh,14.5rem)] justify-center bg-surface p-3.5 sm:h-[min(43svh,25rem)] sm:p-5">
+      <section aria-label="Your photo" className="flex flex-col gap-3 md:col-start-1 md:row-start-2">
+        <div className="relative flex justify-center rounded-xl bg-surface px-4 py-5 sm:px-6 sm:py-8">
+          {failed ? (
+            <div className="flex h-[min(32svh,15rem)] flex-col items-center justify-center gap-2 text-center sm:h-[min(44svh,22rem)] lg:h-[min(44svh,23rem)]">
+              <CameraIcon className="size-8 text-muted-foreground" />
+              <p className="font-semibold">The preview couldn&apos;t be loaded</p>
+              <p className="max-w-xs text-sm text-muted-foreground">
+                Refresh the page to try again. Your photo and its measurements are still saved.
+              </p>
+            </div>
+          ) : (
+            <>
+            {/* Pointer shortcut only; the labelled round button below is the accessible control. */}
             <button
               type="button"
+              tabIndex={-1}
+              aria-hidden="true"
               onClick={() => dialogRef.current?.showModal()}
-              aria-label="View photo full size"
-              className="h-full max-w-full cursor-zoom-in rounded-sm"
+              className="h-[min(32svh,15rem)] max-w-full cursor-zoom-in rounded-md sm:h-[min(44svh,22rem)] lg:h-[min(44svh,23rem)]"
             >
               {/* eslint-disable-next-line @next/next/no-img-element, jsx-a11y/no-noninteractive-element-interactions -- private, short-lived image; next/image would copy it into our cache. onContextMenu only suppresses the menu. */}
               <img
-                src={shownSrc}
-                alt={shownAlt}
+                src={imageSrc}
+                alt={alt}
                 width={width}
                 height={height}
                 draggable={false}
                 onContextMenu={blockContextMenu}
-                className="h-full w-auto max-w-full rounded-sm border border-border bg-photo-backdrop object-contain select-none"
+                onError={() => setFailed(true)}
+                // The server-rendered image may fail before hydration, when onError isn't attached yet.
+                ref={(img) => {
+                  if (img?.complete && img.naturalWidth === 0) setFailed(true);
+                }}
+                className="h-full w-auto max-w-full rounded-md border border-border bg-photo-backdrop object-contain select-none"
               />
             </button>
-          </div>
-          <figcaption className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1.5 border-t border-border px-4 py-1.5 text-sm text-muted-foreground max-sm:justify-center">
-            <span className="max-sm:sr-only">{caption}</span>
-            <span className="flex gap-1">
-              {guidesSrc && (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  aria-pressed={showGuides}
-                  onClick={() => setShowGuides((value) => !value)}
-                  // A fill as well as a color change, so "on" isn't signalled by color alone (WCAG 1.4.1).
-                  className="aria-pressed:bg-primary-subtle aria-pressed:text-primary-subtle-foreground"
-                >
-                  <EyeIcon className="size-4" />
-                  Guides
-                </Button>
-              )}
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => dialogRef.current?.showModal()}
-              >
-                <ExpandIcon className="size-4" />
-                Full size
-              </Button>
-            </span>
-          </figcaption>
-        </figure>
+            <button
+              type="button"
+              onClick={() => dialogRef.current?.showModal()}
+              aria-label="View photo full size"
+              className="absolute top-2 right-2 flex size-11 items-center justify-center rounded-full border border-border bg-background/80 text-foreground backdrop-blur-md transition-transform hover:bg-background active:scale-95"
+            >
+              <ExpandIcon className="size-4" />
+            </button>
+            </>
+          )}
+        </div>
+
+        <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+          {chips && <ul className="flex flex-wrap gap-2 text-sm">{chips}</ul>}
+          <p className="text-sm text-muted-foreground">{caption}</p>
+        </div>
       </section>
 
-      {/* Focus tracking only (to hide the mobile bar), not an interaction. */}
-      {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
       <aside
-        aria-labelledby="download-heading"
-        onFocus={() => setPanelFocused(true)}
-        onBlur={(event) => {
-          if (!event.currentTarget.contains(event.relatedTarget)) {
-            setPanelFocused(false);
-          }
-        }}
-        className="flex flex-col gap-4 rounded-md border border-border bg-surface-raised p-4 sm:p-5 lg:sticky lg:top-20 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:self-start"
+        aria-labelledby="panel-heading"
+        className="md:sticky md:top-[calc(var(--layout-header-height)+1rem)] md:col-start-2 md:row-span-3 md:row-start-1 md:self-start"
       >
-        <h2
-          id="download-heading"
-          className="flex items-center gap-2 text-xs font-semibold tracking-wide text-muted-foreground uppercase"
-        >
-          <ShieldIcon className="size-4 text-primary" />
-          Your download
-        </h2>
-
-        {/* After the form on small screens, so email and button come right after the photo. */}
-        <div className="rounded-md border-2 border-primary bg-primary-subtle p-3.5 max-lg:order-last">
-          <div className="flex items-start justify-between gap-3">
-            <p className="font-display font-semibold tracking-tight">
-              {summary.title}
-            </p>
-            <span className="shrink-0 rounded-full bg-primary px-2 py-0.5 text-xs font-semibold text-primary-foreground">
-              {summary.meta}
-            </span>
-          </div>
-          <ul className="mt-2.5 flex flex-col gap-1.5 text-sm">
-            {summary.includes.map((item) => (
-              <li key={item} className="flex items-center gap-2">
-                <CheckIcon className="size-4 text-success" />
-                {item}
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <form noValidate onSubmit={onSubmit} className="flex flex-col gap-2.5">
-          {!unlocked && (
-            <Field
-              id="photo-email-address"
-              label="Email for delivery"
-              hint="We'll send you the download link. Used only for this message."
-              errors={errors.email}
-            >
-              {(props) => (
-                <Input
-                  {...props}
-                  ref={emailRef}
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  placeholder="you@example.com"
-                  required
-                  maxLength={200}
-                  className="h-11 shadow-none!"
-                />
-              )}
-            </Field>
-          )}
-
-          {/* Honeypot: invisible to people and assistive tech; bots tend to fill it. */}
-          <div
-            aria-hidden="true"
-            className="absolute -left-[9999px] h-px w-px overflow-hidden"
-          >
-            <label htmlFor="photo-email-website">Website</label>
-            <input
-              id="photo-email-website"
-              name="website"
-              type="text"
-              tabIndex={-1}
-              autoComplete="off"
-            />
-          </div>
-
-          <Button
-            ref={submitRef}
-            type="submit"
-            size="lg"
-            className="h-11 w-full font-semibold shadow-none! aria-disabled:opacity-50"
-            // Not `disabled`: that would drop keyboard focus to <body> mid-submit.
-            aria-disabled={status.kind === "sending" || undefined}
-          >
-            <DownloadIcon />
-            {status.kind === "sending" ? "Sending…" : "Download photo"}
-          </Button>
-          {/* Always mounted so the confirmation is announced when it appears. */}
-          <div role="status">
-            {sentNow && (
-              <p className="flex gap-2 text-sm text-muted-foreground">
-                <MailIcon className="mt-0.5 size-4 text-success" />
-                We also emailed you the link. Check your spam folder if it
-                isn&apos;t there.
-              </p>
-            )}
-          </div>
-          {status.kind === "error" && (
-            <Alert tone="danger">{status.message}</Alert>
-          )}
-        </form>
-
-        {/* order-last too, so it stays the panel's footer below the reordered summary. */}
-        <ul className="flex flex-wrap justify-center gap-x-4 gap-y-1.5 border-t border-border pt-3 text-xs text-muted-foreground max-lg:order-last">
-          <li className="flex items-center gap-1.5">
-            <DownloadIcon className="size-4 text-primary" />
-            Instant download
-          </li>
-          <li className="flex items-center gap-1.5">
-            <MailIcon className="size-4 text-primary" />
-            Link sent by email
-          </li>
-          <li className="flex items-center gap-1.5">
-            <ClockIcon className="size-4 text-primary" />
-            Available until {expires}
-          </li>
-        </ul>
+        {panel}
       </aside>
 
-      {children && (
-        <div className="flex flex-col gap-4 lg:col-start-1 lg:row-start-2">
-          {children}
-        </div>
-      )}
-
-      {/* Small screens: keep the download one tap away until the form's own button is visible. */}
-      <div
-        className={cn(
-          "fixed inset-x-0 bottom-0 z-40 border-t border-border bg-surface-raised px-gutter pt-2.5 pb-[max(0.625rem,env(safe-area-inset-bottom))] transition-transform motion-reduce:transition-none lg:hidden",
-          hideBar && "pointer-events-none translate-y-full",
-        )}
-        inert={hideBar}
-      >
-        <Button
-          size="lg"
-          className="h-11 w-full font-semibold shadow-none!"
-          onClick={downloadFromBar}
-        >
-          <DownloadIcon />
-          Download photo
-        </Button>
-      </div>
+      {children && <div className="flex flex-col gap-6 md:col-start-1 md:row-start-3">{children}</div>}
 
       {/* Backdrop clicks are a pointer convenience; keyboard users close it with Escape or the Close button. */}
       {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions */}
@@ -421,31 +117,26 @@ export function PhotoDownload({
           // A click on the backdrop lands on the <dialog> itself.
           if (event.target === event.currentTarget) event.currentTarget.close();
         }}
-        className="m-auto max-h-[90vh] max-w-[min(90vw,40rem)] rounded-md border border-border bg-surface-raised p-4 text-foreground backdrop:bg-overlay"
+        className="m-auto max-h-[92vh] max-w-[min(92vw,44rem)] overflow-visible rounded-xl bg-surface p-4 text-foreground backdrop:bg-overlay sm:p-6"
       >
-        <div className="flex flex-col items-center gap-4">
-          {/* eslint-disable-next-line @next/next/no-img-element, jsx-a11y/no-noninteractive-element-interactions -- see above */}
-          <img
-            src={shownSrc}
-            alt={shownAlt}
-            width={width}
-            height={height}
-            draggable={false}
-            onContextMenu={blockContextMenu}
-            className="h-auto max-h-[70vh] w-auto max-w-full rounded-md bg-photo-backdrop select-none"
-          />
-          <div className="flex gap-3">
-            <Button onClick={downloadFromDialog} className="shadow-none!">
-              {unlocked ? "Download photo" : "Enter email to download"}
-            </Button>
-            <Button
-              variant="outline"
-              onClick={() => dialogRef.current?.close()}
-            >
-              Close
-            </Button>
-          </div>
-        </div>
+        {/* eslint-disable-next-line @next/next/no-img-element, jsx-a11y/no-noninteractive-element-interactions -- see above */}
+        <img
+          src={imageSrc}
+          alt={alt}
+          width={width}
+          height={height}
+          draggable={false}
+          onContextMenu={blockContextMenu}
+          className="h-auto max-h-[80vh] w-auto max-w-full rounded-md border border-border bg-photo-backdrop select-none"
+        />
+        <button
+          type="button"
+          onClick={() => dialogRef.current?.close()}
+          aria-label="Close"
+          className="absolute -top-3 -right-3 flex size-11 items-center justify-center rounded-full border border-border bg-background text-foreground transition-transform active:scale-95"
+        >
+          <XIcon className="size-4" />
+        </button>
       </dialog>
     </div>
   );
