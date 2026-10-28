@@ -136,3 +136,15 @@ export const AlertIcon = (props: IconProps) => (
     <path d="M12 10v4m0 3h.01" />
   </Icon>
 );
+
+export const MenuIcon = (props: IconProps) => (
+  <Icon {...props}>
+    <path d="M4 7h16M4 12h16M4 17h16" />
+  </Icon>
+);
+
+export const XIcon = (props: IconProps) => (
+  <Icon {...props}>
+    <path d="M6 6l12 12M18 6 6 18" />
+  </Icon>
+);

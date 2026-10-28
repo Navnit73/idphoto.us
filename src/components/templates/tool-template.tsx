@@ -7,34 +7,26 @@ import { Sources } from "@/components/content/sources";
 import { SupportedCountries } from "@/components/content/supported-countries";
 import { Container } from "@/components/ui/container";
 import { Widget } from "@/components/widgets/registry";
-import { cn } from "@/lib/cn";
 
 import { TOOL_ANCHOR, type TemplateProps } from "./types";
 
-/** Tool first, explanation second: the widget sits right under the H1, and the header button jumps to it. */
+/** Tool first, explanation second: the widget sits right under the header, and the header button jumps to it. */
 export function ToolTemplate({ page, crumbs }: TemplateProps) {
   const { frontmatter } = page;
-  const band = frontmatter.heroStyle === "band";
-
-  const header = (
-    <PageHeader
-      page={page}
-      crumbs={crumbs}
-      band={band}
-      cta={frontmatter.widget ? { label: frontmatter.ctaLabel ?? "Get started", href: `#${TOOL_ANCHOR}` } : undefined}
-      image={frontmatter.heroImage}
-      facts={frontmatter.heroFacts}
-    />
-  );
 
   return (
     <article>
-      {/* The band header is full-bleed, so it sits outside the page Container. */}
-      {band && header}
-      <Container className={cn("flex flex-col gap-8 pb-10 sm:gap-12 sm:pb-14", band ? "pt-10 sm:pt-14" : "pt-page")}>
-        {!band && header}
+      <PageHeader
+        page={page}
+        crumbs={crumbs}
+        band={frontmatter.heroStyle === "band"}
+        cta={frontmatter.widget ? { label: frontmatter.ctaLabel ?? "Get started", href: `#${TOOL_ANCHOR}` } : undefined}
+        image={frontmatter.heroImage}
+        facts={frontmatter.heroFacts}
+      />
+      <Container className="flex flex-col gap-8 pt-10 pb-16 sm:gap-12 sm:pt-14 sm:pb-24">
         {frontmatter.widget && (
-          <section id={TOOL_ANCHOR} aria-labelledby="tool-heading" className="mx-auto w-full max-w-6xl scroll-mt-20">
+          <section id={TOOL_ANCHOR} aria-labelledby="tool-heading" className="w-full scroll-mt-20">
             {/* The widget's own headings are H3s, so this keeps the outline from skipping a level. */}
             <h2 id="tool-heading" className="sr-only">
               {page.breadcrumbLabel}
@@ -49,9 +41,7 @@ export function ToolTemplate({ page, crumbs }: TemplateProps) {
           <FaqSection faq={page.faq} title={frontmatter.faqTitle} />
           <Sources sources={frontmatter.sources} />
         </div>
-        <div className="mx-auto w-full max-w-6xl">
-          <RelatedPages pages={page.related} />
-        </div>
+        <RelatedPages pages={page.related} />
       </Container>
     </article>
   );

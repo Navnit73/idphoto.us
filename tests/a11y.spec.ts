@@ -119,7 +119,8 @@ test.describe("320px wide (WCAG 1.4.10 reflow)", () => {
 
   test("axe + keyboard: mobile menu", async ({ page }) => {
     await page.goto("/");
-    const menu = page.locator("summary", { hasText: "Menu" });
+    // Its accessible name flips between "Open menu" and "Close menu", so find it by what it controls.
+    const menu = page.locator('button[aria-controls="mobile-nav"]');
     await menu.focus();
     await page.keyboard.press("Enter");
     await expect(page.getByRole("navigation", { name: "Mobile" })).toBeVisible();

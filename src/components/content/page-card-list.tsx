@@ -23,12 +23,6 @@ export const CARD_ICON_COMPONENTS: Record<CardIcon, typeof CameraIcon> = {
   printer: PrinterIcon,
 };
 
-export const ACTION_LABEL: Partial<Record<PageSummary["category"], string>> = {
-  tool: "Open tool",
-  checker: "Open checker",
-  guide: "Read guide",
-};
-
 /** The page's card icon in a tinted tile, or nothing when it has none. */
 export function PageIcon({ page, className }: { page: PageSummary; className?: string }) {
   const Icon = page.icon && CARD_ICON_COMPONENTS[page.icon];
@@ -52,22 +46,17 @@ export function PageCardList({ pages, as: Title = "h3", className, showCategory 
         <li key={page.path}>
           <Link
             href={page.path}
-            className="group flex h-full gap-3 rounded-lg border bg-surface-raised p-4 transition-colors hover:border-primary/50"
+            className="group flex h-full items-start gap-3 rounded-lg border bg-surface-raised p-4 transition-colors hover:border-primary/50"
           >
             <PageIcon page={page} className="size-9 rounded-md [&>svg]:size-5" />
             <div className="flex min-w-0 flex-1 flex-col gap-1">
               {showCategory && (
-                <span className="text-[0.6875rem] font-medium tracking-wide text-primary uppercase">{page.category}</span>
+                <span className="text-xs font-semibold text-primary capitalize">{page.category}</span>
               )}
-              <Title className="text-base leading-snug font-semibold text-balance group-hover:text-primary">
-                {page.heading}
-              </Title>
-              <p className="mb-2 line-clamp-2 text-sm text-pretty text-muted-foreground">{page.summary}</p>
-              <span className="mt-auto inline-flex items-center gap-1 self-start rounded-md bg-primary px-2.5 py-1 text-xs font-semibold tracking-wide text-primary-foreground uppercase transition-colors group-hover:bg-primary-hover">
-                {ACTION_LABEL[page.category] ?? "Read more"}
-                <ArrowRightIcon className="size-3.5 transition-transform group-hover:translate-x-0.5" />
-              </span>
+              <Title className="text-sm leading-snug font-semibold text-balance">{page.heading}</Title>
+              <p className="line-clamp-2 text-sm text-pretty text-muted-foreground">{page.summary}</p>
             </div>
+            <ArrowRightIcon className="mt-0.5 size-4 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:text-primary" />
           </Link>
         </li>
       ))}
@@ -78,11 +67,11 @@ export function PageCardList({ pages, as: Title = "h3", className, showCategory 
 export function RelatedPages({ pages }: { pages: PageSummary[] }) {
   if (!pages.length) return null;
   return (
-    <section aria-labelledby="related-heading" className="flex flex-col gap-6">
-      <h2 id="related-heading" className="font-display text-2xl font-semibold tracking-tight">
+    <section aria-labelledby="related-heading" className="border-t pt-10">
+      <h2 id="related-heading" className="text-lg font-semibold">
         Related pages
       </h2>
-      <PageCardList pages={pages} />
+      <PageCardList pages={pages} className="mt-5" />
     </section>
   );
 }

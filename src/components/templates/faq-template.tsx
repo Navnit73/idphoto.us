@@ -14,9 +14,9 @@ export function FaqTemplate({ page, crumbs }: TemplateProps) {
   const { frontmatter } = page;
 
   return (
-    <Container className="pt-page pb-10 sm:pb-14">
-      <article className="flex flex-col gap-12">
-        <PageHeader page={page} crumbs={crumbs} />
+    <article>
+      <PageHeader page={page} crumbs={crumbs} />
+      <Container className="flex flex-col gap-12 pt-10 pb-16 sm:pt-14 sm:pb-24">
         <div className="flex max-w-prose flex-col gap-12">
           {frontmatter.showDisclaimer && <Disclaimer />}
           <FaqSection faq={page.faq} title={frontmatter.faqTitle ?? "Questions and answers"} />
@@ -25,7 +25,7 @@ export function FaqTemplate({ page, crumbs }: TemplateProps) {
           <Feedback path={page.path} />
         </div>
         <RelatedPages pages={page.related} />
-      </article>
-    </Container>
+      </Container>
+    </article>
   );
 }

@@ -7,14 +7,20 @@ export function TableOfContents({ headings, className }: { headings: Heading[]; 
   if (items.length < 2) return null;
 
   return (
-    <nav aria-labelledby="toc-heading" className={cn("rounded-lg border bg-surface p-5 text-sm", className)}>
+    <nav aria-labelledby="toc-heading" className={cn("text-sm", className)}>
       <p id="toc-heading" className="font-semibold">
         On this page
       </p>
-      <ol className="mt-3 space-y-2">
+      <ol className="mt-4 space-y-1 border-l">
         {items.map((heading) => (
-          <li key={heading.id} className={cn(heading.depth === 3 && "pl-4")}>
-            <a href={`#${heading.id}`} className="text-muted-foreground transition-colors hover:text-primary">
+          <li key={heading.id}>
+            <a
+              href={`#${heading.id}`}
+              className={cn(
+                "-ml-px block border-l border-transparent py-1.5 text-muted-foreground transition-colors hover:border-primary hover:text-foreground",
+                heading.depth === 3 ? "pl-8" : "pl-4",
+              )}
+            >
               {heading.text}
             </a>
           </li>

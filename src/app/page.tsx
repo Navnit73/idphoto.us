@@ -10,18 +10,24 @@ import {
   CropIcon,
   DownloadIcon,
   GlobeIcon,
+  IdCardIcon,
   PlusIcon,
   PrinterIcon,
   ShieldIcon,
   UploadCloudIcon,
+  XIcon,
 } from "@/components/home/icons";
+import { MobileCtaBar } from "@/components/home/mobile-cta-bar";
 import { JsonLd } from "@/components/seo/json-ld";
+import { BackgroundBeams } from "@/components/ui/background-beams";
 import { buttonVariants } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
+import { SectionHeading } from "@/components/ui/section-heading";
 import { Widget } from "@/components/widgets/registry";
 import { cn } from "@/lib/cn";
 import { getPageSummaries } from "@/lib/content/loader";
-import { PHOTO_COUNTRIES, type CountryCode } from "@/lib/photo/countries";
+import { flagEmoji, PHOTO_COUNTRIES, type CountryCode } from "@/lib/photo/countries";
+import { PHOTO_RESULT_TTL_DAYS } from "@/lib/photo/limits";
 import { faqPageJsonLd, homePageJsonLd, organizationJsonLd, websiteJsonLd } from "@/lib/seo/json-ld";
 import { buildMetadata } from "@/lib/seo/metadata";
 
@@ -56,10 +62,10 @@ export const metadata = buildMetadata({
 });
 
 const heroImage = {
-  src: "https://res.cloudinary.com/dipzpwbbk/image/upload/v1791864231/Upload_Edit_Print__Passport_Photos_uqasb5.webp",
-  width: 1774,
-  height: 887,
-  alt: "Three steps to a passport photo: upload a photo, edit it online, then get a sheet of printed passport photos.",
+  src: "https://res.cloudinary.com/dipzpwbbk/image/upload/v1793201051/passport-photo-hero-image_clabua.webp",
+  width: 1535,
+  height: 1024,
+  alt: "Passport photo with framing guides, a checklist of passed photo checks, and a 4×6 in print sheet ready",
 };
 
 /** Internal link targets. Each must be a published page (or an anchor on this one). */
@@ -69,74 +75,98 @@ const links = {
   faq: "/faq",
 } as const;
 
+const heroHighlights = ["No account needed", "Retake as often as you like", "Privacy-first by default"];
+
 const heroStats = [
-  { label: "Countries supported", value: "60+" },
-  { label: "Free, no account", value: "$0" },
-  { label: "Time to download", value: "<5 min" },
-] as const;
+  { value: "60+", label: "Countries supported" },
+  { value: "$0", label: "Free, no account" },
+  { value: "< 5 min", label: "Time to download" },
+  { value: `${PHOTO_RESULT_TTL_DAYS} days`, label: "Then your result expires" },
+];
+
+/** Country tiles show names only; sizes live on the owning size page. */
+const stripCountries: { code: CountryCode; label?: string }[] = [
+  { code: "US", label: "United States" },
+  { code: "GB", label: "United Kingdom" },
+  { code: "CA" },
+  { code: "IN" },
+  { code: "AU" },
+  { code: "EU" },
+];
+
+const countryTiles = stripCountries.flatMap(({ code, label }) => {
+  const spec = PHOTO_COUNTRIES.find((country) => country.code === code);
+  return spec ? [{ code, name: label ?? spec.name }] : [];
+});
 
 const steps = [
   {
     icon: CameraIcon,
     title: "Take or upload a photo",
-    body: "Snap a photo with your phone, or pick a recent one. JPEG, PNG, and WebP files all work.",
+    body: "Snap a photo with your phone, or pick a recent one. A plain wall and soft daylight work best.",
+    meta: "JPEG, PNG or WebP",
   },
   {
     icon: CropIcon,
     title: "Pick your country",
     body: "Choose the U.S. or any of 60+ countries. The maker finds your face and builds your passport picture.",
+    meta: "60+ country specs",
   },
   {
     icon: DownloadIcon,
     title: "Download your photo",
     body: "Save a high-resolution file. Print it at home, send it to a photo lab, or upload it online.",
+    meta: "Print or digital file",
   },
 ];
 
-const usPeople = [
+const usPeople = ["First-time applicants", "Renewals", "Parents and families", "Americans abroad"];
+
+const features = [
   {
-    title: "First-time applicants",
-    body: "Apply for your first U.S. passport with a photo you made at home.",
+    icon: PrinterIcon,
+    title: "Print at home or at a lab",
+    body: "Print on photo paper at 100% scale, or send the file to a photo lab or pharmacy counter. Check it with a ruler before you mail it.",
   },
   {
-    title: "Renewals",
-    body: "Renew with a fresh passport photo made from a recent selfie.",
+    icon: UploadCloudIcon,
+    title: "Upload a digital photo",
+    body: "Online renewals and e-forms ask for a digital photo. Our editor saves a JPEG you can upload right away.",
   },
   {
-    title: "Parents and families",
-    body: "Make a passport picture for your child, baby, or the whole family.",
+    icon: ClockIcon,
+    title: "Ready in minutes",
+    body: "No account, no waiting on a studio appointment. Upload, crop, and download — most people finish in under five minutes.",
   },
   {
-    title: "Americans abroad",
-    body: "Get a U.S. passport photo online, wherever you live.",
+    icon: GlobeIcon,
+    title: "60+ countries",
+    body: `Beyond the U.S., choose from ${PHOTO_COUNTRIES.length - 1} other photo specs, from the UK and Canada to India and the Schengen visa.`,
   },
 ];
 
-/** Country tiles show names only; sizes live on the owning size page. */
-const internationalCountries: { code: CountryCode; label?: string }[] = [
-  { code: "GB", label: "United Kingdom" },
-  { code: "CA" },
-  { code: "IN" },
-  { code: "AU" },
-  { code: "DE" },
-  { code: "FR" },
-  { code: "MX" },
-  { code: "PH" },
-  { code: "CN" },
-  { code: "EU" },
+/** Practical tips for taking the photo. The full rules live on the requirements guide. */
+const photoDos = [
+  "Plain white or off-white background",
+  "Even light, with no shadows on your face or behind you",
+  "Neutral expression or a natural smile, both eyes open",
+  "Face the camera straight on, head centered",
+  "Taken within the last six months",
 ];
 
-const countryTiles = internationalCountries.flatMap(({ code, label }) => {
-  const spec = PHOTO_COUNTRIES.find((country) => country.code === code);
-  return spec ? [{ code, name: label ?? spec.name }] : [];
-});
-const moreCountries = PHOTO_COUNTRIES.length - 1 - countryTiles.length;
+const photoDonts = [
+  "Glasses (unless you have a doctor's statement)",
+  "Hats or head coverings*",
+  "Filters, retouching, or AI edits",
+  "Uniforms or camouflage clothing",
+  "Patterns, objects, or other people in the frame",
+];
 
 const principles = [
   {
     icon: ShieldIcon,
     title: "Clear about your data",
-    body: "We tell you before a photo uploads, expire your result page after 7 days, and never sell your information.",
+    body: `We tell you before a photo uploads, expire your result page after ${PHOTO_RESULT_TTL_DAYS} days, and never sell your information.`,
   },
   {
     icon: CheckIcon,
@@ -190,59 +220,7 @@ const faqs = [
 
 const textLink = "font-medium text-primary underline underline-offset-4 hover:text-primary-hover";
 const arrowLink = "group inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-primary-hover";
-const card = "rounded-xl border bg-surface-raised";
-
-function SectionHeader({
-  id,
-  eyebrow,
-  title,
-  children,
-  className,
-  align = "left",
-}: {
-  id: string;
-  eyebrow?: string;
-  title: string;
-  children?: React.ReactNode;
-  className?: string;
-  align?: "left" | "center";
-}) {
-  return (
-    <div
-      className={cn(
-        "flex max-w-2xl flex-col gap-3",
-        align === "center" && "mx-auto items-center text-center",
-        className,
-      )}
-    >
-      {eyebrow && (
-        <span className="text-sm font-semibold tracking-wide text-primary uppercase">{eyebrow}</span>
-      )}
-      <h2 id={id} className="font-display text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
-        {title}
-      </h2>
-      {children && <p className="text-lg text-pretty text-muted-foreground">{children}</p>}
-    </div>
-  );
-}
-
-function ArrowLink({ href, children }: { href: string; children: React.ReactNode }) {
-  const content = (
-    <>
-      {children}
-      <ArrowRightIcon className="size-4 transition-transform group-hover:translate-x-0.5" />
-    </>
-  );
-  return href.startsWith("#") ? (
-    <a href={href} className={arrowLink}>
-      {content}
-    </a>
-  ) : (
-    <Link href={href} className={arrowLink}>
-      {content}
-    </Link>
-  );
-}
+const arrow = <ArrowRightIcon className="size-4 transition-transform group-hover:translate-x-0.5" />;
 
 export default async function Home() {
   const pages = await getPageSummaries();
@@ -255,249 +233,327 @@ export default async function Home() {
         data={[organizationJsonLd(), websiteJsonLd(), homePageJsonLd({ title, description }), faqPageJsonLd("/", faqs)]}
       />
 
-      {/* Hero — Apple white canvas (black in dark mode). */}
-      <section className="border-b bg-background">
-        <Container className="grid items-center gap-10 pt-page pb-12 lg:grid-cols-2 lg:gap-16 lg:py-20">
-          <div className="flex flex-col items-start gap-6 text-left">
-            <span className="inline-flex items-center gap-2 rounded-full border border-border-strong px-3 py-1 text-xs font-medium text-muted-foreground">
-              <span className="size-1.5 rounded-full bg-success" aria-hidden="true" />
-              Trusted for 60+ countries&apos; requirements
-            </span>
-            <h1 className="font-display text-4xl font-semibold tracking-tight text-balance sm:text-5xl">
-              Passport photos,{" "}
-              <span className="text-primary">done right</span>, in minutes.
-            </h1>
-            <p className="max-w-xl text-lg text-pretty text-muted-foreground">
-              Make a U.S. passport photo online, or choose from 60+ other countries. This free ID photo editor
-              crops, resizes, and checks your photo, then lets you download, print, or submit it online.
-            </p>
-            <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
-              <a href={links.tool} className={buttonVariants({ size: "lg", className: "group" })}>
-                Make my passport photo
-                <ArrowRightIcon className="size-4 transition-transform group-hover:translate-x-0.5" />
-              </a>
-              <Link
-                href={links.requirements}
-                className={buttonVariants({ variant: "outline", size: "lg" })}
+      {/* Hero */}
+      <section className="relative overflow-hidden border-b">
+        <BackgroundBeams>
+          <div className="relative z-10 mx-auto grid max-w-wide items-center gap-10 px-gutter pt-10 pb-12 sm:gap-14 sm:pt-16 sm:pb-20 md:pt-24 lg:grid-cols-[1fr_1.15fr] lg:gap-10">
+            <div className="text-center lg:text-left">
+              <a
+                href={links.tool}
+                className="group inline-flex items-center gap-2 rounded-lg border bg-background py-1.5 pr-3 pl-1.5 text-xs font-medium text-muted-foreground transition-colors hover:border-border-strong"
               >
-                See photo requirements
-              </Link>
-            </div>
-            <dl className="grid w-full grid-cols-3 gap-4 border-t border-border-strong pt-6">
-              {heroStats.map((stat) => (
-                <div key={stat.label} className="flex flex-col gap-0.5">
-                  <dt className="order-2 text-xs text-muted-foreground">{stat.label}</dt>
-                  <dd className="order-1 font-display text-2xl font-semibold sm:text-3xl">
-                    {stat.value}
-                  </dd>
-                </div>
-              ))}
-            </dl>
-          </div>
+                <span className="rounded-md bg-primary px-2 py-0.5 font-semibold text-primary-foreground">Free</span>
+                Passport photos for 60+ countries
+                <ArrowRightIcon className="size-3.5 transition-transform group-hover:translate-x-0.5" />
+              </a>
 
-          <figure className="rounded-xl bg-photo-backdrop p-2 sm:p-4">
-            <Image
-              src={heroImage.src}
-              width={heroImage.width}
-              height={heroImage.height}
-              alt={heroImage.alt}
-              sizes="(min-width: 80rem) 35rem, (min-width: 64rem) 45vw, 100vw"
-              preload
-              className="h-auto w-full rounded-lg"
-            />
-          </figure>
-        </Container>
+              <h1 className="mt-7 font-display text-4xl leading-tight font-semibold tracking-tight text-balance sm:text-5xl lg:text-5xl">
+                Passport photos, <span className="text-primary">done right</span>, in minutes.
+              </h1>
+              <p className="mx-auto mt-5 max-w-xl text-base text-pretty text-muted-foreground sm:mt-6 sm:text-lg lg:mx-0">
+                Make a U.S. passport photo online, or choose from 60+ other countries. This free ID photo editor crops,
+                resizes, and checks your photo, then lets you download, print, or submit it online.
+              </p>
+
+              <div id="hero-actions" className="mt-8 flex flex-col justify-center gap-3 sm:mt-9 sm:flex-row lg:justify-start">
+                <a href={links.tool} className={buttonVariants({ size: "lg" })}>
+                  Make my passport photo
+                  {arrow}
+                </a>
+                <Link href={links.requirements} className={buttonVariants({ variant: "outline", size: "lg" })}>
+                  See photo requirements
+                </Link>
+              </div>
+
+              <ul className="mt-6 grid grid-cols-3 gap-2 text-xs leading-tight text-muted-foreground sm:mt-8 sm:flex sm:flex-wrap sm:justify-center sm:gap-x-6 sm:text-sm lg:justify-start">
+                {heroHighlights.map((point) => (
+                  <li key={point} className="flex flex-col items-center gap-1.5 text-center sm:flex-row sm:gap-2 sm:text-left">
+                    <CheckIcon className="size-4 text-primary" />
+                    {point}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/*
+              Crops the image's empty white margins so the mockup fills the column. In light mode,
+              a slight brightness lift turns its off-white background pure white, and multiply blends it
+              into the page. Multiply over black would hide the image,
+              so dark mode sets it on a light panel instead.
+            */}
+            <div className="relative -mx-gutter aspect-[1100/740] overflow-hidden sm:mx-auto sm:w-full sm:max-w-2xl dark:mx-0 dark:rounded-lg dark:bg-photo-backdrop">
+              <Image
+                src={heroImage.src}
+                width={heroImage.width}
+                height={heroImage.height}
+                alt={heroImage.alt}
+                sizes="(min-width: 80rem) 58rem, (min-width: 64rem) 75vw, 140vw"
+                preload
+                className="absolute top-[-18.2%] left-[-30.7%] w-[139.5%] max-w-none brightness-[1.03] mix-blend-multiply"
+              />
+            </div>
+          </div>
+        </BackgroundBeams>
+
+        {/* Stats */}
+        <div className="relative border-t bg-background">
+          <dl className="mx-auto grid max-w-wide grid-cols-2 px-gutter md:grid-cols-4">
+            {heroStats.map((stat, i) => (
+              <div
+                key={stat.label}
+                className={cn(
+                  "flex flex-col px-2 py-5 text-center sm:py-6 md:py-8",
+                  i % 2 === 1 && "border-l",
+                  i > 1 && "border-t md:border-t-0",
+                  i === 2 && "md:border-l",
+                )}
+              >
+                <dt className="order-last mt-1 text-xs text-muted-foreground sm:text-sm">{stat.label}</dt>
+                <dd className="font-mono text-lg font-semibold tracking-tight sm:text-xl md:text-2xl">{stat.value}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
       </section>
 
-      {/* Reassurance strip */}
-      <section className="border-b bg-surface">
-        <Container>
-          <ul className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 py-5 text-sm text-muted-foreground">
-            {["No account needed", "Retake as often as you like", "Print or digital file", "Privacy-first by default"].map(
-              (point) => (
-                <li key={point} className="flex items-center gap-1.5">
-                  <CheckIcon className="size-4 text-success" />
-                  {point}
-                </li>
-              ),
-            )}
+      {/* Countries strip */}
+      <section aria-label="Popular countries" className="bg-surface">
+        <Container className="py-12">
+          <p className="text-center text-sm font-medium text-muted-foreground">The right passport photo for</p>
+          <ul className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+            {countryTiles.map((country) => (
+              <li
+                key={country.code}
+                className="rounded-lg border bg-surface-raised px-4 py-3 text-center transition-colors hover:border-primary/50"
+              >
+                <span aria-hidden="true" className="block text-xl leading-none">
+                  {flagEmoji(country.code)}
+                </span>
+                <span className="mt-1.5 block text-sm font-medium">{country.name}</span>
+              </li>
+            ))}
           </ul>
         </Container>
       </section>
 
       {/* Photo tool: the hero's main button scrolls here. */}
-      <section id="photo-tool" aria-labelledby="photo-tool-heading" className="scroll-mt-header py-section">
-        <Container className="flex flex-col gap-10">
-          <SectionHeader id="photo-tool-heading" eyebrow="The tool" title="Make your passport photo online">
-            Choose your country and upload a photo. This photo ID maker builds your passport ID picture and opens it
-            on its own page, ready to download.
-          </SectionHeader>
-
+      <section id="photo-tool" aria-labelledby="photo-tool-heading" className="scroll-mt-header border-t py-section">
+        <Container className="flex flex-col gap-10 sm:gap-16">
+          <SectionHeading id="photo-tool-heading" eyebrow="The tool" title="Make your passport photo online">
+            Choose your country and upload a photo. This photo ID maker builds your passport ID picture and opens it on
+            its own page, ready to download.
+          </SectionHeading>
           <Widget name="photo-editor" />
         </Container>
       </section>
 
       {/* How it works */}
       <section aria-labelledby="how-heading" className="border-y bg-surface py-section">
-        <Container className="flex flex-col gap-10">
-          <SectionHeader id="how-heading" eyebrow="How it works" title="Three steps to a finished photo">
+        <Container>
+          <SectionHeading id="how-heading" eyebrow="How it works" title="Three steps to a finished photo">
             You need a phone, a plain wall, and good light. Our passport photo maker handles the rest.
-          </SectionHeader>
+          </SectionHeading>
 
-          <ol className="grid gap-4 md:grid-cols-3 md:gap-6">
-            {steps.map(({ icon: Icon, title, body }, index) => (
-              <li key={title} className={cn(card, "relative flex flex-col gap-4 p-6 sm:p-7")}>
-                <div className="flex items-center gap-3">
-                  <span className="flex size-10 items-center justify-center rounded-full bg-primary text-sm font-semibold text-primary-foreground">
+          <ol className="relative mt-10 grid gap-8 sm:mt-16 md:grid-cols-3">
+            {/* Horizontal connector between steps on desktop */}
+            <div aria-hidden="true" className="absolute top-6 right-[16%] left-[16%] hidden border-t border-dashed border-border-strong md:block" />
+
+            {steps.map((step, i) => (
+              <li key={step.title} className="relative flex gap-5 md:flex-col md:items-center md:gap-0 md:text-center">
+                {/* Vertical connector on mobile */}
+                {i < steps.length - 1 && (
+                  <span aria-hidden="true" className="absolute top-14 -bottom-6 left-6 border-l border-dashed border-border-strong md:hidden" />
+                )}
+
+                <span className="relative flex size-12 shrink-0 items-center justify-center rounded-lg border bg-surface-raised text-primary">
+                  <step.icon className="size-5" />
+                  <span className="absolute -top-2 -right-2 flex size-5 items-center justify-center rounded-md bg-foreground font-mono text-[10px] font-semibold text-background">
                     <span className="sr-only">Step </span>
-                    {index + 1}
+                    {i + 1}
                   </span>
-                  <Icon className="size-6 text-muted-foreground" />
+                </span>
+
+                <div className="md:flex md:flex-col md:items-center">
+                  <h3 className="pt-1 text-lg font-semibold md:mt-6 md:pt-0">{step.title}</h3>
+                  <p className="mt-1.5 text-sm text-muted-foreground md:mt-2 md:max-w-xs">{step.body}</p>
+                  <p className="mt-3 inline-block rounded-md border bg-background px-2.5 py-1 font-mono text-xs text-muted-foreground md:mt-4">
+                    {step.meta}
+                  </p>
                 </div>
-                <h3 className="text-xl font-semibold">{title}</h3>
-                <p className="text-muted-foreground">{body}</p>
               </li>
             ))}
           </ol>
         </Container>
       </section>
 
-      {/* People in the U.S. and other countries */}
-      <section aria-labelledby="people-heading" className="py-section">
-        <Container className="flex flex-col gap-10">
-          <SectionHeader id="people-heading" eyebrow="Who it's for" title="Built for every passport photo need">
-            People across the U.S. use our passport photo maker and photo ID editor for every kind of application.
-            People in 60+ countries use it too.
-          </SectionHeader>
+      {/* Features */}
+      <section aria-labelledby="features-heading" className="py-section">
+        <Container>
+          <SectionHeading id="features-heading" eyebrow="Features" title="Built for every passport photo need">
+            People across the U.S. use our passport photo maker and photo ID editor for every kind of application. People
+            in 60+ countries use it too.
+          </SectionHeading>
 
-          <div className="grid gap-6 lg:grid-cols-2">
-            <div className={cn(card, "flex flex-col gap-5 p-6 sm:p-8")}>
-              <div className="flex items-center gap-3">
-                <span className="flex h-7 items-center rounded-md bg-primary-subtle px-2 text-xs font-bold text-primary-subtle-foreground">
-                  US
+          <div className="mt-10 grid gap-3 sm:mt-16 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
+            {/* Highlight card */}
+            <div className="flex flex-col justify-between rounded-lg bg-contrast p-6 text-contrast-foreground sm:col-span-2 sm:p-7 lg:col-span-1 lg:row-span-2">
+              <div>
+                <span className="flex size-10 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+                  <IdCardIcon className="size-5" />
                 </span>
-                <h3 className="text-xl font-semibold">U.S. passport photo</h3>
+                <h3 className="mt-6 text-xl font-semibold">U.S. passport photos, made at home</h3>
+                <p className="mt-3 text-sm text-contrast-muted-foreground">
+                  Apply for your first passport, renew with a fresh selfie, make a photo for your child, or get one from
+                  anywhere in the world.
+                </p>
               </div>
-              <ul className="flex flex-col divide-y">
+              <ul className="mt-6 grid grid-cols-2 gap-2 sm:mt-8">
                 {usPeople.map((person) => (
-                  <li key={person.title} className="flex flex-col gap-0.5 py-3 first:pt-0">
-                    <span className="font-medium">{person.title}</span>
-                    <span className="text-sm text-muted-foreground">{person.body}</span>
+                  <li
+                    key={person}
+                    className="flex items-center gap-2 rounded-md border border-contrast-border bg-contrast-raised px-3 py-2 text-xs text-contrast-foreground"
+                  >
+                    <CheckIcon className="size-3.5 text-primary" />
+                    {person}
                   </li>
                 ))}
               </ul>
-              <div className="mt-auto">
-                <ArrowLink href={links.tool}>Make a U.S. passport picture</ArrowLink>
-              </div>
+              <a
+                href={links.tool}
+                className="group mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-contrast-foreground underline-offset-4 hover:underline"
+              >
+                Make a U.S. passport picture
+                {arrow}
+              </a>
             </div>
 
-            <div className={cn(card, "flex flex-col gap-5 p-6 sm:p-8")}>
-              <div className="flex items-center gap-3">
-                <span className="flex size-7 items-center justify-center rounded-md bg-primary-subtle text-primary-subtle-foreground">
-                  <GlobeIcon className="size-4" />
+            {features.map((feature) => (
+              <div
+                key={feature.title}
+                className="group flex gap-4 rounded-lg border bg-surface-raised p-5 transition-colors hover:border-primary/50 sm:block sm:p-6"
+              >
+                <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary-subtle text-primary-subtle-foreground transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+                  <feature.icon className="size-5" />
                 </span>
-                <h3 className="text-xl font-semibold">Passport photos for other countries</h3>
+                <div>
+                  <h3 className="text-base font-semibold sm:mt-5">{feature.title}</h3>
+                  <p className="mt-1 text-sm text-muted-foreground sm:mt-2">{feature.body}</p>
+                </div>
               </div>
-              <ul className="grid grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-3">
-                {countryTiles.map((country) => (
-                  <li key={country.code} className="rounded-lg border px-3 py-2.5">
-                    <span className="block text-sm font-medium break-words">{country.name}</span>
-                  </li>
-                ))}
-              </ul>
-              <div className="mt-auto">
-                <ArrowLink href={links.tool}>Choose from {moreCountries} more countries</ArrowLink>
-              </div>
-            </div>
+            ))}
           </div>
         </Container>
       </section>
 
-      {/* Print or digital */}
-      <section aria-labelledby="output-heading" className="border-y bg-surface py-section">
-        <Container className="flex flex-col gap-10">
-          <SectionHeader id="output-heading" eyebrow="Your file" title="Print it, or upload it — your choice">
-            Every download is a high-resolution file, so you can use one photo on paper and on screen.
-          </SectionHeader>
+      {/* Photo tips */}
+      <section aria-labelledby="tips-heading" className="border-y bg-surface py-section">
+        <Container>
+          <SectionHeading id="tips-heading" eyebrow="Before you start" title="Take a photo that's ready to use">
+            Small details like a shadow or a pair of glasses cause most problems. Get these right before you upload. For
+            every rule, see the{" "}
+            <Link href={links.requirements} className={textLink}>
+              passport photo requirements
+            </Link>
+            .
+          </SectionHeading>
 
-          <div className="grid gap-6 md:grid-cols-3">
-            <div className={cn(card, "flex flex-col gap-4 p-6 sm:p-8")}>
-              <span className="flex size-11 items-center justify-center rounded-lg bg-primary-subtle text-primary-subtle-foreground">
-                <PrinterIcon />
-              </span>
-              <h3 className="text-xl font-semibold">Print at home or at a lab</h3>
-              <p className="text-muted-foreground">
-                Print on photo paper at 100% scale, or send the file to a photo lab or pharmacy counter. Check the
-                printed photo with a ruler before you mail your application.
-              </p>
+          <div className="mt-10 grid gap-3 sm:mt-16 sm:gap-4 md:grid-cols-2">
+            <div className="rounded-lg border bg-surface-raised">
+              <div className="flex items-center gap-3 border-b px-5 py-4 sm:px-6">
+                <span className="flex size-7 items-center justify-center rounded-md bg-primary text-primary-foreground">
+                  <CheckIcon className="size-4" />
+                </span>
+                <h3 className="font-semibold">Do</h3>
+              </div>
+              <ul className="space-y-3.5 p-5 sm:p-6">
+                {photoDos.map((tip) => (
+                  <li key={tip} className="flex items-start gap-3 text-sm">
+                    <CheckIcon className="mt-0.5 size-4 text-primary" />
+                    {tip}
+                  </li>
+                ))}
+              </ul>
             </div>
-            <div className={cn(card, "flex flex-col gap-4 p-6 sm:p-8")}>
-              <span className="flex size-11 items-center justify-center rounded-lg bg-primary-subtle text-primary-subtle-foreground">
-                <UploadCloudIcon />
-              </span>
-              <h3 className="text-xl font-semibold">Upload a digital passport photo</h3>
-              <p className="text-muted-foreground">
-                Online renewals and e-forms ask for a digital photo. Our editor saves a JPEG you can upload right
-                away.
-              </p>
-            </div>
-            <div className={cn(card, "flex flex-col gap-4 p-6 sm:p-8")}>
-              <span className="flex size-11 items-center justify-center rounded-lg bg-primary-subtle text-primary-subtle-foreground">
-                <ClockIcon />
-              </span>
-              <h3 className="text-xl font-semibold">Ready in minutes</h3>
-              <p className="text-muted-foreground">
-                No account, no waiting on a studio appointment. Upload, crop, and download — most people finish in
-                under five minutes.
-              </p>
+
+            <div className="rounded-lg border bg-muted">
+              <div className="flex items-center gap-3 border-b border-border-strong px-5 py-4 sm:px-6">
+                <span className="flex size-7 items-center justify-center rounded-md bg-foreground text-background">
+                  <XIcon className="size-4" />
+                </span>
+                <h3 className="font-semibold">Avoid</h3>
+              </div>
+              <ul className="space-y-3.5 p-5 sm:p-6">
+                {photoDonts.map((tip) => (
+                  <li key={tip} className="flex items-start gap-3 text-sm text-muted-foreground">
+                    <XIcon className="mt-0.5 size-4" />
+                    {tip}
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
+
+          <p className="mt-6 text-center text-xs text-muted-foreground">
+            *Allowed for religious or medical reasons with a signed statement. These tips follow U.S. rules; other countries
+            differ.
+          </p>
         </Container>
       </section>
 
       {/* Tools and guides */}
       <section aria-labelledby="resources-heading" className="py-section">
-        <Container className="flex flex-col gap-10">
-          <SectionHeader id="resources-heading" eyebrow="Resources" title="Free passport photo tools and guides">
+        <Container className="flex flex-col gap-10 sm:gap-16">
+          <SectionHeading id="resources-heading" eyebrow="Resources" title="Free passport photo tools and guides">
             Plain-English explanations of official rules, with links to the agency sources we used.
-          </SectionHeader>
+          </SectionHeading>
 
-          <div className="flex flex-col gap-4">
-            <div className="flex items-center justify-between gap-4">
-              <h3 className="text-xl font-semibold">Photo tools</h3>
-              <ArrowLink href="/tool">All tools</ArrowLink>
+          <div className="flex flex-col gap-10">
+            <div className="flex flex-col gap-4">
+              <div className="flex items-center justify-between gap-4">
+                <h3 className="text-xl font-semibold">Photo tools</h3>
+                <Link href="/tool" className={arrowLink}>
+                  All tools
+                  {arrow}
+                </Link>
+              </div>
+              <PageCardList pages={tools} />
             </div>
-            <PageCardList pages={tools} />
-          </div>
 
-          <div className="flex flex-col gap-4">
-            <div className="flex items-center justify-between gap-4">
-              <h3 className="text-xl font-semibold">Guides</h3>
-              <ArrowLink href="/guide">All guides</ArrowLink>
+            <div className="flex flex-col gap-4">
+              <div className="flex items-center justify-between gap-4">
+                <h3 className="text-xl font-semibold">Guides</h3>
+                <Link href="/guide" className={arrowLink}>
+                  All guides
+                  {arrow}
+                </Link>
+              </div>
+              <PageCardList pages={guides} />
             </div>
-            <PageCardList pages={guides} />
           </div>
         </Container>
       </section>
 
       {/* How we work */}
-      <section aria-labelledby="principles-heading" className="border-t bg-surface py-section">
-        <Container className="flex flex-col gap-10">
-          <SectionHeader id="principles-heading" eyebrow="Our standards" title="How we work" align="center" />
-          <ul className="grid gap-6 md:grid-cols-3">
-            {principles.map(({ icon: Icon, title, body }) => (
-              <li key={title} className={cn(card, "flex flex-col items-start gap-4 p-6 sm:p-7")}>
-                <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary-subtle text-primary-subtle-foreground">
-                  <Icon />
+      <section aria-labelledby="principles-heading" className="border-t py-section">
+        <Container>
+          <SectionHeading id="principles-heading" eyebrow="Our standards" title="How we work" />
+          <ul className="mt-10 grid gap-3 sm:mt-16 sm:gap-4 md:grid-cols-3">
+            {principles.map((principle) => (
+              <li
+                key={principle.title}
+                className="group flex flex-col items-start gap-5 rounded-lg border bg-surface-raised p-5 transition-colors hover:border-primary/50 sm:p-6"
+              >
+                <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary-subtle text-primary-subtle-foreground transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+                  <principle.icon className="size-5" />
                 </span>
-                <div className="flex flex-col gap-1">
-                  <h3 className="font-semibold">{title}</h3>
-                  <p className="text-sm text-muted-foreground">{body}</p>
+                <div>
+                  <h3 className="font-semibold">{principle.title}</h3>
+                  <p className="mt-2 text-sm text-muted-foreground">{principle.body}</p>
                 </div>
               </li>
             ))}
           </ul>
-          <p className="text-center text-sm text-muted-foreground">
+          <p className="mt-8 text-center text-sm text-muted-foreground">
             Read our{" "}
             <Link href="/editorial-policy" className={textLink}>
               editorial policy
@@ -512,35 +568,61 @@ export default async function Home() {
       </section>
 
       {/* FAQ */}
-      <section aria-labelledby="faq-heading" className="border-t py-section">
-        <Container className="grid gap-10 lg:grid-cols-[minmax(0,20rem)_minmax(0,1fr)] lg:gap-16">
-          <SectionHeader
-            id="faq-heading"
-            eyebrow="FAQ"
-            title="Passport photo online: frequently asked questions"
-            className="lg:sticky lg:top-[calc(var(--spacing-header)+2rem)] lg:self-start"
-          >
-            Can&apos;t find your answer? See the{" "}
-            <Link href={links.faq} className={textLink}>
-              full FAQ
+      <section aria-labelledby="faq-heading" className="border-t bg-surface py-section">
+        <Container className="grid gap-8 sm:gap-12 lg:grid-cols-[1fr_1.6fr] lg:gap-16">
+          <div className="lg:sticky lg:top-[calc(var(--spacing-header)+2rem)] lg:self-start">
+            <SectionHeading id="faq-heading" eyebrow="FAQ" title="Passport photo online: frequently asked questions" align="left">
+              Can&apos;t find your answer? See the full FAQ.
+            </SectionHeading>
+            <Link href={links.faq} className={cn(arrowLink, "mt-4 py-2")}>
+              Read the full FAQ
+              {arrow}
             </Link>
-            .
-          </SectionHeader>
-          <div className="flex flex-col gap-3">
+          </div>
+
+          <div className="divide-y rounded-lg border bg-surface-raised">
             {faqs.map((faq) => (
-              <details key={faq.question} className={cn(card, "group open:border-border-strong")}>
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 rounded-xl p-5 [&::-webkit-details-marker]:hidden">
-                  <h3 className="text-base font-semibold sm:text-lg">{faq.question}</h3>
-                  <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-muted text-muted-foreground transition-transform group-open:rotate-45">
+              <details key={faq.question} className="group px-5 sm:px-6">
+                <summary className="flex list-none items-center justify-between gap-4 py-5 [&::-webkit-details-marker]:hidden">
+                  <h3 className="text-base font-medium">{faq.question}</h3>
+                  <span className="flex size-7 shrink-0 items-center justify-center rounded-md border text-muted-foreground transition-all group-open:rotate-45 group-open:border-primary group-open:bg-primary group-open:text-primary-foreground">
                     <PlusIcon className="size-4" />
                   </span>
                 </summary>
-                <p className="-mt-1 px-5 pb-5 text-muted-foreground">{faq.answer}</p>
+                <p className="pr-10 pb-5 text-sm text-muted-foreground">{faq.answer}</p>
               </details>
             ))}
           </div>
         </Container>
       </section>
+
+      {/* Closing call to action */}
+      <section className="border-t">
+        <Container className="py-16 sm:py-24">
+          <div className="relative overflow-hidden rounded-lg bg-primary px-5 py-12 text-center text-primary-foreground sm:px-12 sm:py-16 md:py-20">
+            <div aria-hidden="true" className="bg-grid fade-edges pointer-events-none absolute inset-0 opacity-20 [--grid-line:var(--color-primary-foreground)]" />
+            <div className="relative">
+              <h2 className="mx-auto max-w-2xl font-display text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
+                Make your passport photo today
+              </h2>
+              <p className="mx-auto mt-4 max-w-xl text-base opacity-85">
+                Skip the photo booth. Make a passport photo from home in a few minutes — free, with no account.
+              </p>
+              <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+                <a href={links.tool} className={buttonVariants({ variant: "inverse", size: "lg" })}>
+                  Make my passport photo
+                  {arrow}
+                </a>
+                <Link href={links.requirements} className={buttonVariants({ variant: "inverse-outline", size: "lg" })}>
+                  Check requirements
+                </Link>
+              </div>
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      <MobileCtaBar href={links.tool} />
     </>
   );
 }

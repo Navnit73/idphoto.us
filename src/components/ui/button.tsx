@@ -1,18 +1,22 @@
 import { cn } from "@/lib/cn";
 
+// `group` lets a trailing arrow icon nudge right on hover.
 const base =
-  "inline-flex shrink-0 items-center justify-center gap-2 rounded-md font-medium whitespace-nowrap transition-colors disabled:pointer-events-none disabled:opacity-50";
+  "group inline-flex shrink-0 items-center justify-center gap-2 rounded-lg font-semibold whitespace-nowrap transition-colors disabled:pointer-events-none disabled:opacity-50";
 
 const variants = {
-  primary: "bg-primary text-primary-foreground shadow-sm hover:bg-primary-hover",
+  primary: "bg-primary text-primary-foreground hover:bg-primary-hover",
   secondary: "bg-secondary text-secondary-foreground hover:bg-secondary-hover",
-  outline: "border border-border-strong bg-background text-foreground hover:bg-muted",
+  outline: "border border-border-strong bg-background text-foreground hover:border-muted-foreground hover:bg-surface",
   ghost: "text-foreground hover:bg-muted",
+  /** For use on a `bg-primary` band. */
+  inverse: "bg-primary-foreground text-primary hover:bg-primary-foreground/90",
+  "inverse-outline": "border border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10",
 } as const;
 
 const sizes = {
-  sm: "h-9 px-3 text-sm",
-  md: "h-10 px-4 text-sm",
+  sm: "h-9 px-4 text-sm",
+  md: "h-11 px-5 text-sm",
   lg: "h-12 px-6 text-base",
 } as const;
 

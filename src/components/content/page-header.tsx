@@ -4,7 +4,9 @@ import Link from "next/link";
 import { ArrowRightIcon } from "@/components/home/icons";
 import { buttonVariants } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
+import { Eyebrow } from "@/components/ui/section-heading";
 import { cn } from "@/lib/cn";
+import type { Category } from "@/lib/content/schema";
 
 import type { Page } from "@/lib/content/loader";
 import type { Crumb } from "@/lib/seo/json-ld";
@@ -23,25 +25,27 @@ type PageHeaderProps = {
   image?: { src: string; width: number; height: number; alt: string };
   /** Key figures under the intro, like the home page hero's stats. */
   facts?: { value: string; label: string }[];
-  /**
-   * The home page hero's look: a full-width white (dark: black) band with larger type.
-   * It brings its own Container, so templates render it outside theirs.
-   */
+  /** The home page hero's look: a white (dark: black) band with a larger image, instead of the tinted band. */
   band?: boolean;
 };
 
+const EYEBROW: Record<Category, string> = {
+  tool: "Free tool",
+  checker: "Photo checker",
+  guide: "Guide",
+  legal: "Legal",
+  about: "About",
+};
+
+/** Full-width header band. It brings its own Container, so templates render it outside theirs. */
 export function PageHeader({ page, crumbs, byline = false, cta, image, facts, band = false }: PageHeaderProps) {
   const intro = (
-    <div className={cn("flex flex-col", band ? "gap-6" : "gap-4")}>
-      <h1
-        className={cn(
-          "font-display font-semibold tracking-tight text-balance",
-          band ? "text-4xl sm:text-5xl" : "text-3xl sm:text-4xl",
-        )}
-      >
+    <div className="flex flex-col gap-4">
+      <Eyebrow>{EYEBROW[page.category]}</Eyebrow>
+      <h1 className="max-w-3xl font-display text-3xl font-semibold tracking-tight text-balance sm:text-4xl md:text-5xl">
         {page.heading}
       </h1>
-      <p className="max-w-prose text-base text-pretty text-muted-foreground sm:text-lg">{page.description}</p>
+      <p className="max-w-2xl text-base text-pretty text-muted-foreground sm:text-lg">{page.description}</p>
       <dl className="flex flex-wrap gap-x-6 gap-y-1 text-sm text-muted-foreground">
         {byline && (
           <div className="flex gap-1.5">
@@ -85,17 +89,17 @@ export function PageHeader({ page, crumbs, byline = false, cta, image, facts, ba
         )}
       </dl>
       {cta && (
-        <a href={cta.href} className={buttonVariants({ size: "lg", className: "group mt-2 w-full sm:w-auto sm:self-start" })}>
+        <a href={cta.href} className={buttonVariants({ size: "lg", className: "mt-2 w-full sm:w-auto sm:self-start" })}>
           {cta.label}
           <ArrowRightIcon className="size-4 transition-transform group-hover:translate-x-0.5" />
         </a>
       )}
       {facts?.length ? (
-        <dl className="grid w-full grid-cols-3 gap-4 border-t border-border-strong pt-6">
-          {facts.map((fact) => (
-            <div key={fact.label} className="flex flex-col gap-0.5">
-              <dt className="order-2 text-xs text-muted-foreground">{fact.label}</dt>
-              <dd className="order-1 font-display text-xl font-semibold sm:text-3xl">{fact.value}</dd>
+        <dl className="mt-2 grid w-full grid-cols-3 rounded-lg border bg-background">
+          {facts.map((fact, i) => (
+            <div key={fact.label} className={cn("flex flex-col px-2 py-4 text-center", i > 0 && "border-l")}>
+              <dt className="order-last mt-1 text-xs text-muted-foreground">{fact.label}</dt>
+              <dd className="font-mono text-lg font-semibold tracking-tight sm:text-xl">{fact.value}</dd>
             </div>
           ))}
         </dl>
@@ -112,7 +116,10 @@ export function PageHeader({ page, crumbs, byline = false, cta, image, facts, ba
     >
       {intro}
       <figure
-        className={cn("rounded-xl bg-photo-backdrop p-2 sm:p-4", !band && "mx-auto w-full max-w-sm lg:mx-0 lg:max-w-none")}
+        className={cn(
+          "rounded-lg border bg-photo-backdrop p-2 sm:p-3",
+          !band && "mx-auto w-full max-w-sm lg:mx-0 lg:max-w-none",
+        )}
       >
         <Image
           src={image.src}
@@ -121,7 +128,7 @@ export function PageHeader({ page, crumbs, byline = false, cta, image, facts, ba
           alt={image.alt}
           sizes={band ? "(min-width: 80rem) 35rem, (min-width: 64rem) 45vw, 100vw" : "(min-width: 64rem) 22rem, 24rem"}
           preload
-          className={cn("h-auto w-full", band ? "rounded-lg" : "mx-auto max-w-sm lg:max-w-none")}
+          className={cn("h-auto w-full rounded-md", !band && "mx-auto max-w-sm lg:max-w-none")}
         />
       </figure>
     </div>
@@ -129,21 +136,12 @@ export function PageHeader({ page, crumbs, byline = false, cta, image, facts, ba
     intro
   );
 
-  if (band) {
-    return (
-      <header className="border-b bg-background">
-        <Container className="flex flex-col gap-6 pt-page pb-12 lg:gap-8 lg:pb-20">
-          <Breadcrumbs crumbs={crumbs} />
-          {body}
-        </Container>
-      </header>
-    );
-  }
-
   return (
-    <header className="flex flex-col gap-4 border-b pb-6 sm:pb-8">
-      <Breadcrumbs crumbs={crumbs} />
-      {body}
+    <header className={cn("border-b", band ? "bg-background" : "bg-surface")}>
+      <Container className="flex flex-col gap-8 py-12 sm:py-16 md:py-20">
+        <Breadcrumbs crumbs={crumbs} />
+        {body}
+      </Container>
     </header>
   );
 }

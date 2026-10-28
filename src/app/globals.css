@@ -31,7 +31,6 @@
   --color-muted-foreground: var(--muted-foreground);
   --color-border: var(--border);
   --color-border-strong: var(--border-strong);
-  --color-header-rule: var(--header-rule);
   --color-input: var(--input);
   --color-ring: var(--ring);
   --color-primary: var(--primary);
@@ -48,6 +47,11 @@
   --color-warning-subtle: var(--warning-subtle);
   --color-danger: var(--danger);
   --color-danger-subtle: var(--danger-subtle);
+  --color-contrast: var(--contrast);
+  --color-contrast-raised: var(--contrast-raised);
+  --color-contrast-border: var(--contrast-border);
+  --color-contrast-foreground: var(--contrast-foreground);
+  --color-contrast-muted-foreground: var(--contrast-muted-foreground);
   --color-photo-backdrop: var(--photo-backdrop);
   --color-overlay: var(--overlay);
 
@@ -85,6 +89,7 @@
   --spacing-header: var(--layout-header-height);
 
   --container-content: var(--layout-content);
+  --container-wide: var(--layout-wide);
   --container-prose: var(--layout-prose);
 
   --radius-sm: var(--corner-sm);
@@ -107,6 +112,63 @@
   --default-transition-timing-function: var(--easing-standard);
 }
 
+/* Hero background beams: the glow and sparks where a beam hits the floor. */
+@theme {
+  --animate-beam-glow: beam-glow 3.5s ease-out forwards;
+  --animate-beam-spark: beam-spark 1s ease-out forwards;
+
+  /* Fade in over 1.5s, hold, then fade out after the beam resets at 2s */
+  @keyframes beam-glow {
+    0% {
+      opacity: 0;
+    }
+    43%,
+    57% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+
+  @keyframes beam-spark {
+    from {
+      transform: translate(0, 0);
+      opacity: 1;
+    }
+    to {
+      transform: translate(var(--dx), var(--dy));
+      opacity: 0;
+    }
+  }
+}
+
+/* Faint square grid (CTA band). Override the line color with `[--grid-line:…]`. */
+@utility bg-grid {
+  background-image:
+    linear-gradient(to right, var(--grid-line, var(--color-border)) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line, var(--color-border)) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+
+/* Fades an element out towards its edges. Masks read alpha only, so any opaque color works. */
+@utility fade-edges {
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, var(--color-foreground) 30%, transparent 100%);
+}
+
+/* Smooth open/close for <details> where supported. */
+details::details-content {
+  block-size: 0;
+  overflow: hidden;
+  transition:
+    block-size var(--duration-base) ease,
+    content-visibility var(--duration-base) allow-discrete;
+}
+
+details[open]::details-content {
+  block-size: auto;
+}
+
 @layer base {
   *,
   ::before,
@@ -115,8 +177,23 @@
   }
 
   html {
-    scroll-padding-top: var(--spacing-header);
+    scroll-padding-top: calc(var(--spacing-header) + 1rem);
     scroll-behavior: smooth;
+    interpolate-size: allow-keywords;
+  }
+
+  /* Tailwind v4 dropped the pointer cursor on buttons. */
+  button,
+  [role="button"],
+  summary,
+  select,
+  label:has(input[type="file"]) {
+    cursor: pointer;
+  }
+
+  button:disabled,
+  [aria-disabled="true"] {
+    cursor: not-allowed;
   }
 
   body {
