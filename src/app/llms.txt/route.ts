@@ -4,6 +4,7 @@ import { absoluteUrl } from "@/lib/seo/metadata";
 
 const SECTIONS = [
   { category: "tool", heading: "Tools" },
+  { category: "checker", heading: "Checkers" },
   { category: "guide", heading: "Guides" },
   { category: "about", heading: "About" },
   { category: "legal", heading: "Policies" },

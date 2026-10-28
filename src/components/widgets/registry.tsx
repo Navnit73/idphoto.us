@@ -21,6 +21,8 @@ function WidgetLoading({ className }: { className?: string }) {
 const FormLoading = () => <WidgetLoading className="min-h-80 border" />;
 /** Country picker plus drop zone, inside a padded card. */
 const EditorLoading = () => <WidgetLoading className="min-h-96 border" />;
+/** Country header plus drop zone and rules panel. */
+const CheckerLoading = () => <WidgetLoading className="min-h-[28rem] border" />;
 
 /** Options a page passes through frontmatter. Each widget reads only the ones it understands. */
 type WidgetProps = { country?: CountryCode };
@@ -34,6 +36,9 @@ type WidgetProps = { country?: CountryCode };
 const widgets: Record<WidgetName, React.ComponentType<WidgetProps>> = {
   "photo-editor": dynamic(() => import("@/components/tools/photo-editor").then((m) => m.PhotoEditor), {
     loading: EditorLoading,
+  }),
+  "photo-checker": dynamic(() => import("@/components/checker/photo-checker").then((m) => m.PhotoChecker), {
+    loading: CheckerLoading,
   }),
   "contact-form": dynamic(() => import("@/components/widgets/contact-form").then((m) => m.ContactForm), {
     loading: FormLoading,

@@ -7,6 +7,7 @@ import { PageHeader } from "@/components/content/page-header";
 import { ArrowRightIcon, CheckIcon } from "@/components/home/icons";
 import { buttonVariants } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
+import { cn } from "@/lib/cn";
 import type { PageSummary } from "@/lib/content/loader";
 
 import type { TemplateProps } from "./types";
@@ -81,7 +82,7 @@ function ToolHub({ page, crumbs, categoryPages }: TemplateProps) {
           </div>
           {featured && <FeaturedTool page={featured} />}
           {others.length > 0 && (
-            <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
               {others.map((tool) => (
                 <li key={tool.path}>
                   <ToolCard page={tool} />
@@ -105,18 +106,15 @@ function FeaturedTool({ page }: { page: PageSummary }) {
   return (
     <Link
       href={page.path}
-      className="group flex flex-col gap-6 rounded-xl border bg-surface-raised p-6 transition-colors hover:border-primary/50 sm:flex-row sm:items-center sm:p-8"
+      className="group flex flex-col gap-4 rounded-lg border bg-surface-raised p-4 transition-colors hover:border-primary/50 sm:flex-row sm:items-center sm:p-5"
     >
-      <PageIcon page={page} className="size-14 rounded-xl" />
-      <div className="flex flex-1 flex-col gap-2">
-        <span className="text-xs font-semibold tracking-wide text-primary uppercase">Start here</span>
-        <h3 className="font-display text-2xl font-semibold tracking-tight text-balance">{page.breadcrumbLabel}</h3>
-        <p className="max-w-2xl text-pretty text-muted-foreground">{page.summary}</p>
+      <PageIcon page={page} className="size-11 rounded-md" />
+      <div className="flex min-w-0 flex-1 flex-col gap-1">
+        <span className="text-[0.6875rem] font-semibold tracking-wide text-primary uppercase">Start here</span>
+        <h3 className="text-lg leading-snug font-semibold text-balance group-hover:text-primary">{page.breadcrumbLabel}</h3>
+        <p className="max-w-2xl text-sm text-pretty text-muted-foreground">{page.summary}</p>
       </div>
-      <span className={buttonVariants({ size: "lg", className: "pointer-events-none sm:self-center" })}>
-        {ACTION_LABEL.tool}
-        <ArrowRightIcon className="size-4 transition-transform group-hover:translate-x-0.5" />
-      </span>
+      <ActionChip className="sm:self-center" />
     </Link>
   );
 }
@@ -125,15 +123,29 @@ function ToolCard({ page }: { page: PageSummary }) {
   return (
     <Link
       href={page.path}
-      className="group flex h-full flex-col gap-3 rounded-xl border bg-surface-raised p-5 transition-colors hover:border-primary/50 sm:p-6"
+      className="group flex h-full gap-3 rounded-lg border bg-surface-raised p-4 transition-colors hover:border-primary/50"
     >
-      <PageIcon page={page} />
-      <h3 className="text-lg font-semibold text-balance group-hover:text-primary">{page.breadcrumbLabel}</h3>
-      <p className="text-sm text-pretty text-muted-foreground">{page.summary}</p>
-      <span className="mt-auto flex items-center gap-1.5 pt-2 text-sm font-medium text-primary">
-        {ACTION_LABEL.tool}
-        <ArrowRightIcon className="size-4 transition-transform group-hover:translate-x-0.5" />
-      </span>
+      <PageIcon page={page} className="size-9 rounded-md [&>svg]:size-5" />
+      <div className="flex min-w-0 flex-1 flex-col gap-1">
+        <h3 className="text-base leading-snug font-semibold text-balance group-hover:text-primary">{page.breadcrumbLabel}</h3>
+        <p className="mb-2 line-clamp-2 text-sm text-pretty text-muted-foreground">{page.summary}</p>
+        <ActionChip className="mt-auto" />
+      </div>
     </Link>
+  );
+}
+
+/** Small flat filled "Open tool" label; the whole card is the link. */
+function ActionChip({ className }: { className?: string }) {
+  return (
+    <span
+      className={cn(
+        "inline-flex items-center gap-1 self-start rounded-md bg-primary px-2.5 py-1 text-xs font-semibold tracking-wide text-primary-foreground uppercase transition-colors group-hover:bg-primary-hover",
+        className,
+      )}
+    >
+      {ACTION_LABEL.tool}
+      <ArrowRightIcon className="size-3.5 transition-transform group-hover:translate-x-0.5" />
+    </span>
   );
 }

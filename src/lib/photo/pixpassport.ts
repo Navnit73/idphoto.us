@@ -1,9 +1,11 @@
 import "server-only";
 
 import { AxiosError } from "axios";
+import { cacheLife } from "next/cache";
 import { z } from "zod";
 
 import { ApiError } from "@/lib/api/server";
+import type { PhotoRequirements } from "@/lib/api/types";
 import { serverEnv } from "@/lib/env/server";
 import { serverHttp } from "@/lib/http/server";
 
@@ -60,6 +62,38 @@ export async function processPhoto(input: { image: Blob; filename: string; count
     return parsed.data;
   } catch (error) {
     throw toApiError(error);
+  }
+}
+
+/** Just enough structure to trust the response; the checker treats every rule as optional. */
+const requirementsResponseSchema = z.looseObject({
+  country: z.object({ name: z.string().min(1), code: z.string().min(1) }),
+  document_type: z.string().min(1),
+});
+
+/**
+ * A country's published photo rules from PixPassport `GET /countries/{code}`.
+ * Public and slow-changing, so responses are cached for a day; errors aren't cached.
+ */
+export async function getPhotoRequirements(countryCode: CountryCode, documentType: DocumentType): Promise<PhotoRequirements> {
+  "use cache";
+  cacheLife("days");
+
+  const url = new URL(`/countries/${encodeURIComponent(countryCode)}`, serverEnv.PASSPORT_API_URL);
+  url.searchParams.set("document_type", documentType);
+  try {
+    const { data } = await serverHttp.get(url.toString());
+    const parsed = requirementsResponseSchema.safeParse(data);
+    if (!parsed.success) throw new Error(`Unexpected PixPassport requirements: ${z.prettifyError(parsed.error)}`);
+    return parsed.data as PhotoRequirements;
+  } catch (error) {
+    if (error instanceof AxiosError && error.response?.status === 404) {
+      throw new ApiError("not_found", "No photo requirements are published for this country yet.");
+    }
+    if (error instanceof AxiosError) {
+      throw new ApiError("network_error", "The photo requirements service isn't responding right now. Please try again in a few minutes.");
+    }
+    throw error;
   }
 }
 

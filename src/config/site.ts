@@ -11,6 +11,7 @@ export const siteConfig = {
   owner: "Navnit Rai",
   nav: [
     { label: "Tools", href: "/tool" },
+    { label: "Checkers", href: "/checker" },
     { label: "Guides", href: "/guide" },
     { label: "FAQ", href: "/faq" },
     { label: "About", href: "/about" },

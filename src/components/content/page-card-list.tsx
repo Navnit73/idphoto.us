@@ -25,6 +25,7 @@ export const CARD_ICON_COMPONENTS: Record<CardIcon, typeof CameraIcon> = {
 
 export const ACTION_LABEL: Partial<Record<PageSummary["category"], string>> = {
   tool: "Open tool",
+  checker: "Open checker",
   guide: "Read guide",
 };
 
@@ -46,21 +47,27 @@ export function PageIcon({ page, className }: { page: PageSummary; className?: s
 
 export function PageCardList({ pages, as: Title = "h3", className, showCategory = true }: PageCardListProps) {
   return (
-    <ul className={cn("grid gap-4 sm:grid-cols-2", className)}>
+    <ul className={cn("grid gap-3 sm:grid-cols-2 lg:grid-cols-3", className)}>
       {pages.map((page) => (
         <li key={page.path}>
           <Link
             href={page.path}
-            className="group flex h-full flex-col gap-2 rounded-lg border bg-surface-raised p-5 shadow-sm transition-[border-color,box-shadow] hover:border-primary/50 hover:shadow-md sm:p-6"
+            className="group flex h-full gap-3 rounded-lg border bg-surface-raised p-4 transition-colors hover:border-primary/50"
           >
-            <PageIcon page={page} className="mb-2" />
-            {showCategory && <span className="text-xs font-medium tracking-wide text-primary uppercase">{page.category}</span>}
-            <Title className="text-lg font-semibold text-balance group-hover:text-primary">{page.heading}</Title>
-            <p className="text-sm text-pretty text-muted-foreground">{page.summary}</p>
-            <span className="mt-auto flex items-center gap-1.5 pt-2 text-sm font-medium text-primary">
-              {ACTION_LABEL[page.category] ?? "Read more"}
-              <ArrowRightIcon className="size-4 transition-transform group-hover:translate-x-0.5" />
-            </span>
+            <PageIcon page={page} className="size-9 rounded-md [&>svg]:size-5" />
+            <div className="flex min-w-0 flex-1 flex-col gap-1">
+              {showCategory && (
+                <span className="text-[0.6875rem] font-medium tracking-wide text-primary uppercase">{page.category}</span>
+              )}
+              <Title className="text-base leading-snug font-semibold text-balance group-hover:text-primary">
+                {page.heading}
+              </Title>
+              <p className="mb-2 line-clamp-2 text-sm text-pretty text-muted-foreground">{page.summary}</p>
+              <span className="mt-auto inline-flex items-center gap-1 self-start rounded-md bg-primary px-2.5 py-1 text-xs font-semibold tracking-wide text-primary-foreground uppercase transition-colors group-hover:bg-primary-hover">
+                {ACTION_LABEL[page.category] ?? "Read more"}
+                <ArrowRightIcon className="size-3.5 transition-transform group-hover:translate-x-0.5" />
+              </span>
+            </div>
           </Link>
         </li>
       ))}

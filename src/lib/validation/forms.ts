@@ -32,6 +32,9 @@ export const photoProcessSchema = z.object({
   document_type: z.enum(DOCUMENT_TYPES).default("passport"),
 });
 
+/** Country whose photo rules the photo checker loads. */
+export const photoRequirementsSchema = photoProcessSchema;
+
 /** Upload cap. The browser downsizes photos well below this before sending them. */
 export const MAX_PHOTO_UPLOAD_BYTES = 8 * 1024 * 1024;
 export const PHOTO_UPLOAD_TYPES = ["image/jpeg", "image/png", "image/webp"] as const;

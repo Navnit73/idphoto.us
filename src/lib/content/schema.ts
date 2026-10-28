@@ -5,17 +5,19 @@ import { COUNTRY_CODES } from "@/lib/photo/countries";
 /** Content directories and the category each one holds. */
 export const CATEGORY_DIRECTORIES = {
   tools: "tool",
+  checkers: "checker",
   guides: "guide",
   legal: "legal",
   about: "about",
 } as const;
 
-export const CATEGORIES = ["tool", "guide", "legal", "about"] as const;
+export const CATEGORIES = ["tool", "checker", "guide", "legal", "about"] as const;
 export type Category = (typeof CATEGORIES)[number];
 
 /** URL prefix per category. Legal and about pages live at the site root. */
 export const CATEGORY_ROUTE_PREFIX: Record<Category, string> = {
   tool: "/tool",
+  checker: "/checker",
   guide: "/guide",
   legal: "",
   about: "",
@@ -25,7 +27,7 @@ export const TEMPLATES = ["tool", "guide", "faq", "legal", "info", "hub"] as con
 export type TemplateName = (typeof TEMPLATES)[number];
 
 /** Interactive client components a page can embed via `widget`. */
-export const WIDGETS = ["photo-editor", "contact-form"] as const;
+export const WIDGETS = ["photo-editor", "photo-checker", "contact-form"] as const;
 export type WidgetName = (typeof WIDGETS)[number];
 
 /** Icons a page can show on hub and related-page cards. */
@@ -122,7 +124,7 @@ export const frontmatterSchema = z
         alt: z.string().trim().min(10),
       })
       .optional(),
-    /** Country preselected in the `photo-editor` widget (its API code, e.g. IN, GB, EU). */
+    /** Country preselected in the `photo-editor` or `photo-checker` widget (its API code, e.g. IN, GB, EU). */
     country: z.enum(COUNTRY_CODES).optional(),
     /** Heading of the FAQ section. Defaults to the template's own heading. */
     faqTitle: z.string().trim().min(5).max(80).optional(),
@@ -156,8 +158,8 @@ export const frontmatterSchema = z
     if (data.ctaLabel && !data.widget) {
       ctx.addIssue({ code: "custom", path: ["ctaLabel"], message: "needs a widget for the button to scroll to" });
     }
-    if (data.country && data.widget !== "photo-editor") {
-      ctx.addIssue({ code: "custom", path: ["country"], message: "only applies to the photo-editor widget" });
+    if (data.country && data.widget !== "photo-editor" && data.widget !== "photo-checker") {
+      ctx.addIssue({ code: "custom", path: ["country"], message: "only applies to the photo-editor and photo-checker widgets" });
     }
     if (data.template === "faq" && data.faq.length < 3) {
       ctx.addIssue({ code: "custom", path: ["faq"], message: "needs at least 3 entries for the faq template" });

@@ -11,12 +11,14 @@ const contentSecurityPolicy = [
   "default-src 'self'",
   // Microsoft Clarity loads its tag from www.clarity.ms and scripts.clarity.ms,
   // then beacons to *.clarity.ms and c.bing.com.
-  `script-src 'self' 'unsafe-inline' https://*.clarity.ms${isDev ? " 'unsafe-eval'" : ""}`,
+  // The photo checker runs MediaPipe in the browser: its WebAssembly loader comes from jsDelivr
+  // ('wasm-unsafe-eval' allows compiling WebAssembly only, not JavaScript eval) and its models from Google Storage.
+  `script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://*.clarity.ms${isDev ? " 'unsafe-eval'" : ""}`,
   "style-src 'self' 'unsafe-inline'",
   // Cloudinary serves photo-editor results (shown on /preview/<id>).
   "img-src 'self' data: blob: https://res.cloudinary.com https://*.clarity.ms https://c.bing.com",
   "font-src 'self'",
-  "connect-src 'self' https://*.clarity.ms https://c.bing.com",
+  "connect-src 'self' https://cdn.jsdelivr.net https://storage.googleapis.com https://*.clarity.ms https://c.bing.com",
   "worker-src 'self' blob:",
   "object-src 'none'",
   "base-uri 'self'",

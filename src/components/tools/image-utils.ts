@@ -47,3 +47,30 @@ export function canvasToBlob(canvas: HTMLCanvasElement, type: string, quality?: 
     canvas.toBlob((blob) => (blob ? resolve(blob) : reject(new Error("Couldn't encode the image."))), type, quality);
   });
 }
+
+/** The largest output is 1300 × 1800 px, so a 2400 px long edge leaves the service plenty to crop from. */
+const MAX_UPLOAD_EDGE = 2400;
+
+/**
+ * Re-encodes the photo as a JPEG of at most MAX_UPLOAD_EDGE px. Keeps uploads
+ * small and fast, converts HEIC where the browser can decode it, and drops
+ * metadata such as GPS location before anything leaves the device.
+ */
+export async function prepareUpload(file: File): Promise<Blob> {
+  const image = await loadImage(file);
+  try {
+    const scale = Math.min(
+      1,
+      MAX_UPLOAD_EDGE / Math.max(image.width, image.height),
+    );
+    const { canvas, context } = createCanvas(
+      Math.round(image.width * scale),
+      Math.round(image.height * scale),
+    );
+    fillPhotoBackground(context);
+    context.drawImage(image.element, 0, 0, canvas.width, canvas.height);
+    return await canvasToBlob(canvas, "image/jpeg", 0.92);
+  } finally {
+    URL.revokeObjectURL(image.url);
+  }
+}
