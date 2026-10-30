@@ -42,7 +42,12 @@ export function PageHeader({ page, crumbs, byline = false, cta, image, facts, ba
   const intro = (
     <div className="flex flex-col gap-4">
       <Eyebrow>{EYEBROW[page.category]}</Eyebrow>
-      <h1 className="max-w-3xl font-display text-3xl font-semibold tracking-tight text-balance sm:text-4xl md:text-5xl">
+      <h1
+        className={cn(
+          "max-w-3xl font-display text-3xl font-semibold tracking-tight text-balance sm:text-4xl",
+          page.frontmatter.template !== "tool" && page.frontmatter.template !== "guide" && "md:text-5xl",
+        )}
+      >
         {page.heading}
       </h1>
       <p className="max-w-2xl text-base text-pretty text-muted-foreground sm:text-lg">{page.description}</p>
@@ -115,10 +120,16 @@ export function PageHeader({ page, crumbs, byline = false, cta, image, facts, ba
       )}
     >
       {intro}
+      {/*
+        The band matches the home page hero: no frame, and in light mode a slight brightness lift plus
+        multiply blends the image's white background into the page. Multiply over black would hide
+        the image, so dark mode sets it on a light panel instead.
+      */}
       <figure
         className={cn(
-          "rounded-lg border bg-photo-backdrop p-2 sm:p-3",
-          !band && "mx-auto w-full max-w-sm lg:mx-0 lg:max-w-none",
+          band
+            ? "dark:rounded-lg dark:bg-photo-backdrop"
+            : "mx-auto w-full max-w-sm rounded-lg border bg-photo-backdrop p-2 sm:p-3 lg:mx-0 lg:max-w-none",
         )}
       >
         <Image
@@ -128,7 +139,10 @@ export function PageHeader({ page, crumbs, byline = false, cta, image, facts, ba
           alt={image.alt}
           sizes={band ? "(min-width: 80rem) 35rem, (min-width: 64rem) 45vw, 100vw" : "(min-width: 64rem) 22rem, 24rem"}
           preload
-          className={cn("h-auto w-full rounded-md", !band && "mx-auto max-w-sm lg:max-w-none")}
+          className={cn(
+            "h-auto w-full",
+            band ? "brightness-[1.03] mix-blend-multiply dark:mix-blend-normal" : "mx-auto max-w-sm rounded-md lg:max-w-none",
+          )}
         />
       </figure>
     </div>
