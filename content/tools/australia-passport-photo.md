@@ -13,7 +13,7 @@ icon: camera
 order: 3
 ctaLabel: "Make my Australia photo"
 heroImage:
-  src: "TODO-add-hero-image-url"
+  src: "https://res.cloudinary.com/dipzpwbbk/image/upload/v1790578820/digital-passport-photo_example_kehhir.webp"
   width: 1774
   height: 887
   alt: "Two example Australian passport photos, each 35 × 45 mm with the head centered on a plain light background."
