@@ -89,7 +89,7 @@ A 2x2 photo won't work for these documents, so choose the right country in the [
 
 | Document | Photo size |
 | --- | --- |
-| UK passport | 35 × 45 mm |
+| [UK passport](https://pixpassport.uk/tool/uk-passport-photo) | 35 × 45 mm |
 | Schengen visa | 35 × 45 mm |
 | Australian passport | 35 × 45 mm |
 | Canadian passport | 50 × 70 mm |

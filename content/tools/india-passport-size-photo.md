@@ -148,6 +148,8 @@ Most rejections break the Indian passport photo guidelines in one of these ways:
 - **Hidden eyes.** Glare on glasses, hair across the face or a tilted head can block a clear view.
 - **Strong expressions.** Grinning, frowning and raised eyebrows are not allowed.
 - **Low quality.** A blurry India passport picture, or a print on ordinary paper, can fail the clarity check.
+
+Many of these mistakes also break the international rules. See [why a photo is not valid as per the ICAO standard](https://icao-standard-photo.online/icao-guide/photo-is-not-valid-as-per-icao-standard) for the most common causes.
 - **Heavy editing.** Filters and skin smoothing change how you look. Cropping and resizing are fine.
 - **Wrong e-Visa shape.** A rectangular passport photo uploaded to the e-Visa form is not square.
 
