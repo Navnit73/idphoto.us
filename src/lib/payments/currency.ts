@@ -27,7 +27,7 @@ export const CURRENCIES = {
   USD: { code: "USD", symbol: "$", exponent: 2, prices: { standard: 799, expert_edit: 1399 } },
   GBP: { code: "GBP", symbol: "£", exponent: 2, prices: { standard: 799, expert_edit: 1399 } },
   EUR: { code: "EUR", symbol: "€", exponent: 2, prices: { standard: 799, expert_edit: 1299 } },
-  INR: { code: "INR", symbol: "₹", exponent: 2, prices: { standard: 1990, expert_edit: 1990 } },
+  INR: { code: "INR", symbol: "₹", exponent: 2, prices: { standard: 19900, expert_edit: 29900 } },
 } as const satisfies Record<string, CurrencyDefinition>;
 
 export type CurrencyCode = keyof typeof CURRENCIES;
