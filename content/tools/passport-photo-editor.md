@@ -17,16 +17,21 @@ heroImage:
   height: 887
   alt: "Two example U.S. passport photos, a man and a woman, each measured at 2 × 2 inches (600 × 600 pixels) with the head centered."
 publishedAt: 2026-10-23
-updatedAt: 2026-10-23
+updatedAt: 2026-11-17
 keywords:
   - passport photo editor
   - edit passport photo
-  - passport photo editor online free
+  - passport photo editor online
   - passport photo for other countries
   - international passport photo
 showDisclaimer: false
 relatedPages:
   - /guide/passport-photo-requirements
+  - /checker/test-passport-photo
+  - /tool/2x2-photo-maker
+  - /tool/passport-photo-converter
+  - /tool/us-visa-photo
+  - /tool/print-passport-photos
 sources:
   - title: "U.S. Passport Photos"
     url: "https://travel.state.gov/content/travel/en/passports/how-apply/photos.html"
@@ -51,12 +56,20 @@ faq:
 3. **Wait a moment.** Processing can take up to a minute. Keep the page open until your result appears.
 4. **Check and download.** Your result opens on its own page, where you can download the photo or email yourself the links.
 
+## What does the passport photo editor cost?
+
+Uploading a photo and previewing the result is free, with no account. Downloading the finished, full-resolution photo is a one-time paid download, priced from $7.99 in U.S. dollars (the price in your local currency is shown before you pay). If an agency rejects the photo, the [refund policy](/refund-policy) explains how to get your money back. An optional Expert edit adds a manual review by a photo specialist.
+
 ## What the editor does
 
 - **Finds your face and the top of your head**, then crops the photo so your head is positioned for the country you chose.
 - **Checks the background.** If it doesn't pass, the editor may replace it, and the result page says so clearly.
 - **Resizes and saves the photo** as a JPEG at the selected country's pixel dimensions.
 - **Reports measurements**: head height, eye line, and space above the head, as percentages of the photo. Use them to spot a bad crop at a glance.
+
+## Which tool should I use?
+
+The editor covers 60+ countries. If you already have a picture and just need it resized, try the [passport photo converter](/tool/passport-photo-converter). For a square U.S. photo, use the [2x2 photo maker](/tool/2x2-photo-maker); for the DS-160 upload, the [US visa photo editor](/tool/us-visa-photo). Test a photo first with the [passport photo checker](/checker/test-passport-photo), and print it using our [print passport photos](/tool/print-passport-photos) page.
 
 ## What it doesn't do
 

@@ -1,7 +1,7 @@
 ---
 # OWNER REVIEW: have these terms reviewed by a qualified lawyer before launch, and add the
-# operator's legal name. Confirm before payments go live: the $7.99 price, what a purchase
-# includes (digital photo + A4 print sheet), and which features stay free.
+# operator's legal name. Confirm that the prices, what a purchase includes, and which
+# features stay free match src/lib/payments/currency.ts and pricing.ts.
 title: "Terms of Service: Rules for Using Our Tools"
 heading: "Terms of service"
 description: "The terms for using idphoto.us: free and paid features, payments and refunds, photo acceptance, your responsibilities, and the limits of our liability."
@@ -9,7 +9,7 @@ slug: terms
 category: legal
 template: legal
 breadcrumbLabel: "Terms of service"
-updatedAt: 2026-10-23
+updatedAt: 2026-11-17
 showTableOfContents: true
 ---
 
@@ -19,23 +19,23 @@ These terms govern your use of idphoto.us (the "site"), including its guides, ph
 
 idphoto.us helps you make passport, visa, and ID photos. Our tools check and crop your photo to the official size for the U.S. and 60+ other countries, and our guides explain the requirements.
 
-Everything on the site is currently free, including downloading your finished photo. We plan to charge a one-time fee per photo for downloads in the future. Our guides, and uploading a photo to see a processed preview with its measurements, will stay free.
+Our guides, our photo checker, and uploading a photo to see a processed preview are free. Downloading the full-resolution photo is a paid, one-time purchase, as described under Payments below.
 
 We may add, change, or remove features at any time.
 
 ## Payments
 
-We don't take payments yet. When paid downloads launch, we'll announce it on the site and update these terms first, and these rules will apply:
+These rules apply to paid downloads:
 
-- The fee to download a processed photo will be **$7.99 (USD) per photo**. The price is always shown before you pay.
-- Each purchase includes one processed digital photo and an A4 print sheet of 20 photos, cropped and ready for submission.
+- The Standard plan costs **$7.99 (USD) per photo** and the Expert edit plan, where a photo specialist reviews and retouches your photo by hand, costs **$13.99 (USD)**. Depending on your location, you may be charged in British pounds, euros, or Indian rupees at a fixed price for that currency. The exact price is always shown before you pay.
+- A Standard purchase gives you the full-resolution JPG, sized to the official dimensions, with your photo and invoice sent by email. The checkout page lists what each plan includes.
 - Payment is a one-time charge. There are no subscriptions or recurring fees.
 - Payments are processed by our third-party payment provider. We never see or store your full card number.
-- Your photo is available to download right after your payment succeeds.
+- Your photo is available to download right after your payment succeeds. Download links expire after a short time, so save your photo when you get it.
 
 ## Refunds
 
-Once paid downloads launch, if a government agency rejects a photo you bought from us, you can get a full refund of your purchase price. Request it within 30 days of purchase through our [contact page](/contact), with your transaction ID or purchase email and proof of the rejection. Approved refunds go back to your original payment method within 5 to 10 business days. See our [refund policy](/refund-policy) for the full details, including requests for other reasons.
+If a government agency rejects a photo you bought from us, you can get a full refund of your purchase price. Request it within 30 days of purchase through our [contact page](/contact), with your transaction ID or purchase email and proof of the rejection. Approved refunds go back to your original payment method within 5 to 10 business days. See our [refund policy](/refund-policy) for the full details, including requests for other reasons.
 
 ## Your responsibilities
 

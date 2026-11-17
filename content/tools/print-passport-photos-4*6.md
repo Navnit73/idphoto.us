@@ -1,7 +1,7 @@
 ---
-title: "Print Passport Photos Online or at Home (Free 4x6 Template)"
+title: "Print Passport Photos Online or at Home"
 heading: "Print Passport Photos Online, at Home or at a Photo Lab"
-description: "Print passport photos on a 4x6 sheet at home, at Walgreens or CVS, or order prints delivered. Free printable template with correct 2x2 sizing."
+description: "Print passport photos on a 4x6 sheet at home, at Walgreens or CVS, or order prints delivered. Includes a 4x6 layout template with correct 2x2 sizing."
 slug: print-passport-photos
 category: tool
 template: tool
@@ -17,7 +17,7 @@ heroImage:
   height: 887
   alt: "Two example U.S. passport photos, a man and a woman, each measured at 2 × 2 inches (600 × 600 pixels) with the head centered."
 publishedAt: 2026-10-24
-updatedAt: 2026-10-24
+updatedAt: 2026-11-17
 keywords:
   - print passport photo online
   - print passport size photo
@@ -57,7 +57,7 @@ faq:
   - question: "Why are my printed photos the wrong size?"
     answer: "Almost always because the printer or print service scaled the image. Turn off \"Fit to page\" or \"Fill\", choose actual size or 100%, and make sure the layout is 1800 × 1200 pixels for a 4 × 6 print."
   - question: "Do you print and mail passport photos?"
-    answer: "No. idphoto.us makes the digital photo for free. You print it yourself at home or through any photo lab or print service you choose."
+    answer: "No. idphoto.us makes the digital photo, which is a one-time paid download after a free preview. You print it yourself at home or through any photo lab or print service you choose."
 ---
 
 Your passport photo is ready, and now you need it on paper. This page shows three ways to print it: order prints delivered, send a 4 × 6 file to a store for pickup, or print it on your own printer. It also gives exact layouts for fitting two, four or six 2 × 2 inch photos on one 4 × 6 sheet. Don't have a correctly sized photo yet? Make one with the tool above first.
@@ -128,3 +128,5 @@ Print one sheet and measure a photo with a ruler before printing more. Each phot
 - **Keep the photos flat and clean.** Don't fold them or touch the face area, and don't staple them through your face when you attach them to a form.
 
 Before you send your photos, compare them with the full [passport photo requirements](/guide/passport-photo-requirements).
+
+Need the photo first? Make it with the [2x2 photo maker](/tool/2x2-photo-maker) or the [passport photo editor](/tool/passport-photo-editor), and check the rules in our [U.S. passport photo requirements](/guide/passport-photo-requirements).

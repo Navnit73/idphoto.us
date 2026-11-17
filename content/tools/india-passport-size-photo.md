@@ -1,5 +1,5 @@
 ---
-title: "India Passport Size Photo Maker: Free Online Tool"
+title: "India Passport Size Photo Maker Online"
 heading: "Make an India Passport Photo Online in Minutes"
 description: "Crop your picture to the correct Indian passport photo size, with head position and background checks. Fix common rejections and get a print-ready file."
 slug: india-passport-size-photo
@@ -18,7 +18,7 @@ heroImage:
   height: 500
   alt: "Two example U.S. passport photos, a man and a woman, each measured at 2 × 2 inches (600 × 600 pixels) with the head centered."
 publishedAt: 2026-10-27
-updatedAt: 2026-10-27
+updatedAt: 2026-11-17
 keywords:
   - india passport photo
   - india passport size photo
@@ -154,3 +154,5 @@ Many of these mistakes also break the international rules. See [why a photo is n
 - **Wrong e-Visa shape.** A rectangular passport photo uploaded to the e-Visa form is not square.
 
 No tool can promise acceptance. Before you apply, compare your result with the latest guidance in the [Passport Seva instruction booklet](https://www.passportindia.gov.in/AppOnlineProject/pdf/ApplicationformInstructionBooklet-V3.0.pdf). When you're ready, upload your picture above to convert photo to passport size India applications accept, then download a print-ready file.
+
+For other countries use the [passport photo editor](/tool/passport-photo-editor), and test a photo with the [passport photo checker](/checker/test-passport-photo) before you apply.

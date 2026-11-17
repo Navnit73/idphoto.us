@@ -1,5 +1,5 @@
 ---
-title: "New Zealand Passport Photo Online | NZ Photo Editor"
+title: "New Zealand Passport Photo Maker Online"
 heading: "New Zealand Passport Photo Online: Crop, Resize and Check (900 × 1200 px)"
 description: "Make a New Zealand passport photo online with our NZ passport photo editor. Crop to 900 × 1200 px, check DIA specs, and download in minutes."
 slug: new-zealand-passport-photo
@@ -18,7 +18,7 @@ heroImage:
   height: 887
   alt: "Two example U.S. passport photos, a man and a woman, each measured at 2 × 2 inches (600 × 600 pixels) with the head centered."
 publishedAt: 2026-10-26
-updatedAt: 2026-10-26
+updatedAt: 2026-11-17
 keywords:
   - new zealand passport photo
   - nz passport photo
@@ -155,3 +155,5 @@ The DIA rejects thousands of photos each year for avoidable errors. Check your p
 - **Filters and beautification:** Instagram, TikTok, and smartphone smoothing filters alter your skin texture and proportions. The DIA rejects edited photos immediately.
 
 Ready to create your New Zealand passport photo? Upload your picture above, and the editor handles the crop, the centring, and the checks. To compare rules for other countries, read our [passport photo requirements guide](/guide/passport-photo-requirements) or try the [general passport photo editor](/tool/passport-photo-editor).
+
+For other countries use the [passport photo editor](/tool/passport-photo-editor), and test a photo with the [passport photo checker](/checker/test-passport-photo) before you apply.

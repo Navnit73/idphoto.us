@@ -1,5 +1,5 @@
 ---
-title: "Schengen Visa Photo Size and Requirements (35 × 45 mm)"
+title: "Schengen Visa Photo Size and Rules"
 heading: "Schengen visa photo size and requirements: 35 × 45 mm explained"
 description: "A Schengen visa photo is 35 × 45 mm (1.38 × 1.77 in) with a 32–36 mm face on a white or light background. Every rule, plus how to get one in the U.S."
 slug: schengen-visa-photo-size
@@ -9,7 +9,8 @@ breadcrumbLabel: "Schengen visa photo size"
 summary: "The 35 × 45 mm Schengen visa photo: size, face height, background, and printing."
 icon: globe
 publishedAt: 2026-10-30
-updatedAt: 2026-10-30
+updatedAt: 2026-11-17
+author: navnit-rai
 keywords:
   - photo size for schengen visa
   - schengen visa photo requirements
@@ -38,6 +39,7 @@ heroFacts:
     label: "Or a plain light background"
 showDisclaimer: true
 relatedPages:
+  - /tool/schengen-visa-photo-size
   - /tool/passport-photo-editor
   - /checker/test-passport-photo
   - /tool/print-passport-photos
@@ -230,11 +232,11 @@ Some locations offer photos on site. The German consulate in Los Angeles, for ex
 
 ### Online, from a photo you take at home
 
-You can make a Schengen visa photo online for free from a picture taken on your phone:
+You can make a Schengen visa photo online from a picture taken on your phone. Uploading and previewing is free; downloading the finished photo is a one-time paid download. Our [Schengen visa photo maker](/tool/schengen-visa-photo-size) is built for this:
 
 1. Stand about 2 feet in front of a plain white wall, facing a window for soft light.
 2. Have someone take the photo from about 4 feet away, at your eye level.
-3. Upload it to our [passport photo editor](/tool/passport-photo-editor) and choose **Schengen visa**. It crops the photo to 35 × 45 mm and checks your face size and background.
+3. Upload it to our [Schengen visa photo maker](/tool/schengen-visa-photo-size) (or the general [passport photo editor](/tool/passport-photo-editor)) and choose **Schengen visa**. It crops the photo to 35 × 45 mm and checks your face size and background.
 4. Run the result through our [photo checker](/checker/test-passport-photo) if you want a second look.
 5. Print it on a 4 × 6 inch sheet at any photo counter.
 
@@ -253,4 +255,4 @@ Before you submit, confirm each point:
 - Print is on photo paper, undamaged, and not a scan.
 - You have the number of photos your consulate's checklist asks for.
 
-Requirements can change, and individual consulates sometimes add their own rules. Always compare your photo against the current checklist from the consulate or application center that handles your appointment.
+Our [content methodology](/content-methodology) and [editorial policy](/editorial-policy) explain how we check and update guides. Requirements can change, and individual consulates sometimes add their own rules. Always compare your photo against the current checklist from the consulate or application center that handles your appointment.

@@ -39,7 +39,7 @@ faq:
   - question: "How do I test passport photo rules online?"
     answer: "Pick your country, upload the photo you plan to submit, and read the results. Each rule shows as a pass, a warning or a fail. If a check fails, fix the problem and test the photo again."
   - question: "Is this passport photo checker free?"
-    answer: "Yes. You can check your photo for free. You only upload your photo if you press the button to fix it, which sends it to the [passport photo editor](/tool/passport-photo-editor)."
+    answer: "Yes. You can check your photo for free. You only upload your photo if you press the button to fix it, which sends it to the [passport photo editor](/tool/passport-photo-editor). Previewing the fixed photo there is free, but downloading it is a paid one-time purchase."
   - question: "Is my photo uploaded when I check it?"
     answer: "No. The check runs in your browser using on-device face detection, so your photo stays on your device. The first check downloads the detection models (about 16 MB), but your photo isn't sent with them. Your photo is only uploaded if you press the button to fix it, which sends it to the [passport photo editor](/tool/passport-photo-editor)."
   - question: "Is my passport photo acceptable if it passes every check?"

@@ -73,7 +73,7 @@ export function renderOgImage({ eyebrow, title }: { eyebrow: string; title: stri
             {title}
           </div>
         </div>
-        <div style={{ fontSize: 26, color: ogTheme.muted }}>Free tools · Plain-English guides · Official sources cited</div>
+        <div style={{ fontSize: 26, color: ogTheme.muted }}>Free preview · Plain-English guides · Official sources cited</div>
       </div>
     ),
     OG_SIZE,

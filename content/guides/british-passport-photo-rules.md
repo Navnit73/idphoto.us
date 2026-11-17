@@ -1,5 +1,5 @@
 ---
-title: "British Passport Photo Rules, Size and Requirements"
+title: "British Passport Photo Rules and Size"
 heading: "British passport photo rules: size, background and requirements"
 description: "British passport photo rules from GOV.UK: 35 × 45 mm print, 29–34 mm head, 600 × 750 px digital file, light background, and what U.S. applicants should know."
 slug: british-passport-photo-rules
@@ -9,7 +9,8 @@ breadcrumbLabel: "British passport photo rules"
 summary: "Every GOV.UK rule for a British passport photo, in inches, mm and pixels."
 icon: globe
 publishedAt: 2026-11-09
-updatedAt: 2026-11-09
+updatedAt: 2026-11-17
+author: navnit-rai
 keywords:
   - british passport photo rules
   - british passport photo specifications
@@ -143,6 +144,10 @@ Do not reuse a 2 × 2 inch photo. The [2x2 photo maker](/tool/2x2-photo-maker) s
 - **Shadows or glare.** They hide your face and eyes.
 - **An old photo.** It must be from the last month.
 - **Editing or filters.** Software changes lead to rejection.
+
+## How we wrote this guide
+
+These rules come from the GOV.UK pages listed in the sources below. Our [content methodology](/content-methodology) and [editorial policy](/editorial-policy) explain how we check and update guides.
 
 ## Applying From the United States
 

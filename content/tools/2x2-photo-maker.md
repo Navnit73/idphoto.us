@@ -1,7 +1,7 @@
 ---
-title: "2x2 Photo Maker: Create a 2x2 Inch Photo Online Free"
+title: "2x2 Photo Maker: Make a 2x2 Inch Photo Online"
 heading: "2x2 Photo Maker: Make a 2 Inch by 2 Inch Photo Online"
-description: "Turn any picture into a 2x2 inch (51x51 mm) photo for passports, visas, green cards and IDs. Free preview, instant crop and print-ready download."
+description: "Turn any picture into a 2x2 inch (51x51 mm) photo for passports, visas, green cards and IDs. Free preview, instant crop, then a print-ready download."
 slug: 2x2-photo-maker
 category: tool
 template: tool
@@ -18,11 +18,11 @@ heroImage:
   height: 887
   alt: "Two example U.S. passport photos, a man and a woman, each measured at 2 × 2 inches (600 × 600 pixels) with the head centered."
 publishedAt: 2026-10-24
-updatedAt: 2026-10-24
+updatedAt: 2026-11-17
 keywords:
   - 2x2 photo
   - 2x2 passport photo
-  - 2x2 passport photo online free
+  - 2x2 passport photo online
   - 2x2 picture size
   - 2x2 picture
   - 2x2 picture maker
@@ -51,7 +51,7 @@ faq:
   - question: "Is a 2x2 photo the same as a passport photo?"
     answer: "For a U.S. passport, yes: the Department of State requires a 2 × 2 inch photo. Many other countries use a different size, such as 35 × 45 mm, so a 2x2 photo isn't a universal passport photo. See [documents that use a different photo size](#documents-that-use-a-different-photo-size)."
   - question: "Can I make a 2x2 passport photo online for free?"
-    answer: "Yes. The 2x2 photo maker on this page is free and needs no account. It crops and sizes your photo; it can't fix a photo that breaks the rules, such as one with shadows or glasses, so start with a good original."
+    answer: "You can upload your picture and preview the 2x2 result for free, with no account. Downloading the finished photo is a one-time paid download (see our [refund policy](/refund-policy)). The maker crops and sizes your photo; it can't fix a photo that breaks the rules, such as one with shadows or glasses, so start with a good original."
   - question: "How many pixels is a 2x2 photo?"
     answer: "600 × 600 pixels at 300 DPI. For digital U.S. visa photos, the Department of State accepts square images from 600 × 600 up to 1200 × 1200 pixels."
   - question: "How big should my head be in a 2x2 photo?"

@@ -12,7 +12,7 @@ import type { PageSummary } from "@/lib/content/loader";
 
 import type { TemplateProps } from "./types";
 
-const TOOL_POINTS = ["Free to use", "No account needed", "60+ countries"];
+const TOOL_POINTS = ["Free preview", "No account needed", "60+ countries"];
 
 const arrow = <ArrowRightIcon className="size-4 transition-transform group-hover:translate-x-0.5" />;
 
@@ -47,7 +47,7 @@ function ToolHub({ page, crumbs, categoryPages }: TemplateProps) {
         <Container className="flex flex-col gap-8 py-12 sm:py-16 md:py-20">
           <Breadcrumbs crumbs={crumbs} />
           <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
-            <Eyebrow>Free tools</Eyebrow>
+            <Eyebrow>Photo tools</Eyebrow>
             <h1 className="mt-4 font-display text-3xl font-semibold tracking-tight text-balance sm:text-4xl md:text-5xl">
               {page.heading}
             </h1>

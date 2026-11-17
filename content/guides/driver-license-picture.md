@@ -1,7 +1,7 @@
 ---
-title: "Driver License Picture: DMV Photo Rules, Tips & Retakes"
+title: "Driver License Picture: DMV Photo Rules & Tips"
 heading: "Driver License Picture: DMV Photo Requirements and Tips"
-description: "Your driver license picture is taken at the DMV. Learn the DMV photo requirements, what to wear, glasses and smile rules, and how to ask for a retake."
+description: "DMV photo requirements, what to wear, glasses and smile rules, and how to ask for a retake. Sourced from Pennsylvania guidance; check your state."
 slug: driver-license-picture
 category: guide
 template: guide
@@ -10,7 +10,8 @@ summary: "DMV photo requirements, what to wear, glasses and smile rules, and ret
 icon: id-card
 order: 5
 publishedAt: 2026-11-07
-updatedAt: 2026-11-07
+updatedAt: 2026-11-17
+author: navnit-rai
 keywords:
   - driver license picture
   - dmv photo
@@ -31,7 +32,7 @@ sources:
   - title: "Driver's License, Learner's Permit, & Photo IDs Frequently Asked Questions"
     url: "https://www.pa.gov/agencies/dmv/faqs/driver-licensing-faqs/dl-lp-id-faqs"
     publisher: "Pennsylvania Department of Transportation (PennDOT)"
-faqTitle: "FAQ: DMV Photo Questions Answered"
+faqTitle: "FAQ: DMV photo questions answered"
 faq:
   - question: "Where can I get my driver license picture taken?"
     answer: "At your state's DMV, driver license center or photo license center. In most states, DMV staff or an automated station takes the photo when you apply or renew. Pharmacies, print shops and self-taken photos don't work for a standard in-person license."
@@ -57,7 +58,7 @@ faq:
 
 Your driver license picture is taken at the DMV, on the day you apply or renew. In most states, you cannot upload your own photo, so a little preparation goes a long way. This guide explains the DMV photo requirements, what to wear, whether you can smile or keep your glasses on, and what to do if you want a retake.
 
-Rules change by state, so check your DMV's official page before you go. Where this guide cannot give one rule for every state, it tells you the safest choice.
+Rules change by state, so check your DMV's official page before you go. **What this guide is based on:** the only state agency we cite is Pennsylvania's PennDOT, so the Pennsylvania details are sourced and the rest is general guidance that applies in most states. Where one rule can't cover every state, we tell you the safest choice. Our [content methodology](/content-methodology) and [editorial policy](/editorial-policy) explain how we handle sourcing.
 
 ## DMV Photo Rules at a Glance
 
@@ -129,13 +130,13 @@ DMVs generally do not allow hats, caps or headbands. Religious and medical head 
 
 Your license lists your eye color. Remove colored or cosmetic lenses that change your eye color so the photo matches your card.
 
-## DMV Photo Rules by State
+## How DMV Photo Rules Vary by State
 
-Federal law sets the baseline for secure IDs, and each state fills in the details. The two questions that vary most are smiles and glasses.
+Federal law sets the baseline for secure IDs, and each state fills in the details. We have not compiled a state-by-state table, because we only cite one state's official pages. The two questions that vary most are smiles and glasses, so check your own state's DMV page for both.
 
 ### Smiling in Your DMV Photo
 
-Most DMVs prefer a neutral expression or a slight, closed-mouth smile because facial recognition software compares the shape of your mouth and cheeks. Some states are more relaxed. Colorado, for example, announced that residents can smile for license photos. Other states ask you to keep a neutral face.
+Most DMVs prefer a neutral expression or a slight, closed-mouth smile because facial recognition software compares the shape of your mouth and cheeks. Some states are more relaxed than others, so follow your state's instructions and the clerk at the camera.
 
 **Safest choice:** Relax your face and keep your lips together, with a hint of a smile in your eyes.
 
@@ -204,24 +205,16 @@ Many offices allow one more attempt if you ask right away, especially if you bli
 
 Once the DMV issues your card, you generally cannot swap the photo for free. You usually need to apply for a replacement card and pay the fee, and your office takes a new photo as part of that process. A bad driver license picture is something you may carry for years, so take the review step seriously before you walk away.
 
-## DMV Photo Center Near Me: Hours, Appointments and Wait Times
+## How to Find Your DMV Photo Office and Hours
 
-Searches like "DMV photo center near me" and "DMV photo ID hours" lead to the same place: your state's official DMV location finder. Use it instead of third-party listings, because hours and services change.
-
-### How to Find a DMV Photo Center
+Your state's official DMV location finder is the best place to check hours and services, because they change. Third-party listings are often out of date.
 
 1. Visit your state DMV or licensing agency website.
 2. Open the location or office finder.
 3. Check whether the office takes photos, since some locations only handle exams or registrations.
 4. Confirm the hours, and book an appointment if your state offers them.
 
-### DMV Photo ID Hours and Busy Times
-
-Hours differ by state and by branch. Many offices close earlier on certain days or run reduced hours on some weekdays. Pennsylvania notes that demand for photo services peaks at the start and end of each month, so wait times run shorter on other days. Plan your visit mid-month if your schedule allows.
-
-#### Photo License Centers in Pennsylvania
-
-Pennsylvanians often search for specific photo centers, such as Meadville, Mercer, Schuylkill Haven, Belle Vernon and Dunmore. Hours and services change, so open PennDOT's location finder for each office before you drive. Bring your camera card if you are renewing, because renewal photo services require it.
+Hours differ by state and by branch. Pennsylvania notes that demand for photo services peaks at the start and end of each month, so wait times run shorter on other days; plan a mid-month visit if your schedule allows. If you are renewing in Pennsylvania, bring your camera card to the Photo License Center, because renewal photo services require it.
 
 ## Special Situations and Edge Cases
 
@@ -284,3 +277,6 @@ Before you leave home, confirm that you have:
 - [ ] Your appointment confirmation, if you booked one
 
 A great driver license picture comes down to three things: follow your state's rules, wear a contrasting solid color, and keep your expression relaxed and natural. Check your DMV's official page, practice your look at home, and ask for a retake at the counter if the first shot misses.
+
+
+Need a photo for a passport instead? A DMV photo can't be used for one: see our [U.S. passport photo requirements](/guide/passport-photo-requirements) and the [2x2 photo maker](/tool/2x2-photo-maker).

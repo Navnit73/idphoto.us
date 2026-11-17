@@ -1,5 +1,5 @@
 ---
-title: "Convert Photo to Passport Size Online (Crop & Resize Free)"
+title: "Convert Photo to Passport Size Online"
 heading: "Convert Any Photo to Passport Size: Crop, Resize and Fix the Background"
 description: "Already have a photo? Convert it to passport size in seconds. Auto-crop, resize and replace the background to meet US and international specs."
 slug: passport-photo-converter
@@ -17,7 +17,7 @@ heroImage:
   height: 887
   alt: "Two example U.S. passport photos, a man and a woman, each measured at 2 × 2 inches (600 × 600 pixels) with the head centered."
 publishedAt: 2026-10-24
-updatedAt: 2026-10-24
+updatedAt: 2026-11-17
 keywords:
   - convert photo to passport size
   - passport photo crop
@@ -53,7 +53,7 @@ faq:
   - question: "Is my photo uploaded?"
     answer: "Yes. Face detection and background checks run on a server, so the photo is sent over an encrypted connection. Your result page expires after 7 days. The [privacy policy](/privacy-policy) explains what is stored."
   - question: "Is the converter free?"
-    answer: "Yes. Converting and downloading are free, with no account needed."
+    answer: "Uploading a photo and previewing the converted result is free, with no account needed. Downloading the finished photo is a one-time paid download, and the [refund policy](/refund-policy) explains when you can get your money back."
 ---
 
 Already have a photo you like? Upload it above and the converter turns it into a passport photo. It finds your face, crops the picture so your head is the right size, checks the background and resizes the result to your country's official dimensions. You don't need to retake anything if the original photo is good enough.
@@ -128,3 +128,5 @@ You can crop a passport photo yourself in any photo editor. You'll need to:
 4. Export at the right pixel size, and check the background by eye.
 
 Manual cropping gives you full control and keeps the photo on your device. The converter does the measuring for you: it detects your face, crops to the head-height rules for your country, checks the background and reports the measurements. Either way, the original photo has to follow the [photo requirements](/guide/passport-photo-requirements), and the agency that receives your application makes the final decision.
+
+If you would rather start from the rules, read the [U.S. passport photo requirements](/guide/passport-photo-requirements), or test a photo first with the [passport photo checker](/checker/test-passport-photo). The [passport photo editor](/tool/passport-photo-editor) does the same job for 60+ countries.

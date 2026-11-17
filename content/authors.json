@@ -12,5 +12,12 @@
     "bio": "The team behind PixPassport.com, the photo processing service that powers the idphoto.us passport photo editor. They review our passport photo guides for accuracy.",
     "url": "https://www.pixpassport.com",
     "type": "Organization"
+  },
+  "navnit-rai": {
+    "name": "Navnit Rai",
+    "role": "Founder, research and writing",
+    "bio": "Navnit Rai founded and runs idphoto.us. He researches official passport, visa and ID photo requirements from primary government sources, writes the guides and builds the tools. He is not a government employee and holds no professional photography credentials.",
+    "url": "/about",
+    "type": "Person"
   }
 }

@@ -1,14 +1,14 @@
 ---
-title: "Free Passport Photo Tools for 60+ Countries"
+title: "Passport Photo Tools for 60+ Countries"
 heading: "Passport and ID photo tools"
-description: "Free online tools that crop and size passport photos for the U.S. and 60+ countries and check the background. No sign-up needed. Pick a tool to start."
+description: "Online tools that crop and size passport photos for the U.S. and 60+ countries and check the background. Free preview, no sign-up needed. Pick a tool."
 slug: ""
 category: tool
 template: hub
 breadcrumbLabel: "Tools"
-updatedAt: 2026-10-23
+updatedAt: 2026-11-17
 keywords:
-  - free passport photo tools
+  - passport photo tools
   - id photo tools
   - passport photo tools online
 relatedPages: []
@@ -17,6 +17,17 @@ relatedPages: []
 ## How our tools handle your photos
 
 Photos of your face are personal data, so we tell you plainly where each one goes. The passport photo editor uploads your photo, because face detection and background checks run on a server. Before uploading, your browser re-saves the photo, which removes hidden metadata such as GPS location. Your result page expires after 7 days.
+
+## Which tool do you need?
+
+- [Passport photo editor](/tool/passport-photo-editor): crop and size a photo for 60+ countries.
+- [2x2 photo maker](/tool/2x2-photo-maker): a 2 × 2 inch photo for U.S. passports, visas and IDs.
+- [Passport photo converter](/tool/passport-photo-converter): turn a picture you already have into a passport-size photo.
+- [US visa photo editor](/tool/us-visa-photo): a square JPEG for the DS-160 upload.
+- [Print passport photos](/tool/print-passport-photos): a 4 × 6 layout and printing options.
+- Country tools: [Schengen](/tool/schengen-visa-photo-size), [British](/tool/british-passport-photo), [India](/tool/india-passport-size-photo), [Australia](/tool/australia-passport-photo) and [New Zealand](/tool/new-zealand-passport-photo).
+
+Uploading and previewing is free. You pay a one-time fee only to download the finished photo; see the [refund policy](/refund-policy). To test a photo without fixing it, use the [passport photo checker](/checker/test-passport-photo).
 
 ## Before you start
 

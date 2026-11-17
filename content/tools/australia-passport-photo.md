@@ -1,6 +1,6 @@
 ---
-title: "Australia Passport Photo Maker: 35x45 mm Size Online"
-heading: "Australia Passport Photo: Size, Rules and Free Maker"
+title: "Australia Passport Photo Maker (35x45 mm)"
+heading: "Australia Passport Photo: Size, Rules and Online Maker"
 description: "Make an Australia passport photo at the correct 35x45 mm size. See the official size, head height, background and print rules for U.S. applicants."
 slug: australia-passport-photo
 category: tool
@@ -18,7 +18,7 @@ heroImage:
   height: 887
   alt: "Two example Australian passport photos, each 35 × 45 mm with the head centered on a plain light background."
 publishedAt: 2026-11-02
-updatedAt: 2026-11-02
+updatedAt: 2026-11-17
 keywords:
   - australia passport photo
   
@@ -181,3 +181,5 @@ Toys and visible parents lead to rejection. A plain white sheet under the baby, 
 Visitors who travel to Australia on a U.S. passport do not need an Australian passport photo. Visa applications through the Department of Home Affairs have their own photo instructions, which vary by visa type. The applicant should follow the instructions shown in the application itself.
 
 Our [passport photo requirements](/guide/passport-photo-requirements) checklist covers the general rules that apply to most countries.
+
+For other countries use the [passport photo editor](/tool/passport-photo-editor), and test a photo with the [passport photo checker](/checker/test-passport-photo) before you apply.

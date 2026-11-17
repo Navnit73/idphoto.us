@@ -11,7 +11,7 @@ slug: data-security
 category: legal
 template: info
 breadcrumbLabel: "Data security"
-updatedAt: 2026-10-23
+updatedAt: 2026-11-17
 relatedPages:
   - /privacy-policy
   - /terms
@@ -22,7 +22,7 @@ faq:
   - question: "How long do you keep my photo?"
     answer: "Your result page, and our record of it, is deleted automatically 7 days after you make your photo. After that, the result page stops working and we can't recover it, so download your photo promptly."
   - question: "Do you store my card details?"
-    answer: "No. Our tools are currently free, so we don't collect card details at all. When paid downloads launch, you'll enter card details with our payment provider, not on our servers, and we'll receive only a confirmation that the payment succeeded."
+    answer: "No. When you pay to download your photo, you enter card details with our payment provider, not on our servers. We receive only a confirmation that the payment succeeded and the details needed to record your purchase and send your invoice."
   - question: "Can your staff see my photo?"
     answer: "Processing is automated. We don't look at your photo unless you ask us to in a support request, for example to check why a photo didn't process correctly."
   - question: "Will my photo be used to train AI or facial recognition?"
@@ -49,7 +49,7 @@ We keep your photo only as long as you need it to view and download the result.
 
 ## Payment security
 
-Our tools are currently free, so we don't take payments or collect card details. When paid downloads launch, you'll enter card details with our payment provider, not on idphoto.us. Your card number, security code, and bank details never reach our servers, and we don't store them. We receive only what we need to confirm and record your purchase.
+Uploading and previewing your photo is free, but downloading it is a paid purchase. When you pay, you enter card details with our payment provider, not on idphoto.us. Your card number, security code, and bank details never reach our servers, and we don't store them. We receive only what we need to confirm and record your purchase, such as the amount, currency, and your email address for the invoice.
 
 ## Your data is not for sale
 

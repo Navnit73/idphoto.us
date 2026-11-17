@@ -28,8 +28,9 @@ export function organizationJsonLd(): Organization {
     "@id": ORGANIZATION_ID,
     name: siteConfig.name,
     url: siteConfig.url,
-    logo: absoluteUrl("/logo.png"),
+    logo: { "@type": "ImageObject", url: absoluteUrl("/logo.png") },
     email: siteConfig.contactEmail,
+    contactPoint: { "@type": "ContactPoint", contactType: "customer support", email: siteConfig.contactEmail, availableLanguage: "English" },
     founder: { "@type": "Person", name: siteConfig.owner },
   };
 }
@@ -63,7 +64,8 @@ export function homePageJsonLd(input: { title: string; description: string; upda
 
 /** FAQ markup for a page. The questions and answers must match the visible FAQ text exactly. */
 export function faqPageJsonLd(path: string, faq: { question: string; answer: string }[]): FAQPage {
-  return { "@type": "FAQPage", "@id": `${absoluteUrl(path)}#faq`, mainEntity: faqEntities(faq) };
+  const base = path === "/" ? `${absoluteUrl(path)}/` : absoluteUrl(path);
+  return { "@type": "FAQPage", "@id": `${base}#faq`, mainEntity: faqEntities(faq) };
 }
 
 export function breadcrumbJsonLd(crumbs: Crumb[]): BreadcrumbList {
@@ -123,16 +125,27 @@ export function pageJsonLd(input: PageInput): Thing[] {
   };
 
   if (input.type === "Article") {
+    // `reviewedBy` and `lastReviewed` belong to WebPage, so the article gets a WebPage node of its own to carry them.
+    graph.push({
+      "@type": "WebPage",
+      "@id": `${url}#page`,
+      url,
+      name: input.title,
+      description: input.description,
+      dateModified: input.updatedAt,
+      inLanguage: "en-US",
+      isPartOf: { "@id": WEBSITE_ID },
+      mainEntity: { "@id": `${url}#article` },
+      ...(input.reviewer && { reviewedBy: authorJsonLd(input.reviewer), lastReviewed: input.updatedAt }),
+    } satisfies WebPage);
     graph.push({
       ...common,
+      "@id": `${url}#article`,
       "@type": "Article",
       headline: input.title,
       author: authorJsonLd(input.author),
       publisher: { "@id": ORGANIZATION_ID },
-      // `reviewedBy` and `lastReviewed` belong to WebPage, not Article, so they go on the page the article lives on.
-      mainEntityOfPage: input.reviewer
-        ? { "@type": "WebPage", "@id": url, reviewedBy: authorJsonLd(input.reviewer), lastReviewed: input.updatedAt }
-        : url,
+      mainEntityOfPage: { "@id": `${url}#page` },
     } satisfies Article);
   } else if (input.type === "WebApplication") {
     graph.push({
@@ -141,8 +154,15 @@ export function pageJsonLd(input: PageInput): Thing[] {
       applicationCategory: "MultimediaApplication",
       operatingSystem: "Any (runs in the browser)",
       browserRequirements: "Requires JavaScript and a modern browser",
-      isAccessibleForFree: true,
-      offers: { "@type": "Offer", price: 0, priceCurrency: "USD" },
+      // Uploading, previewing and checking are free; the full-resolution download is a paid one-time purchase.
+      isAccessibleForFree: false,
+      offers: {
+        "@type": "Offer",
+        price: "7.99",
+        priceCurrency: "USD",
+        availability: "https://schema.org/InStock",
+        description: "Free upload and preview. One-time fee for the full-resolution download.",
+      },
       publisher: { "@id": ORGANIZATION_ID },
     } satisfies WebApplication);
   } else if (input.type === "FAQPage") {

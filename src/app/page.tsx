@@ -38,9 +38,9 @@ export const ensureStatic = "navigation";
  * It does not target requirements, size, 2x2, crop/converter, checker, visa or
  * near-me terms. Each of those gets one sentence and a link to its own page.
  */
-const title = "Passport Photo Online: Free Passport Photo Maker";
+const title = "Passport Photo Online: Maker with Free Preview";
 const description =
-  "Make a passport photo online for free. Our passport photo maker creates a U.S. passport picture or a photo for 60+ countries. Download, print, or upload.";
+  "Make a passport photo online: upload and preview it free, then pay once to download. Built for U.S. passports and 60+ countries. No account needed.";
 
 export const metadata = buildMetadata({
   title,
@@ -51,7 +51,7 @@ export const metadata = buildMetadata({
   keywords: [
     "passport photo online",
     "passport photo maker",
-    "free passport photo",
+    "passport photo free preview",
     "us passport picture",
     "make passport photo at home",
     "id photo editor online",
@@ -79,7 +79,7 @@ const heroHighlights = ["No account needed", "Retake as often as you like", "Pri
 
 const heroStats = [
   { value: "60+", label: "Countries supported" },
-  { value: "$0", label: "Free, no account" },
+  { value: "Free", label: "Preview, no account" },
   { value: "< 5 min", label: "Time to download" },
   { value: `${PHOTO_RESULT_TTL_DAYS} days`, label: "Then your result expires" },
 ];
@@ -184,7 +184,7 @@ const faqs = [
   {
     question: "Is this passport photo maker free?",
     answer:
-      "Yes. You can make, edit, and download your passport photo for free, with no account. If you print at a store or lab, that business sets its own price.",
+      "Partly. Uploading, previewing and checking your photo is free, with no account. Downloading the full-resolution file is a one-time paid purchase (from $7.99 in U.S. dollars, priced in your local currency in some countries), with a refund if a government agency rejects the photo. If you print at a store or lab, that business sets its own price.",
   },
   {
     question: "Can I make my own U.S. passport photo online?",
@@ -242,8 +242,8 @@ export default async function Home() {
                 href={links.tool}
                 className="group inline-flex items-center gap-2 rounded-lg border bg-background py-1.5 pr-3 pl-1.5 text-xs font-medium text-muted-foreground transition-colors hover:border-border-strong"
               >
-                <span className="rounded-md bg-primary px-2 py-0.5 font-semibold text-primary-foreground">Free</span>
-                Passport photos for 60+ countries
+                <span className="rounded-md bg-primary px-2 py-0.5 font-semibold text-primary-foreground">Free preview</span>
+                Photos for 60+ countries
                 <ArrowRightIcon className="size-3.5 transition-transform group-hover:translate-x-0.5" />
               </a>
 
@@ -251,13 +251,13 @@ export default async function Home() {
                 Passport photos, <span className="text-primary">done right</span>, in minutes.
               </h1>
               <p className="mx-auto mt-5 max-w-xl text-base text-pretty text-muted-foreground sm:mt-6 sm:text-lg lg:mx-0">
-                Make a U.S. passport photo online, or choose from 60+ other countries. This free ID photo editor crops,
-                resizes, and checks your photo, then lets you download, print, or submit it online.
+                Make a U.S. passport photo online, or choose from 60+ other countries. Upload a photo and the editor crops,
+                resizes, and checks it. Preview the result free, then pay once to download, print, or submit it online.
               </p>
 
               <div id="hero-actions" className="mt-8 flex flex-col justify-center gap-3 sm:mt-9 sm:flex-row lg:justify-start">
                 <a href={links.tool} className={buttonVariants({ size: "lg" })}>
-                  Make my passport photo
+                  Make my photo
                   {arrow}
                 </a>
                 <Link href={links.requirements} className={buttonVariants({ variant: "outline", size: "lg" })}>
@@ -319,7 +319,7 @@ export default async function Home() {
       {/* Countries strip */}
       <section aria-label="Popular countries" className="bg-surface">
         <Container className="py-12">
-          <p className="text-center text-sm font-medium text-muted-foreground">The right passport photo for</p>
+          <p className="text-center text-sm font-medium text-muted-foreground">The right photo for</p>
           <ul className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
             {countryTiles.map((country) => (
               <li
@@ -351,7 +351,7 @@ export default async function Home() {
       <section aria-labelledby="how-heading" className="border-y bg-surface py-section">
         <Container>
           <SectionHeading id="how-heading" eyebrow="How it works" title="Three steps to a finished photo">
-            You need a phone, a plain wall, and good light. Our passport photo maker handles the rest.
+            You need a phone, a plain wall, and good light. Our maker handles the rest.
           </SectionHeading>
 
           <ol className="relative mt-10 grid gap-8 sm:mt-16 md:grid-cols-3">
@@ -389,8 +389,8 @@ export default async function Home() {
       {/* Features */}
       <section aria-labelledby="features-heading" className="py-section">
         <Container>
-          <SectionHeading id="features-heading" eyebrow="Features" title="Built for every passport photo need">
-            People across the U.S. use our passport photo maker and photo ID editor for every kind of application. People
+          <SectionHeading id="features-heading" eyebrow="Features" title="Built for every photo need">
+            People across the U.S. use our maker and photo ID editor for every kind of application. People
             in 60+ countries use it too.
           </SectionHeading>
 
@@ -503,7 +503,7 @@ export default async function Home() {
       {/* Tools and guides */}
       <section aria-labelledby="resources-heading" className="py-section">
         <Container className="flex flex-col gap-10 sm:gap-16">
-          <SectionHeading id="resources-heading" eyebrow="Resources" title="Free passport photo tools and guides">
+          <SectionHeading id="resources-heading" eyebrow="Resources" title="Passport photo tools and guides">
             Plain-English explanations of official rules, with links to the agency sources we used.
           </SectionHeading>
 
@@ -606,11 +606,11 @@ export default async function Home() {
                 Make your passport photo today
               </h2>
               <p className="mx-auto mt-4 max-w-xl text-base opacity-85">
-                Skip the photo booth. Make a passport photo from home in a few minutes — free, with no account.
+                Skip the photo booth. Make your photo from home in a few minutes. Preview it free, with no account, and pay only to download.
               </p>
               <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
                 <a href={links.tool} className={buttonVariants({ variant: "inverse", size: "lg" })}>
-                  Make my passport photo
+                  Make my photo
                   {arrow}
                 </a>
                 <Link href={links.requirements} className={buttonVariants({ variant: "inverse-outline", size: "lg" })}>

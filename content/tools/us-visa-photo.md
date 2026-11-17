@@ -1,7 +1,7 @@
 ---
-title: "US Visa Photo Editor Online Free: Crop & Check for DS-160"
+title: "US Visa Photo Editor for the DS-160"
 heading: "US Visa Photo Editor: Crop, Resize and Check Your DS-160 Photo"
-description: "Crop, resize and check your US visa photo for the DS-160 upload. Square JPEG output sized to Department of State specs, with a free compliance check."
+description: "Crop, resize and check your US visa photo for the DS-160 upload. Square JPEG output sized to Department of State specs, with a compliance check before you download."
 slug: us-visa-photo
 category: tool
 template: tool
@@ -18,10 +18,10 @@ heroImage:
   height: 887
   alt: "Two example U.S. passport photos, a man and a woman, each measured at 2 × 2 inches (600 × 600 pixels) with the head centered."
 publishedAt: 2026-10-24
-updatedAt: 2026-10-24
+updatedAt: 2026-11-17
 keywords:
-  - us visa photo editor online free
-  - us visa photo size online free
+  - us visa photo editor online
+  - us visa photo size online
   - photo cropping tool us visa
   - american visa photo checker
   - photo check us visa
@@ -42,7 +42,7 @@ sources:
   - title: "Photo Frequently Asked Questions (U.S. visas)"
     url: "https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/photos/frequently-asked-questions.html"
     publisher: "U.S. Department of State"
-faqTitle: "FAQ: US Visa Photo Editor Online Free Questions Answered"
+faqTitle: "FAQ: US visa photo editor questions answered"
 faq:
   - question: "What size is a US visa photo for the DS-160?"
     answer: "A square JPEG between 600 × 600 and 1200 × 1200 pixels, no larger than 240 kB. This editor produces a 600 × 600 pixel JPEG, which is also the size you need to print a 2 × 2 inch photo."
@@ -55,7 +55,7 @@ faq:
   - question: "Can I use a photo I already have?"
     answer: "Yes, if it was taken in the last six months, shows how you look now and wasn't edited with filters. The editor crops and resizes it to visa size. It can't fix shadows, a tilted head or a blurry photo."
   - question: "Is the visa photo editor free?"
-    answer: "Yes. Cropping, checking and downloading are free, with no account needed."
+    answer: "Uploading, cropping and previewing your photo is free, with no account needed. Downloading the finished photo is a one-time paid download. See the [refund policy](/refund-policy) for what happens if an agency rejects it."
   - question: "Is my photo uploaded?"
     answer: "Yes. Face detection and background checks run on a server, so the photo is sent over an encrypted connection. Your result page expires after 7 days. The [privacy policy](/privacy-policy) explains what is stored."
 ---
@@ -134,3 +134,5 @@ If the photo still won't upload, you can usually continue with the application. 
 Some applicants need a printed photo: immigrant visa applicants bring two identical photos to the interview, and anyone whose DS-160 photo upload failed brings one. Some embassies also ask for a photo even when the upload worked, so read your interview instructions.
 
 Printed visa photos must be **2 × 2 inches (51 × 51 mm)**, in color, on matte or glossy photo-quality paper. The 600 × 600 pixel file from this editor prints at exactly 2 × 2 inches at 300 DPI; print at actual size with no scaling. See [how to print passport photos](/tool/print-passport-photos) for a 4 × 6 inch layout and printer settings.
+
+Related: the [passport photo editor](/tool/passport-photo-editor) covers 60+ countries, the [passport photo checker](/checker/test-passport-photo) tests a photo against the rules, and our [U.S. passport photo requirements](/guide/passport-photo-requirements) explain the matching passport rules.

@@ -1,5 +1,5 @@
 ---
-title: "British Passport Photo Maker: UK Size Online (35x45 mm)"
+title: "British Passport Photo Maker (UK, 35x45 mm)"
 heading: "British passport photo maker: UK size, online"
 description: "Make a British passport photo online at the UK size, 35 × 45 mm (1.38 × 1.77 in), with a digital file that meets the GOV.UK 600 × 750 px minimum."
 slug: british-passport-photo
@@ -13,7 +13,7 @@ icon: camera
 order: 8
 ctaLabel: "Make my British photo"
 publishedAt: 2026-11-09
-updatedAt: 2026-11-09
+updatedAt: 2026-11-17
 keywords:
   - british passport photo
   - british passport photo size in inches
@@ -33,6 +33,7 @@ relatedPages:
   - /guide/passport-photo-requirements
   - /tool/passport-photo-editor
   - /tool/2x2-photo-maker
+  - /checker/test-passport-photo
 sources:
   - title: "Photos for passports: digital photos"
     url: "https://www.gov.uk/photos-for-passports"
@@ -54,7 +55,7 @@ faq:
     answer: "No. HM Passport Office makes the final decision. The maker crops and sizes your photo, but it cannot fix shadows, glare, a smile or a tilted head."
 ---
 
-A British passport photo is 35 × 45 mm in print, or a digital file of at least 600 × 750 pixels, taken against a plain light background. Many U.S. photo counters default to the 2 × 2 inch American square, which does not fit. Upload a picture above, and the maker crops it to the UK proportions with the head at the right height.
+A British passport photo is 35 × 45 mm in print, or a digital file of at least 600 × 750 pixels, taken against a plain light background. Many U.S. photo counters default to the 2 × 2 inch American square, which does not fit. Upload a picture above, and the maker crops it to the UK proportions with the head at the right height. Uploading and previewing is free; the finished photo is a one-time paid download. This page is the tool; the full rulebook is in our [British passport photo rules](/guide/british-passport-photo-rules) guide.
 
 ## How the British Passport Photo Maker Works
 
@@ -94,7 +95,7 @@ A photo made for one country will not pass for the other. Anyone who needs both 
 - Avoid glasses unless you must wear them, and never wear sunglasses or tinted lenses.
 - Head coverings are allowed only for religious or medical reasons.
 
-The full list, including baby photos and print rules, is in our [British passport photo rules](/guide/british-passport-photo-rules) guide. For other countries, see the [passport photo editor](/tool/passport-photo-editor).
+The full list, including baby photos, print rules and common mistakes, is in the [British passport photo rules guide](/guide/british-passport-photo-rules), which also explains how GOV.UK treats digital and printed photos. For other countries, see the [passport photo editor](/tool/passport-photo-editor).
 
 ## Applying From the United States
 

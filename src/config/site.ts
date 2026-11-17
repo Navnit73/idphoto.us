@@ -5,7 +5,7 @@ export const siteConfig = {
   url: publicEnv.NEXT_PUBLIC_SITE_URL,
   tagline: "Passport & ID photo tools and guides",
   description:
-    "Free tools and plain-English guides for passport and ID photos. Make a passport photo online for the U.S. and 60+ countries, then download, print, or upload it.",
+    "Passport and ID photo tools with a free preview, plus plain-English guides. Make a passport photo online for the U.S. and 60+ countries, then pay once to download it.",
   contactEmail: "hello@idphoto.us",
   /** Reply-to on order emails and shown on invoices. */
   supportEmail: "hello@idphoto.us",

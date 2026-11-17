@@ -2,7 +2,7 @@
 # OWNER REVIEW: have this policy reviewed by a qualified lawyer before launch. Fill in
 # the operator's legal name and postal address, confirm the hosting and database
 # providers named below, and update this page whenever data practices change
-# (e.g. adding analytics, ads, or payments).
+# (e.g. adding analytics or ads). OWNER REVIEW: state how long order and invoice records are kept.
 # OWNER REVIEW (photo editor + email): confirm how long PixPassport and its
 # Cloudinary storage keep uploaded originals and results, and state it under
 # "How long we keep information". Name the email provider (currently Gmail SMTP)
@@ -14,7 +14,7 @@ slug: privacy-policy
 category: legal
 template: legal
 breadcrumbLabel: "Privacy policy"
-updatedAt: 2026-10-23
+updatedAt: 2026-11-17
 showTableOfContents: true
 ---
 
@@ -23,7 +23,7 @@ This policy explains what information idphoto.us ("we", "us") collects when you 
 ## The short version
 
 - **The passport photo editor, also on our home page, does upload your photo**, because it's processed on a server. We tell you this on the tool itself, and your result page expires after 7 days.
-- **We only store what you choose to send us** through the photo editor, the contact form, or the "Was this page helpful?" feedback box.
+- **We only store what you choose to send us** through the photo editor, a purchase, the contact form, or the "Was this page helpful?" feedback box.
 - **We don't sell your information**, and we don't use advertising or analytics cookies.
 
 ## Photos you use with our tools
@@ -33,6 +33,10 @@ This policy explains what information idphoto.us ("we", "us") collects when you 
 The [passport photo editor](/tool/passport-photo-editor), which is also on our home page, uploads your photo so a server can find your face, check the background, and crop the photo to your chosen country's size. Before uploading, your browser re-saves the photo (and shrinks it if it's very large), which removes hidden metadata such as the location where it was taken.
 
 The photo is sent over an encrypted connection to our server and then to our photo processing provider, which stores the original and the finished photo in its image storage so you can view and download the result. We store a record of the result (the image links, the measurements, the country you chose, and a hashed IP address) so your result page works. That record is deleted automatically after 7 days, and the result page stops working at that point.
+
+### Paid downloads
+
+Uploading and previewing a photo is free. If you pay to download it, we also store an order record: your email address, the plan, the amount and currency, your payment and order references, the country your purchase was made from, your browser type, a hashed IP address, and your invoice. We use it to confirm your payment, deliver your photo and invoice by email, handle refund requests, and keep the financial records we need. Your card details go to our payment provider, not to us. We keep order and invoice records for as long as needed for those purposes, which is longer than the 7 days that apply to the photo itself. Download links expire after a short time.
 
 ## Information you send us
 
@@ -73,15 +77,16 @@ We don't use advertising or analytics cookies. If you choose a light or dark the
 We don't sell or rent your information. We share it only with service providers that help us run the site, under their own security and privacy commitments:
 
 - our website hosting provider, which serves pages and processes form requests,
-- our database provider, which stores contact messages, feedback, and photo editor result records,
-- our photo processing provider, which processes and stores photos uploaded to the photo editor, and
-- our email provider, which delivers emails you ask us to send and contact messages sent to our inbox.
+- our database provider, which stores contact messages, feedback, photo editor result records, and order records,
+- our photo processing provider, which processes and stores photos uploaded to the photo editor,
+- our payment provider, which processes your card payment when you buy a download, and
+- our email provider, which delivers your photo and invoice, emails you ask us to send, and contact messages sent to our inbox.
 
 We may also disclose information if required by law, or to protect the rights, safety, or property of our users or others.
 
 ## How long we keep information
 
-We keep contact messages for as long as needed to respond and keep a reasonable record of the conversation, and feedback for as long as it's useful for improving our content. Photo editor result records are deleted automatically after 7 days. Rate-limit records are deleted automatically within about an hour. You can ask us to delete your messages at any time.
+We keep contact messages for as long as needed to respond and keep a reasonable record of the conversation, and feedback for as long as it's useful for improving our content. Photo editor result records are deleted automatically after 7 days. Order and invoice records are kept as described under "Paid downloads" above. Rate-limit records are deleted automatically within about an hour. You can ask us to delete your messages at any time.
 
 ## Your choices and rights
 

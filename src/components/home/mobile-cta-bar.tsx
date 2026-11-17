@@ -32,8 +32,8 @@ export function MobileCtaBar({ href }: { href: string }) {
     >
       <div className="flex items-center justify-between gap-3">
         <div className="min-w-0">
-          <p className="truncate text-sm font-semibold">Free passport photo</p>
-          <p className="truncate text-xs text-muted-foreground">Ready in under 5 minutes</p>
+          <p className="truncate text-sm font-semibold">Passport photo online</p>
+          <p className="truncate text-xs text-muted-foreground">Free preview, ready in minutes</p>
         </div>
         <a href={href} className={buttonVariants({ className: "shrink-0" })}>
           Make photo
