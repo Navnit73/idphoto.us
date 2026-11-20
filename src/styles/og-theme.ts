@@ -9,6 +9,6 @@ export const ogTheme = {
   surface: "#f5f5f7", // --neutral-100
   foreground: "#1d1d1f", // --neutral-900
   muted: "#6e6e73", // --neutral-600
-  primary: "#0066cc", // --blue
+  primary: "#b45309", // --brand
   primaryForeground: "#ffffff", // --neutral-0
 } as const;

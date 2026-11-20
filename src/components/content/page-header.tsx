@@ -22,7 +22,7 @@ type PageHeaderProps = {
   /** Button that jumps to an anchor on the page (tools: the widget). */
   cta?: { label: string; href: `#${string}` };
   /** Image shown to the right of the text on large screens. */
-  image?: { src: string; width: number; height: number; alt: string };
+  image?: { src: string; width: number; height: number; alt: string; credit?: { name: string; url: string } };
   /** Key figures under the intro, like the home page hero's stats. */
   facts?: { value: string; label: string }[];
   /** The home page hero's look: a white (dark: black) band with a larger image, instead of the tinted band. */
@@ -44,13 +44,13 @@ export function PageHeader({ page, crumbs, byline = false, cta, image, facts, ba
       <Eyebrow>{EYEBROW[page.category]}</Eyebrow>
       <h1
         className={cn(
-          "max-w-3xl font-display text-3xl font-semibold tracking-tight text-balance sm:text-4xl",
+          "max-w-4xl font-display text-3xl font-semibold tracking-tight text-balance sm:text-4xl",
           page.frontmatter.template !== "tool" && page.frontmatter.template !== "guide" && "md:text-5xl",
         )}
       >
         {page.heading}
       </h1>
-      <p className="max-w-2xl text-base text-pretty text-muted-foreground sm:text-lg">{page.description}</p>
+      <p className="max-w-3xl text-base text-pretty text-muted-foreground sm:text-lg">{page.description}</p>
       <dl className="flex flex-wrap gap-x-6 gap-y-1 text-sm text-muted-foreground">
         {byline && (
           <div className="flex gap-1.5">
@@ -116,7 +116,7 @@ export function PageHeader({ page, crumbs, byline = false, cta, image, facts, ba
     <div
       className={cn(
         "grid items-center",
-        band ? "gap-10 lg:grid-cols-2 lg:gap-16" : "gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,22rem)] lg:gap-12",
+        band ? "gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,24rem)] lg:gap-16" : "gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,22rem)] lg:gap-12",
       )}
     >
       {intro}
@@ -128,7 +128,7 @@ export function PageHeader({ page, crumbs, byline = false, cta, image, facts, ba
       <figure
         className={cn(
           band
-            ? "dark:rounded-lg dark:bg-photo-backdrop"
+            ? "mx-auto w-full max-w-sm dark:rounded-lg dark:bg-photo-backdrop lg:mx-0 lg:max-w-none"
             : "mx-auto w-full max-w-sm rounded-lg border bg-photo-backdrop p-2 sm:p-3 lg:mx-0 lg:max-w-none",
         )}
       >
@@ -137,13 +137,21 @@ export function PageHeader({ page, crumbs, byline = false, cta, image, facts, ba
           width={image.width}
           height={image.height}
           alt={image.alt}
-          sizes={band ? "(min-width: 80rem) 35rem, (min-width: 64rem) 45vw, 100vw" : "(min-width: 64rem) 22rem, 24rem"}
+          sizes={band ? "(min-width: 64rem) 24rem, 100vw" : "(min-width: 64rem) 22rem, 24rem"}
           preload
           className={cn(
             "h-auto w-full",
             band ? "brightness-[1.03] mix-blend-multiply dark:mix-blend-normal" : "mx-auto max-w-sm rounded-md lg:max-w-none",
           )}
         />
+        {image.credit && (
+          <figcaption className="mt-2 text-center text-xs text-muted-foreground">
+            Image credit:{" "}
+            <a href={image.credit.url} target="_blank" rel="noopener" className="underline underline-offset-2">
+              {image.credit.name}
+            </a>
+          </figcaption>
+        )}
       </figure>
     </div>
   ) : (

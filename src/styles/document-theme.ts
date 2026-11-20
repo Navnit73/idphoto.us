@@ -15,7 +15,7 @@ export const documentTheme = {
   faint: "#86868b", // --neutral-500
   border: "#e8e8ed", // --neutral-200
   borderStrong: "#d2d2d7", // --neutral-300
-  primary: "#0066cc", // --blue
+  primary: "#b45309", // --brand
   primaryForeground: "#ffffff", // --neutral-0
 } as const;
 
@@ -24,6 +24,6 @@ export const pdfTheme = {
   foreground: rgb(0.114, 0.114, 0.122), // --neutral-900
   muted: rgb(0.431, 0.431, 0.451), // --neutral-600
   border: rgb(0.91, 0.91, 0.929), // --neutral-200
-  primary: rgb(0, 0.4, 0.8), // --blue
-  primarySubtle: rgb(0.902, 0.941, 0.98), // --primary-subtle
+  primary: rgb(0.706, 0.325, 0.035), // --brand
+  primarySubtle: rgb(0.976, 0.946, 0.923), // --primary-subtle
 } as const;

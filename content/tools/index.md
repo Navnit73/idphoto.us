@@ -6,7 +6,7 @@ slug: ""
 category: tool
 template: hub
 breadcrumbLabel: "Tools"
-updatedAt: 2026-11-17
+updatedAt: 2026-11-20
 keywords:
   - passport photo tools
   - id photo tools
@@ -22,6 +22,7 @@ Photos of your face are personal data, so we tell you plainly where each one goe
 
 - [Passport photo editor](/tool/passport-photo-editor): crop and size a photo for 60+ countries.
 - [2x2 photo maker](/tool/2x2-photo-maker): a 2 × 2 inch photo for U.S. passports, visas and IDs.
+- [ID photo maker](/tool/id-photo-maker): create a U.S.-style ID photo online, with size and head-height checks.
 - [Passport photo converter](/tool/passport-photo-converter): turn a picture you already have into a passport-size photo.
 - [US visa photo editor](/tool/us-visa-photo): a square JPEG for the DS-160 upload.
 - [Print passport photos](/tool/print-passport-photos): a 4 × 6 layout and printing options.

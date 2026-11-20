@@ -20,10 +20,11 @@
 :root {
   /* ── Primitives: color ─────────────────────────────────────────────── */
 
-  /* Apple palette (see DESIGN.md): one interactive blue, warm-neutral grays. */
-  --blue: #0066cc; /* Action Blue — links and primary buttons on light */
-  --blue-focus: #0071e3; /* hover and focus ring */
-  --blue-on-dark: #2997ff; /* Sky Link Blue — Action Blue disappears on dark */
+  /* Brand amber: the one interactive color (links, primary buttons), with warm-neutral grays. */
+  --brand: #b45309; /* amber-700: 5:1 against white, so white text and links both pass */
+  --brand-focus: #d97706; /* amber-600: focus ring (3:1 against white) */
+  --brand-hover: #92400e; /* amber-800: hover on light */
+  --brand-on-dark: #fbbf24; /* amber-400: reads on black; takes dark text */
 
   --neutral-0: #ffffff; /* canvas */
   --neutral-50: #fafafc; /* pearl */
@@ -57,7 +58,7 @@
   --lime-700: oklch(0.532 0.157 131.589);
   --lime-800: oklch(0.453 0.124 130.933);
 
-  /* Champagne gold: the premium tier (Expert edit) only. Blue stays the action color. */
+  /* Champagne gold: the premium tier (Expert edit) only. Amber stays the action color. */
   --gold-100: oklch(0.955 0.035 88);
   --gold-400: oklch(0.82 0.105 84);
   --gold-600: oklch(0.66 0.115 76);
@@ -82,18 +83,18 @@
   /* Outline of form controls. Must reach 3:1 against every surface a control
      sits on (WCAG 1.4.11); decorative borders above don't have to. */
   --input: light-dark(var(--neutral-500), var(--neutral-500));
-  --ring: var(--blue-focus);
+  --ring: var(--brand-focus);
 
-  /* Dark mode uses Sky Link Blue with dark text: it reaches 7:1 against black
-     text and 4.9:1 as text on raised dark surfaces. */
-  --primary: light-dark(var(--blue), var(--blue-on-dark));
-  --primary-hover: light-dark(var(--blue-focus), color-mix(in srgb, var(--blue-on-dark) 80%, var(--neutral-0)));
+  /* Dark mode uses amber-400 with dark text: it reaches 10:1 against black
+     and stays readable as text on raised dark surfaces. */
+  --primary: light-dark(var(--brand), var(--brand-on-dark));
+  --primary-hover: light-dark(var(--brand-hover), color-mix(in srgb, var(--brand-on-dark) 80%, var(--neutral-0)));
   --primary-foreground: light-dark(var(--neutral-0), var(--neutral-950));
   --primary-subtle: light-dark(
-    color-mix(in srgb, var(--blue) 8%, var(--neutral-0)),
-    color-mix(in srgb, var(--blue-on-dark) 16%, var(--neutral-950))
+    color-mix(in srgb, var(--brand) 8%, var(--neutral-0)),
+    color-mix(in srgb, var(--brand-on-dark) 16%, var(--neutral-950))
   );
-  --primary-subtle-foreground: light-dark(var(--blue), var(--blue-on-dark));
+  --primary-subtle-foreground: light-dark(var(--brand), var(--brand-on-dark));
 
   --secondary: light-dark(var(--neutral-100), var(--neutral-800));
   --secondary-hover: light-dark(var(--neutral-200), var(--neutral-700));

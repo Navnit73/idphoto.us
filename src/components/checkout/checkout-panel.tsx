@@ -110,7 +110,7 @@ function loadRazorpayScript(): Promise<boolean> {
 }
 
 /** Razorpay's modal takes a literal color; read Action Blue from the design tokens. */
-const brandColor = () => getComputedStyle(document.documentElement).getPropertyValue("--blue").trim() || undefined;
+const brandColor = () => getComputedStyle(document.documentElement).getPropertyValue("--brand").trim() || undefined;
 
 const thankYouPath = (id: string, paymentId: string) => `/preview/${id}/thank-you?paymentId=${paymentId}`;
 

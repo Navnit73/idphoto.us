@@ -122,6 +122,8 @@ export const frontmatterSchema = z
         width: z.number().int().positive(),
         height: z.number().int().positive(),
         alt: z.string().trim().min(10),
+        /** Optional image credit, shown as a caption under the image. */
+        credit: z.object({ name: z.string().trim().min(2).max(60), url: z.url() }).optional(),
       })
       .optional(),
     /** Country preselected in the `photo-editor` or `photo-checker` widget (its API code, e.g. IN, GB, EU). */
