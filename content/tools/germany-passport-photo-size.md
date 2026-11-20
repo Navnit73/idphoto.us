@@ -1,5 +1,5 @@
 ---
-title: "Germany Passport Photo: Size, Requirements and Biometric Photo Maker"
+title: "Germany Passport Photo: Size, Rules and Online Maker"
 heading: "Germany Passport Size Photo – Requirements, Size and Online Biometric Photo Maker"
 description: "German passport photo size is 35 × 45 mm with a 32–36 mm face. Check passport and visa rules, the digital photo rule since May 2025, and prepare your photo online."
 slug: germany-passport-photo-size
