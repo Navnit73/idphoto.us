@@ -92,7 +92,9 @@ A 2x2 photo won't work for these documents, so choose the right country in the [
 | [UK passport](https://pixpassport.uk/tool/uk-passport-photo) | 35 × 45 mm |
 | Schengen visa | 35 × 45 mm |
 | Australian passport | 35 × 45 mm |
-| Canadian passport | 50 × 70 mm |
+| [Canadian passport](/international/canadian-passport-photo) | 50 × 70 mm |
+| [China visa and Chinese passport](/international/china-visa-photo) | 33 × 48 mm |
+| [Mexican passport](/international/mexican-passport-photo) | Taken at the consulate |
 
 Some other countries' visas and IDs do use a square 51 × 51 mm photo. Always check the official requirements for your document.
 

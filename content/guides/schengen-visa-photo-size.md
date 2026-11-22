@@ -44,6 +44,7 @@ relatedPages:
   - /checker/test-passport-photo
   - /tool/print-passport-photos
   - /tool/passport-photo-converter
+  - /international/eu-passport-photo-size
 sources:
   - title: "Regulation (EC) No 810/2009 establishing a Community Code on Visas (Visa Code), consolidated text"
     url: "https://eur-lex.europa.eu/eli/reg/2009/810/2024-06-11/eng"

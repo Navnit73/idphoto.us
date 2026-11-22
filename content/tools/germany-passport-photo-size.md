@@ -28,6 +28,7 @@ relatedPages:
   - /tool/passport-photo-editor
   - /guide/passport-photo-requirements
   - /tool/print-passport-photos
+  - /international/eu-passport-photo-size
 sources:
   - title: "Ab wann darf ich zur Beantragung von Ausweisdokumenten (Personalausweis, Reisepass) kein Papier-Passbild mehr mitbringen?"
     url: "https://www.bmi.bund.de/SharedDocs/faqs/DE/themen/moderne-verwaltung/reisepass/biometrie/09-kein-papier-passbild.html"
@@ -82,7 +83,7 @@ faq:
 
 German passport photos are 35 × 45 mm, in portrait format, and in Germany they now have to be digital. This page explains the German passport photo size and requirements, shows how German visa photos differ, and lets you prepare a 35 × 45 mm biometric photo online.
 
-**Quick answer:** the photo is 35 mm wide and 45 mm high, with the face 32–36 mm tall from chin to top of head (70–80% of the photo), shown from the front with a neutral expression, against a plain light background. For a German passport or ID card application **in Germany**, you can't hand in a printed or self-made photo. At German missions **abroad** and for visas, printed photos are still used.
+**Quick answer:** the photo is 35 mm wide and 45 mm high, with the face 32–36 mm tall from chin to top of head (70–80% of the photo), shown from the front with a neutral expression, against a plain light background. For a German passport or ID card application **in Germany**, you can't hand in a printed or self-made photo. At German missions **abroad** and for visas, printed photos are still used. Comparing other EU countries' rules? See the [EU passport photo size guide](/international/eu-passport-photo-size).
 
 ## Which German Photo Rule Applies to You?
 

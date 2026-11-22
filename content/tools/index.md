@@ -27,6 +27,7 @@ Photos of your face are personal data, so we tell you plainly where each one goe
 - [US visa photo editor](/tool/us-visa-photo): a square JPEG for the DS-160 upload.
 - [Print passport photos](/tool/print-passport-photos): a 4 × 6 layout and printing options.
 - Country tools: [Schengen](/tool/schengen-visa-photo-size), [British](/tool/british-passport-photo), [Germany](/tool/germany-passport-photo-size), [India](/tool/india-passport-size-photo), [Australia](/tool/australia-passport-photo) and [New Zealand](/tool/new-zealand-passport-photo).
+- [International guides](/international): photo rules for people in the U.S. applying for another country's documents, such as a [Canadian passport](/international/canadian-passport-photo), a [China visa](/international/china-visa-photo), a [Mexican passport](/international/mexican-passport-photo) or an [EU passport](/international/eu-passport-photo-size).
 
 Uploading and previewing is free. You pay a one-time fee only to download the finished photo; see the [refund policy](/refund-policy). To test a photo without fixing it, use the [passport photo checker](/checker/test-passport-photo).
 

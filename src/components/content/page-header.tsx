@@ -32,6 +32,7 @@ type PageHeaderProps = {
 const EYEBROW: Record<Category, string> = {
   tool: "Free tool",
   checker: "Photo checker",
+  international: "Country guide",
   guide: "Guide",
   legal: "Legal",
   about: "About",

@@ -1,7 +1,7 @@
 import { getPage, getPageSummaries, pathFromSegments } from "@/lib/content/loader";
 import { renderOgImage } from "@/lib/seo/og-image";
 
-const EYEBROW = { tool: "Free tool", checker: "Free checker", guide: "Guide", legal: "Policy", about: "About" } as const;
+const EYEBROW = { tool: "Free tool", checker: "Free checker", international: "Country guide", guide: "Guide", legal: "Policy", about: "About" } as const;
 
 export async function generateStaticParams() {
   const pages = await getPageSummaries();

@@ -6,18 +6,20 @@ import { COUNTRY_CODES } from "@/lib/photo/countries";
 export const CATEGORY_DIRECTORIES = {
   tools: "tool",
   checkers: "checker",
+  international: "international",
   guides: "guide",
   legal: "legal",
   about: "about",
 } as const;
 
-export const CATEGORIES = ["tool", "checker", "guide", "legal", "about"] as const;
+export const CATEGORIES = ["tool", "checker", "international", "guide", "legal", "about"] as const;
 export type Category = (typeof CATEGORIES)[number];
 
 /** URL prefix per category. Legal and about pages live at the site root. */
 export const CATEGORY_ROUTE_PREFIX: Record<Category, string> = {
   tool: "/tool",
   checker: "/checker",
+  international: "/international",
   guide: "/guide",
   legal: "",
   about: "",

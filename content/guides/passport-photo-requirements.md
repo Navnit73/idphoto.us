@@ -38,6 +38,7 @@ relatedPages:
   - /checker/test-passport-photo
   - /tool/2x2-photo-maker
   - /tool/print-passport-photos
+  - /international/canadian-passport-photo
   - /guide/driver-license-picture
 sources:
   - title: "U.S. Passport Photos"
@@ -187,7 +188,7 @@ If you are not sure whether the result passes, the [passport photo checker](/che
 
 ## Is a passport photo the same as a visa photo?
 
-Not always. The U.S. passport photo is 2 × 2 inches, and the U.S. visa photo for the DS-160 online form uses a square digital file with its own technical limits. Photos for other countries' passports and visas have different sizes. See our [US visa photo editor](/tool/us-visa-photo) for the DS-160 upload, or the [Schengen visa photo guide](/guide/schengen-visa-photo-size) for Europe. Always follow the instructions of the agency you are applying to.
+Not always. The U.S. passport photo is 2 × 2 inches, and the U.S. visa photo for the DS-160 online form uses a square digital file with its own technical limits. Photos for other countries' passports and visas have different sizes. See our [US visa photo editor](/tool/us-visa-photo) for the DS-160 upload, or the [Schengen visa photo guide](/guide/schengen-visa-photo-size) for Europe. For other countries' documents applied for from the U.S., see the [international guides](/international), including the [Canadian passport photo](/international/canadian-passport-photo), [China visa photo](/international/china-visa-photo) and [Mexican passport photo](/international/mexican-passport-photo). Always follow the instructions of the agency you are applying to.
 
 ## Quick checklist before you submit
 

@@ -32,6 +32,7 @@ relatedPages:
   - /tool/us-visa-photo
   - /tool/passport-photo-editor
   - /guide/passport-photo-requirements
+  - /international/china-visa-photo
 sources:
   - title: "U.S. Passport Photos"
     url: "https://travel.state.gov/content/travel/en/passports/how-apply/photos.html"

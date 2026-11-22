@@ -69,7 +69,7 @@ Uploading a photo and previewing the result is free, with no account. Downloadin
 
 ## Which tool should I use?
 
-The editor covers 60+ countries. If you already have a picture and just need it resized, try the [passport photo converter](/tool/passport-photo-converter). For a square U.S. photo, use the [2x2 photo maker](/tool/2x2-photo-maker); for the DS-160 upload, the [US visa photo editor](/tool/us-visa-photo). Test a photo first with the [passport photo checker](/checker/test-passport-photo), and print it using our [print passport photos](/tool/print-passport-photos) page.
+The editor covers 60+ countries. If you already have a picture and just need it resized, try the [passport photo converter](/tool/passport-photo-converter). For a square U.S. photo, use the [2x2 photo maker](/tool/2x2-photo-maker); for the DS-160 upload, the [US visa photo editor](/tool/us-visa-photo). Test a photo first with the [passport photo checker](/checker/test-passport-photo), and print it using our [print passport photos](/tool/print-passport-photos) page. Applying from the U.S. for another country's documents? Our [international guides](/international) explain each country's process, for example the [China visa photo](/international/china-visa-photo), the [Canadian passport photo](/international/canadian-passport-photo) (which must come from a commercial photographer) and the [Mexican passport photo](/international/mexican-passport-photo) (taken at the consulate).
 
 ## What it doesn't do
 
