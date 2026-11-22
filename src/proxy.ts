@@ -8,7 +8,7 @@ const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
  * All site URLs are lowercase. Mixed-case variants (/Guide, /TOOL/x) get a
  * permanent redirect so there's exactly one URL per page for search engines.
  *
- * Malformed /preview/<id> links are answered with a real 404 here: the preview
+ * Malfdormed /preview/<id> links are answered with a real 404 here: the preview
  * page streams, so a `notFound()` there can only render the 404 UI under a 200.
  */
 export function proxy(request: NextRequest) {
