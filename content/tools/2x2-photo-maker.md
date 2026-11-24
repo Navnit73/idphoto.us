@@ -1,7 +1,7 @@
 ---
-title: "2x2 Photo Maker: Make a 2x2 Inch Photo Online"
+title: "2x2 Photo Maker: 2 x 2 Inch Picture Online"
 heading: "2x2 Photo Maker: Make a 2 Inch by 2 Inch Photo Online"
-description: "Turn any picture into a 2x2 inch (51x51 mm) photo for passports, visas, green cards and IDs. Free preview, instant crop, then a print-ready download."
+description: "Make a 2 by 2 inch photo (51 × 51 mm, 600 × 600 px) for passports, visas and green cards. Upload any picture, preview the crop free, then download or print."
 slug: 2x2-photo-maker
 category: tool
 template: tool
@@ -18,7 +18,7 @@ heroImage:
   height: 887
   alt: "Two example U.S. passport photos, a man and a woman, each measured at 2 × 2 inches (600 × 600 pixels) with the head centered."
 publishedAt: 2026-10-24
-updatedAt: 2026-11-17
+updatedAt: 2026-11-24
 keywords:
   - 2x2 photo
   - 2x2 passport photo
@@ -27,6 +27,10 @@ keywords:
   - 2x2 picture
   - 2x2 picture maker
   - 2 inch by 2 inch photo
+  - 2 by 2 photo
+  - 2x2 picture size online free
+  - print 2x2 photo online
+  - uscis photo
 showDisclaimer: true
 relatedPages:
   - /tool/passport-photo-editor
@@ -58,6 +62,10 @@ faq:
     answer: "For U.S. passports, visas and green cards, your head must be 1 to 1⅜ inches (25–35 mm) from the bottom of your chin to the top of your hair. That's 50–69% of the photo's height."
   - question: "Can I print a 2x2 photo at home?"
     answer: "Yes. Print on photo-quality paper at actual size with no scaling, then measure the result: it should be exactly 2 inches on each side. A 4 × 6 inch print holds up to six 2x2 photos."
+  - question: "Can I use a 2x2 photo for USCIS and green card forms?"
+    answer: "Yes, when the form asks for 2 × 2 inch photos. The [Form I-485 instructions](https://www.uscis.gov/sites/default/files/document/forms/i-485instr.pdf), for example, ask for two identical 2 × 2 inch color photos. Print two copies from the same file so they match, and follow your form's instructions on how recent the photos must be."
+  - question: "Can I take a 2x2 photo with my phone?"
+    answer: "Yes. Have someone stand about 4 feet away and hold the phone at your eye level, using the main camera, not the front selfie camera. Then upload the picture here to crop it to 2 × 2 inches."
   - question: "Will my 2x2 photo be accepted?"
     answer: "No tool can promise that. Acceptance depends on lighting, expression, background and the other [photo requirements](/guide/passport-photo-requirements), and the agency that receives your application makes the final decision."
 ---
@@ -71,6 +79,16 @@ A 2x2 photo is a square photo 2 inches wide by 2 inches tall. It's the size the 
 3. **Download your photo.** Your result opens on its own page with your head height and position measured, so you can check the crop before you print or upload it.
 
 The photo is uploaded over an encrypted connection, because face detection and background checks run on a server. Your result page expires after 7 days; the [privacy policy](/privacy-policy) explains what is stored.
+
+## How to Take a 2x2 Photo With Your Phone
+
+A good original matters more than the crop. These steps are practical advice, not official rules:
+
+1. **Stand in front of a plain white or off-white wall,** about 2 feet away from it, so you don't cast a shadow on it.
+2. **Face a window** so daylight lights your face evenly. Turn off overhead lights that shadow your eyes.
+3. **Ask someone to take the photo** from about 4 feet away, with the phone at your eye level. Arm's-length selfies make your nose and face look larger.
+4. **Leave space around you.** Include your head, shoulders and some wall above your head; the maker crops the rest.
+5. **Take several shots** and upload the sharpest one with both eyes open.
 
 ## What Is a 2x2 Photo Used For?
 

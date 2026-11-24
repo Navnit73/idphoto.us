@@ -1,7 +1,7 @@
 ---
-title: "India Passport Size Photo Maker Online"
+title: "Indian Passport Photo Size (35 × 45 mm) Maker"
 heading: "Make an India Passport Photo Online in Minutes"
-description: "Crop your picture to the correct Indian passport photo size, with head position and background checks. Fix common rejections and get a print-ready file."
+description: "Indian passport photo size is 35 × 45 mm (3.5 × 4.5 cm), white background. Make one online, or a 2 × 2 inch photo if your VFS checklist in the U.S. asks for it."
 slug: india-passport-size-photo
 category: tool
 template: tool
@@ -18,20 +18,20 @@ heroImage:
   height: 500
   alt: "Two example U.S. passport photos, a man and a woman, each measured at 2 × 2 inches (600 × 600 pixels) with the head centered."
 publishedAt: 2026-10-27
-updatedAt: 2026-11-17
+updatedAt: 2026-11-24
 keywords:
   - india passport photo
   - india passport size photo
   - indian photo size for passport
-  - india passport picture size
   - background for passport photo india
-  - convert photo to passport size india
   - dimensions of passport size photo india
   - evisa india photo requirements
   - india passport photo requirements
-  - india passport photo size in cm
   - indian passport photo guidelines
   - india passport photo size requirements
+  - indian passport photo size
+  - indian passport photo size in usa
+  - indian passport renewal photo usa
 showDisclaimer: true
 relatedPages:
   - /tool/passport-photo-editor
@@ -58,6 +58,8 @@ faq:
     answer: "Yes. Upload a sharp, front-facing phone photo taken in even light. The tool crops and sizes it, but it can't fix shadows or glare, so start with a good original."
   - question: "Can a 2 × 2 inch square work as an India passport size photo?"
     answer: "Not for a standard paper application. Some Indian missions abroad ask for a 2 × 2 inch photo, so follow your mission's instructions. If yours does, use the [2x2 photo maker](/tool/2x2-photo-maker)."
+  - question: "What photo size do I need to renew an Indian passport in the U.S.?"
+    answer: "Indian passport services in the U.S. are handled through VFS Global, and the photo size is set by the checklist for your service. Past checklists asked for 2 × 2 inch (51 × 51 mm) photos and newer ones list 35 × 45 mm, so download the current checklist for your application before you print. This tool makes both sizes."
   - question: "Will my photo be accepted?"
     answer: "No tool can promise that. Acceptance depends on lighting, expression, background and the other [photo requirements](/guide/passport-photo-requirements), and the office that receives your application makes the final decision."
 ---
@@ -118,6 +120,17 @@ India passport photo size requirements depend on how you apply:
 
 Even when the counter captures your photo, keep a spare India passport size photo for police verification in some districts and other government forms.
 
+## Indian Passport Photo Size in the USA (VFS Global)
+
+If you renew or apply for an Indian passport while living in the U.S., you submit your application through VFS Global, not a Passport Seva Kendra. VFS publishes a document checklist for each service (adult re-issue, minor passport, Tatkal and others), and that checklist sets the photo size.
+
+- **Check the date on your checklist.** VFS checklists for the U.S. have asked for **2 × 2 inch (51 × 51 mm)** photos in the past, while newer ones list **35 × 45 mm**. Use the one for your service on the VFS Global website on the day you print.
+- **Bring identical copies.** Checklists ask for more than one photo, and the copies should come from the same file.
+- **Use a white background,** with your face and shoulders visible, no glasses and no flash glare.
+- **Pick the size here.** Choose India and the 35 × 45 mm size, or use the [2x2 photo maker](/tool/2x2-photo-maker) if your checklist asks for 2 × 2 inches.
+
+Most U.S. pharmacy photo counters print the 2 × 2 inch U.S. size by default. If you need 35 × 45 mm, make the photo here and print it yourself with the [print passport photos](/tool/print-passport-photos) layout.
+
 ## eVisa India Photo Requirements for Online Uploads
 
 India e visa photo requirements differ from passport rules, because you upload a digital file instead of a print. Apply only on the official site, [indianvisaonline.gov.in](https://indianvisaonline.gov.in/), which warns applicants about fake lookalike websites.
@@ -148,10 +161,10 @@ Most rejections break the Indian passport photo guidelines in one of these ways:
 - **Hidden eyes.** Glare on glasses, hair across the face or a tilted head can block a clear view.
 - **Strong expressions.** Grinning, frowning and raised eyebrows are not allowed.
 - **Low quality.** A blurry India passport picture, or a print on ordinary paper, can fail the clarity check.
-
-Many of these mistakes also break the international rules. See [why a photo is not valid as per the ICAO standard](https://icao-standard-photo.online/icao-guide/photo-is-not-valid-as-per-icao-standard) for the most common causes.
 - **Heavy editing.** Filters and skin smoothing change how you look. Cropping and resizing are fine.
 - **Wrong e-Visa shape.** A rectangular passport photo uploaded to the e-Visa form is not square.
+
+Many of these mistakes also break the international rules. See [why a photo is not valid as per the ICAO standard](https://icao-standard-photo.online/icao-guide/photo-is-not-valid-as-per-icao-standard) for the most common causes.
 
 No tool can promise acceptance. Before you apply, compare your result with the latest guidance in the [Passport Seva instruction booklet](https://www.passportindia.gov.in/AppOnlineProject/pdf/ApplicationformInstructionBooklet-V3.0.pdf). When you're ready, upload your picture above to convert photo to passport size India applications accept, then download a print-ready file.
 

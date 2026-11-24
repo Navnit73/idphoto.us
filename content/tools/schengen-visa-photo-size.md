@@ -1,7 +1,7 @@
 ---
-title: "Schengen Visa Photo Maker (35 × 45 mm)"
+title: "Schengen Visa Photo Size 35×45 mm: Maker for VFS"
 heading: "Schengen visa photo maker: make a 35 × 45 mm photo online"
-description: "Make a Schengen visa photo at 35 × 45 mm with the face sized and positioned for you. Upload and preview free, then download and print it in the U.S."
+description: "Make a 35 × 45 mm Schengen visa photo for your VFS Global or BLS appointment, with face size and background checked. Preview free, then print it in the U.S."
 slug: schengen-visa-photo-size
 category: tool
 template: tool
@@ -26,7 +26,7 @@ heroFacts:
   - value: "Plain, light"
     label: "Background"
 publishedAt: 2026-10-30
-updatedAt: 2026-11-17
+updatedAt: 2026-11-24
 author: navnit-rai
 keywords:
   - schengen visa photo maker
@@ -34,6 +34,9 @@ keywords:
   - make schengen visa photo
   - schengen visa photo 35x45 mm
   - print schengen visa photo
+  - schengen visa photo size vfs
+  - schengen visa photo size
+  - photos for schengen visa
 showDisclaimer: true
 relatedPages:
   - /guide/schengen-visa-photo-size
@@ -97,6 +100,16 @@ These figures follow the shared Schengen standard in the [EU Visa Code](https://
 ## Why a U.S. passport photo doesn't work
 
 A U.S. passport photo is a 2 × 2 inch square. A Schengen photo is a 35 × 45 mm rectangle with a larger face. Trimming a 2 × 2 photo rarely works because the head in a U.S. photo can be smaller than the 32 mm minimum, and trimming doesn't make a face bigger. Start from your original picture instead. If you also need U.S. photos, use the [2x2 photo maker](/tool/2x2-photo-maker).
+
+## Schengen visa photos at VFS Global and BLS appointments
+
+In the U.S., most Schengen visa applications are handed in at an application center run by VFS Global or BLS International for the consulate. Staff check your documents, including the photo, when you hand them in, and the consulate makes the decision.
+
+- **Use the size on your checklist.** Almost every Schengen country asks for 35 × 45 mm. The checklist for your consulate and visa type is the final word, including how many photos to bring.
+- **Bring a spare.** If a print is damaged or doesn't match the rules, a second copy from the same file saves another trip.
+- **Don't trim a U.S. 2 × 2 photo.** The face usually ends up too small for the 32 mm minimum. Make a new 35 × 45 mm photo instead.
+- **Don't staple or glue it** unless your checklist tells you to. Some forms have a box for the photo; others ask you to bring it loose.
+- **Your biometrics are separate.** First-time applicants usually give fingerprints at the center. That doesn't replace the printed photo if your checklist asks for one.
 
 ## Where to print a Schengen visa photo in the U.S.
 

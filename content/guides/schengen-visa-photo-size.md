@@ -1,5 +1,5 @@
 ---
-title: "Schengen Visa Photo Size and Rules"
+title: "Schengen Visa Photo Size & Requirements (35×45 mm)"
 heading: "Schengen visa photo size and requirements: 35 × 45 mm explained"
 description: "A Schengen visa photo is 35 × 45 mm (1.38 × 1.77 in) with a 32–36 mm face on a white or light background. Every rule, plus how to get one in the U.S."
 slug: schengen-visa-photo-size

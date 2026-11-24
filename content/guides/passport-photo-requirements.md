@@ -1,13 +1,13 @@
 ---
-title: "U.S. Passport Photo Requirements Checklist"
+title: "U.S. Passport Photo Requirements (2026)"
 heading: "U.S. passport photo requirements: a complete checklist"
-description: "Every U.S. passport photo rule in one place — size, head height, background, glasses, expression, clothing, and printing — with links to the official sources."
+description: "U.S. passport photo requirements: 2 × 2 in, head 1–1⅜ in, white background, no glasses. Plus renewal photo rules for mail and online, with official sources."
 slug: passport-photo-requirements
 category: guide
 template: guide
 breadcrumbLabel: "Passport photo requirements"
 publishedAt: 2026-10-23
-updatedAt: 2026-11-17
+updatedAt: 2026-11-24
 author: navnit-rai
 keywords:
   - us passport photo requirements
@@ -16,6 +16,9 @@ keywords:
   - passport photo background
   - passport photo smile
   - digital passport photo for renewal
+  - passport renewal photo requirements
+  - passport picture requirements
+  - passport photo requirements
 showTableOfContents: true
 widget: photo-editor
 heroStyle: band
@@ -45,7 +48,7 @@ sources:
     url: "https://travel.state.gov/content/travel/en/passports/how-apply/photos.html"
     publisher: "U.S. Department of State"
   - title: "Uploading a Digital Photo (online passport renewal)"
-    url: "https://travel.state.gov/content/travel/en/passports/how-apply/online-renewal-photo.html"
+    url: "https://travel.state.gov/en/passports/renew-replace/online/upload-digital-photo.html"
     publisher: "U.S. Department of State"
   - title: "8 FAM 402.1 Passport Photographs"
     url: "https://fam.state.gov/fam/08fam/08fam040201.html"
@@ -59,6 +62,10 @@ faq:
     answer: "It must have been taken within the last six months and show how you look now. If your appearance has changed noticeably, take a new photo."
   - question: "Can I take my passport photo at home?"
     answer: "Yes. Many people take their own passport photo at home. Ask someone to take it from a few feet away against a plain white or off-white wall in even light, then crop it to 2 × 2 inches with the correct head size using our [passport photo editor](/tool/passport-photo-editor)."
+  - question: "What are the passport renewal photo requirements?"
+    answer: "The same appearance rules as a new passport: taken in the last six months, plain white or off-white background, no glasses, no filters. Renewing by mail, you attach one printed 2 × 2 inch photo. Renewing online, you upload a digital JPEG instead. See [passport renewal photo requirements](#passport-renewal-photo-requirements-mail-vs-online)."
+  - question: "Can I use a selfie for online passport renewal?"
+    answer: "No. The Department of State asks you to have someone else take your photo for online renewal. A selfie taken at arm's length also distorts your face and usually leaves your head too large in the frame."
 ---
 
 A passport photo is one of the most common reasons a U.S. application gets delayed. The rules are specific, but none of them are complicated once you see them together. This guide covers every requirement the U.S. Department of State publishes for passport photos, grouped by what you need to get right: size, appearance, background and lighting, and printing. Each section starts with the short answer, then explains the detail.
@@ -78,6 +85,7 @@ If you only remember three things: the photo must be **2 × 2 inches**, your hea
 | Expression | Neutral or natural smile, both eyes open, facing the camera |
 | Editing | No filters, retouching, or AI changes. Cropping and resizing are fine |
 | Print | Matte or glossy photo-quality paper, undamaged |
+| Number of photos | One, attached to your application |
 
 The rules come from the Department of State's [passport photo page](https://travel.state.gov/content/travel/en/passports/how-apply/photos.html) and the Foreign Affairs Manual. Our [content methodology](/content-methodology) explains how we check pages against these sources, and our [editorial policy](/editorial-policy) explains how we keep them current.
 
@@ -140,9 +148,25 @@ Print on **matte or glossy photo-quality paper**, at actual size with no scaling
 
 Most people print at a pharmacy or photo lab. Our [print passport photos page](/tool/print-passport-photos) explains the 4 × 6 inch sheet layout, which fits more than one 2 × 2 photo on a single print.
 
-## Can I upload a digital photo instead?
+## Passport renewal photo requirements: mail vs. online
 
-Yes, for online renewal. If you renew online, you upload a digital photo instead of mailing a print. The appearance rules above still apply. The Department of State publishes separate technical instructions for the upload, including file format and size limits; check the [official upload page](https://travel.state.gov/content/travel/en/passports/how-apply/online-renewal-photo.html) before you start, because those details can change.
+A renewal photo follows **the same rules as a first passport**: 2 × 2 inches, taken in the last six months, plain white or off-white background, no glasses. What changes is how you submit it.
+
+| | Renew by mail (Form DS-82) | Renew online |
+| --- | --- | --- |
+| Photo type | One printed 2 × 2 inch photo | A digital photo you upload |
+| File format | Not applicable | JPEG |
+| Who takes it | Anyone, or a store or studio | Someone else: no selfies |
+| Cropping | Print at exactly 2 × 2 inches | You can crop and reposition in the application |
+| Editing | No filters or retouching | Upload the original, unedited photo |
+
+### Online renewal photo tips
+
+- **Have someone else take it.** The Department of State asks for no selfies. An arm's-length selfie also distorts your face and makes your head too large.
+- **Upload the original.** Don't run it through filters, beauty modes or background-replacement apps. Cropping is allowed.
+- **Check the current file limits** on the [official upload page](https://travel.state.gov/en/passports/renew-replace/online/upload-digital-photo.html) before you start, because technical details can change.
+
+You can test the photo with the [passport photo checker](/checker/test-passport-photo) before you upload it, for free. If you renew by mail, the [2x2 photo maker](/tool/2x2-photo-maker) crops it to size for printing.
 
 ## What are the rules for babies and children?
 

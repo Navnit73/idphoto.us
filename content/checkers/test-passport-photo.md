@@ -1,7 +1,7 @@
 ---
-title: "Test Passport Photo Free: Passport Photo Checker"
+title: "Passport Photo Checker: Test Your Photo Free Online"
 heading: "Test Passport Photo Free: Check It Before You Submit"
-description: "Passport photo checker free to use. Test your photo against the rules for the U.S. and 60+ countries: size, head height, pose, background. Runs in your browser."
+description: "Free online passport photo checker. Test size, head height, eyes, pose and background against U.S. and 60+ country rules before you submit. Runs in your browser."
 slug: test-passport-photo
 category: checker
 template: tool
@@ -13,19 +13,20 @@ icon: id-card
 order: 1
 ctaLabel: "Check my photo"
 publishedAt: 2026-10-28
-updatedAt: 2026-10-28
+updatedAt: 2026-11-24
 keywords:
   - test passport photo
   - passport photo checker
   - passport photo validator
   - passport photo checker free
-  - passport picture checker
   - diversity visa photo checker
   - is my passport photo acceptable
   - check if passport photo is valid
   - digital passport photo checker
   - biometric photo checker
-  - online photo checker for passport
+  - check passport photo
+  - online passport photo checker
+  - passport photo check
 showDisclaimer: true
 relatedPages:
   - /tool/passport-photo-editor
@@ -54,6 +55,8 @@ faq:
     answer: "Diversity visa entry photos follow their own digital rules, which differ from the 2 × 2 inch passport photo. Check which rules the tool loads for your selection, and confirm your entry photo against the official instructions. The [U.S. visa photo tool](/tool/us-visa-photo) covers visa photos."
   - question: "Can I test a passport photo taken with my phone?"
     answer: "Yes. Upload the photo file you plan to submit. Use the original file, not a screenshot, so the size and detail reading are correct."
+  - question: "Can I check a photo for online passport renewal?"
+    answer: "Yes. Choose the United States and upload the exact JPEG you plan to submit. The checker tests the size and head position the appearance rules set. The Department of State also asks that someone else take the photo, with no selfies, which software can't verify, so make sure yours was."
   - question: "Is a passport a photo ID?"
     answer: "Yes. A passport is a government-issued photo ID. This tool does not check your ID. It checks the photo you plan to submit with your application."
   - question: "What if my photo fails?"
@@ -84,6 +87,17 @@ The checker compares your photo with the country's published rules and sorts the
 - **Checks for you** are things software can't judge reliably, such as whether both ears need to be visible or whether your expression is acceptable. The checker lists them so you can look for yourself.
 
 Turn on the guides to see where the checker found your eyes, chin and the estimated top of your head, with the allowed eye band shaded in.
+
+## Why photos fail, and how to fix them
+
+| What the checker flags | Usual cause | How to fix it |
+| --- | --- | --- |
+| Head too large | Camera too close, often a selfie | Have someone take it from about 4 feet away |
+| Head too small | Camera too far away | Crop it with the [passport photo editor](/tool/passport-photo-editor) |
+| Background not plain | Shadow, cream wall or objects behind you | Stand 2 feet from a white wall and face a window |
+| Head tilted or turned | Camera not at eye level | Hold the camera level with your eyes and look into the lens |
+| Eyes or mouth | Blinked, squinted or wide smile | Retake with eyes open and a neutral face or small smile |
+| Wrong size or shape | Uncropped phone photo | Crop to your country's size before you submit |
 
 ## Free passport photo checker: private and fast
 
@@ -120,6 +134,7 @@ The U.S. Department of State sets the rules in its [passport photo guidance](htt
 - **Expression:** neutral, or a natural smile.
 - **Glasses:** none.
 - **Date:** taken in the last 6 months.
+- **Online renewal:** a JPEG, taken by someone else. No selfies. See the [passport renewal photo requirements](/guide/passport-photo-requirements#passport-renewal-photo-requirements-mail-vs-online).
 
 ## What the checker cannot judge
 

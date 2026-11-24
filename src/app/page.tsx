@@ -38,9 +38,9 @@ export const ensureStatic = "navigation";
  * It does not target requirements, size, 2x2, crop/converter, checker, visa or
  * near-me terms. Each of those gets one sentence and a link to its own page.
  */
-const title = "Passport Photo Online: Maker with Free Preview";
+const title = "Passport & ID Photo Maker Online, Free Preview | idphoto.us";
 const description =
-  "Make a passport photo online: upload and preview it free, then pay once to download. Built for U.S. passports and 60+ countries. No account needed.";
+  "Make a passport or ID photo online: upload and preview it free, then pay once to download. 2x2 U.S. photos, visas and 60+ countries. No account needed.";
 
 export const metadata = buildMetadata({
   title,
